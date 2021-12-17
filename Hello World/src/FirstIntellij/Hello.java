@@ -253,6 +253,10 @@ public class Hello {
 
 
 
+//        The main method has a public access modifier, it is static, does not return anything, and has a string array called args as a parameter.
+//        Since the main method is static, there can only be 1 instance of this method in the entire application.
+
+
 
 
 
