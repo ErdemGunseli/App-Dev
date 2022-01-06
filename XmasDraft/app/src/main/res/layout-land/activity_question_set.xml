@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relQuestionSet"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".QuestionSetActivity">
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvQuestion"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_margin="35dp"
+        android:backgroundTint="@color/Surface1"
+        android:elevation="100dp"
+        app:cardCornerRadius="5dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <TextView
+                    android:id="@+id/txtQuestionSetName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_margin="15dp"
+                    android:textSize="11sp"
+                    android:textColor="@color/Accent"
+                    android:textStyle="bold"
+                    android:layout_alignParentStart="true"
+                    />
+
+                <TextView
+                    android:id="@+id/txtCurrentQuestionIndex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:textSize="11sp"
+                    android:textColor="@color/Accent"
+                    android:textStyle="bold"
+                    android:layout_toEndOf="@id/txtQuestionSetName"
+                    />
+
+
+                <TextView
+                    android:id="@+id/txtQuestion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginBottom="25dp"
+                    android:textSize="16sp"
+                    android:layout_below="@id/txtQuestionSetName"
+                    />
+
+                <ImageView
+                    android:id="@+id/imgQuestion"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/txtQuestion"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginBottom="25dp"
+                    />
+
+            </RelativeLayout>
+
+
+        </ScrollView>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvQuestionAnswerOptions"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_margin="35dp"
+        android:backgroundTint="@color/Surface2"
+        android:elevation="100dp"
+        app:cardCornerRadius="5dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+        <RelativeLayout
+            android:id="@+id/relQuestionAnswerOptions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp">
+
+            <RadioGroup
+                android:id="@+id/rgQuestionAnswerOptions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/answerA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/Primary"
+                    android:textSize="13sp"
+                    />
+
+                <RadioButton
+                    android:id="@+id/answerB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/Primary"
+                    android:textSize="13sp"
+                    />
+
+                <RadioButton
+                    android:id="@+id/answerC"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/Primary"
+                    android:textSize="13sp"
+                    />
+
+                <RadioButton
+                    android:id="@+id/answerD"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/Primary"
+                    android:textSize="13sp"
+                    />
+
+
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/btnConfirm"
+                android:layout_marginTop="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rgQuestionAnswerOptions"
+                android:layout_centerHorizontal="true"
+                android:backgroundTint="@color/Accent"
+                android:text="@string/confirm"
+                android:layout_marginBottom="25dp"
+                />
+
+        </RelativeLayout>
+        </ScrollView>
+
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+
+
+
+
+</LinearLayout>
