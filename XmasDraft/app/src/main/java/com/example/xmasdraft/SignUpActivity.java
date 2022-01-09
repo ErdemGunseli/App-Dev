@@ -3,9 +3,12 @@ package com.example.xmasdraft;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Locale;
 
@@ -17,6 +20,8 @@ public class SignUpActivity extends SignActivityTemplate implements View.OnClick
 
     private Button btnBack, btnConfirm;
 
+    EditText[] inputs;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +32,9 @@ public class SignUpActivity extends SignActivityTemplate implements View.OnClick
 
 
     }
-
+    /**
+     * Initialising View objects:
+     */
     private void initViews() {
 
         relSignUp = findViewById(R.id.relSignUp);
@@ -45,6 +52,8 @@ public class SignUpActivity extends SignActivityTemplate implements View.OnClick
 
         btnBack.setOnClickListener(this);
         btnConfirm.setOnClickListener(this);
+
+        inputs = new EditText[]{edtTxtParentName, edtTxtStudentName, edtTxtEmail, edtTxtPassword, edtTxtConfirmPassword, edtTxtPin, edtTxtConfirmPin};
     }
 
     @Override
@@ -57,57 +66,7 @@ public class SignUpActivity extends SignActivityTemplate implements View.OnClick
                 break;
 
             case (R.id.btnConfirm):
-
-                // The inputs are converted from View objects to Strings:
-
-                // The names should be uppercase:
-                String parentName = edtTxtParentName.getText().toString().toUpperCase(Locale.ROOT);
-                String studentName = edtTxtStudentName.getText().toString().toUpperCase(Locale.ROOT);
-                // The email should be lowercase
-                String email =edtTxtEmail.getText().toString().toLowerCase(Locale.ROOT);
-                String password = edtTxtPassword.getText().toString();
-                String confirmPassword = edtTxtConfirmPassword.getText().toString();
-                String pin = edtTxtPin.getText().toString();
-                String confirmPin = edtTxtConfirmPin.getText().toString();
-
-
-                /* Classifying the inputs depending on how many characters they need to have
-                * so that they can be validated accordingly
-                */
-                String[] fieldsMinLength_2 = {parentName, studentName};
-
-                String[] fieldsMinLength_4 = {pin, confirmPin};
-
-                String[] fieldsMinLength_6 = {email, password, confirmPassword};
-
-
-                /* The functions below will produce a warning text depending on the error, and
-                * if there is none, they will return an empty string
-                * This can be used to determine the error and display an appropriate SnackBar.
-                */
-                String[] warningTexts = {
-                        inputLengthMessage(fieldsMinLength_2, 2),
-                        inputLengthMessage(fieldsMinLength_4, 4),
-                        inputLengthMessage(fieldsMinLength_6, 6),
-                        inputsMatchMessage(password, confirmPassword, "Passwords"),
-                        inputsMatchMessage(pin, confirmPin, "Pins"),
-                        containsMessage(email, "@", "Email"),
-                        containsMessage(email, ".", "Email")
-                };
-
-                String warning = checkForWarning(warningTexts);
-
-                if (warning != null) {
-                    showSnackBar(relSignUp, warning, "OK");
-                    break;
-                }
-
-
-                // We are creating an account:
-                Account currentUserAccount = new Account(parentName, studentName, email, password, pin);
-
-                // Going to the main menu activity:
-                startActivity(new Intent(this, MainMenuActivity.class));
+                confirmClicked();
                 break;
 
 
@@ -117,4 +76,107 @@ public class SignUpActivity extends SignActivityTemplate implements View.OnClick
         }
 
     }
+
+    /**
+     * Does the necessary validations when the Confirm Button is clicked:
+     */
+    private void confirmClicked(){
+        // Displays appropriate Snack Bar if inputs are invalid:
+        if (!inputsFilled(inputs)){
+            showSnackBar(relSignUp, "Please Fill In All The Fields", "OK");
+        }
+        else if (!isValid(new EditText[]{edtTxtParentName, edtTxtStudentName, edtTxtPassword}, 6)){
+            showSnackBar(relSignUp,"Check The Lengths Of The Inputs", "OK");
+        }
+        else if (!isValidEmail(edtTxtEmail.getText().toString())){
+            showSnackBar(relSignUp,"Check The Email", "OK");
+        }
+
+        else if (!edtTxtPassword.getText().toString().equals(edtTxtConfirmPassword.getText().toString())){
+            showSnackBar(relSignUp, "The Passwords Do Not Match", "OK");
+        }
+        else if (!isValid(new EditText[]{edtTxtPin}, 4)){
+            showSnackBar(relSignUp, "The Pin Needs To Be 4 Digits", "OK");
+        }
+        else if (!edtTxtPin.getText().toString().equals(edtTxtConfirmPin.getText().toString())){
+            showSnackBar(relSignUp, "The Pins Do Not Match", "OK");
+        }
+        else{
+            // We are creating an account:
+            Account currentUserAccount = new Account(edtTxtParentName.getText().toString(),
+                    edtTxtStudentName.getText().toString(), edtTxtEmail.getText().toString(),
+                    edtTxtPassword.getText().toString(),
+                    edtTxtPin.getText().toString());
+
+            // Going to the main menu activity:
+            startActivity(new Intent(this, MainMenuActivity.class));
+        }
+
+    }
+
+    /**
+     *Checks if an array containing inputs is filled:
+     * @param inputs Array of EditTexts
+     * @return Whether or not all of the inputs have been filled in
+     */
+    public boolean inputsFilled(EditText[] inputs) {
+        for (EditText input: inputs){
+            if (input.getText().toString().isEmpty()){
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    /**
+     * Checks if an input array of Edit Texts is valid:
+     * @param inputs Array of input Edit Texts
+     * @param minLength Minimum length that each input can take
+     * @return Whether all the inputs in the array are valid
+     */
+    public boolean isValid(EditText[] inputs, int minLength) {
+
+        for (EditText input: inputs){
+            if (input.getText().toString().length() < minLength){
+                return false;
+            }
+        }
+        return true;
+
+    }
+
+
+    /**
+     * Checks if email is valid
+     * @param target The input
+     * @return Whether or not the input is an Email
+     */
+    public boolean isValidEmail(CharSequence target) {
+        return target != null && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
+
+    /**
+     * Shows a Snack Bar
+     * @param layout The layout
+     * @param mainText The main text
+     * @param actionText The action text
+     */
+    public void showSnackBar(ViewGroup layout, String mainText, String actionText) {
+
+        // Shows Snack Bar:
+        Snackbar.make(layout, mainText, Snackbar.LENGTH_LONG)
+                .setAction(actionText, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                })
+                .setActionTextColor(getResources().getColor(R.color.Accent))
+                .setTextColor(getResources().getColor(R.color.Accent))
+                .setBackgroundTint(getResources().getColor(R.color.Menu))
+                .show();
+    }
+
+
 }

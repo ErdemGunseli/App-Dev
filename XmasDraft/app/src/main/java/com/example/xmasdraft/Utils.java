@@ -1,8 +1,17 @@
 package com.example.xmasdraft;
 
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 
-public class Utils {
+public class Utils extends AppCompatActivity {
 
     private static Utils instance;
 
@@ -11,8 +20,6 @@ public class Utils {
 
     // We are using Static variables so that they can be accessed anywhere in the application
     // The class needs to be Singleton:
-
-
 
     private Utils(){
 
@@ -24,9 +31,10 @@ public class Utils {
 
     }
 
+    /**
+     * Initialising Question Sets
+     */
     private void initData() {
-        // Initialising Question Sets
-
         questionSets = new ArrayList<>();
         Question[] sampleQuestionSetQuestions = new Question[] {
                 new Question("The answer to this question is not (B). What is the answer?",-1, new String[]{"(A)\tThe Answer Is D", "(B)\tThe Answer Is A", "(C)\tThe Answer Is C", "(D)\tThere Is Not Enough Information"}, 2),
@@ -51,7 +59,11 @@ public class Utils {
 
     }
 
-    // synchronized to be thread-safe
+    /**
+     * Gets instance of Singleton Class
+     * Synchronised to be Thread-Safe
+     * @return The instance created now or previously
+     */
     public static synchronized Utils getInstance() {
         if (instance == null){
             instance = new Utils();
@@ -64,10 +76,12 @@ public class Utils {
         return questionSets;
     }
 
-
+    /**
+     * This method is used to get a given Question Set by its ID
+     * @param questionSetID The ID of the Question Set
+     * @return The Question Set found by the function
+     */
     public QuestionSet getQuestionSetByID(int questionSetID) {
-        // This method is used to get a given Question Set by its ID
-
         // For Each loop to go through each Question Set:
         for (QuestionSet questionSet: questionSets) {
 
@@ -79,4 +93,6 @@ public class Utils {
         // If we have not found the Question Set, we are returning null:
         return null;
     }
+
+
 }

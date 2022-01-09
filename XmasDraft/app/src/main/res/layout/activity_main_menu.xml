@@ -15,5 +15,64 @@
         android:layout_centerHorizontal="true"
         app:cardCornerRadius="10dp" />
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="15dp"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="@color/Surface1"
+        android:elevation="100dp"
+        android:padding="25dp"
+        app:cardCornerRadius="5dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            >
+            <ImageView
+                android:id="@+id/imgAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:src="@mipmap/ic_account"
+               />
+
+            <ImageView
+                android:id="@+id/imgTasks"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:src="@mipmap/ic_tasks"
+                android:layout_toEndOf="@id/imgAccount"
+                />
+
+            <ImageView
+                android:id="@+id/imgCreateTask"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:src="@mipmap/ic_create_task"
+                android:layout_toEndOf="@id/imgTasks"
+                />
+
+            <ImageView
+                android:id="@+id/imgSettings"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:src="@mipmap/ic_settings"
+                android:layout_toEndOf="@id/imgCreateTask"
+                />
+
+
+
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
 
 </RelativeLayout>
