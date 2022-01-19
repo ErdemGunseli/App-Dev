@@ -10,11 +10,11 @@
 
     <!-- Extra Colours -->
 
-    <!-- Dark Grey -->
-    <color name="Secondary">#333333</color>
-
     <!-- Light Grey -->
     <color name="Primary">#D3D3D3</color>
+
+    <!-- Dark Grey -->
+    <color name="Secondary">#333333</color>
 
     <!-- Oxford Blue-->
     <color name="Menu">#02223C</color>
@@ -30,6 +30,9 @@
 
     <!-- Light Coral -->
     <color name="Surface2">#EF6F6C</color>
+
+    <!-- Silver -->
+    <color name="Surface3">#C0C0C0</color>
 
     <!-- Platinum -->
     <color name="LightBackground">#E6E8E6</color>

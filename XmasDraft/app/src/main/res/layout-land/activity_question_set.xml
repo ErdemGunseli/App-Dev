@@ -20,6 +20,7 @@
         app:cardCornerRadius="5dp">
 
         <ScrollView
+            android:id="@+id/svQuestionSet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >
@@ -30,27 +31,52 @@
                 android:layout_height="wrap_content"
                 >
 
+                <ImageView
+                    android:id="@+id/imgExit"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="10dp"
+                    android:layout_alignParentStart="true"
+                    android:src="@drawable/ic_back"
+                    />
+
                 <TextView
                     android:id="@+id/txtQuestionSetName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
-                    android:layout_margin="15dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
                     android:textSize="11sp"
                     android:textColor="@color/Accent"
                     android:textStyle="bold"
-                    android:layout_alignParentStart="true"
                     />
 
                 <TextView
                     android:id="@+id/txtCurrentQuestionIndex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_alignParentEnd="true"
                     android:textSize="11sp"
                     android:textColor="@color/Accent"
                     android:textStyle="bold"
-                    android:layout_toEndOf="@id/txtQuestionSetName"
+                    android:layout_below="@id/txtQuestionSetName"
+                    />
+                <TextView
+                    android:id="@+id/txtPointsPossible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:textSize="13sp"
+                    android:textColor="@color/Accent"
+                    android:textStyle="bold"
+                    android:layout_below="@id/imgQuestion"
+                    android:layout_alignParentEnd="true"
                     />
 
 
@@ -61,19 +87,19 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="25dp"
-                    android:layout_marginBottom="25dp"
+                    android:layout_marginBottom="15dp"
                     android:textSize="16sp"
-                    android:layout_below="@id/txtQuestionSetName"
+                    android:layout_below="@id/txtCurrentQuestionIndex"
                     />
 
                 <ImageView
                     android:id="@+id/imgQuestion"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@id/txtQuestion"
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="25dp"
                     android:layout_marginBottom="25dp"
+                    android:layout_below="@id/txtQuestion"
                     />
 
             </RelativeLayout>
@@ -146,16 +172,30 @@
 
             <Button
                 android:id="@+id/btnConfirm"
-                android:layout_marginTop="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/rgQuestionAnswerOptions"
                 android:layout_centerHorizontal="true"
                 android:backgroundTint="@color/Accent"
-                android:text="@string/confirm"
-                android:layout_marginBottom="25dp"
-                />
+                android:text="@string/confirm" />
 
+            <ImageView
+                android:id="@+id/imgPrevious"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_below="@id/rgQuestionAnswerOptions"
+                android:layout_margin="10dp"
+                android:layout_toStartOf="@id/btnConfirm"
+                android:src="@drawable/ic_previous" />
+
+            <ImageView
+                android:id="@+id/imgNext"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_below="@id/rgQuestionAnswerOptions"
+                android:layout_margin="10dp"
+                android:layout_toEndOf="@id/btnConfirm"
+                android:src="@drawable/ic_next" />
         </RelativeLayout>
         </ScrollView>
 

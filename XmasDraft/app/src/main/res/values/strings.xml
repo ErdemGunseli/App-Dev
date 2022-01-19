@@ -21,4 +21,8 @@
 
     <string name="start_question_set">START</string>
 
+    <string name="exit">EXIT</string>
+
+    <string name="results">Results:</string>
+
 </resources>

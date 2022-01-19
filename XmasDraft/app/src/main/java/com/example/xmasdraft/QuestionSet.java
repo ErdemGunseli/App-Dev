@@ -16,6 +16,7 @@ public class QuestionSet {
     private Question[] questions;
     private int currentQuestionIndex;
     private boolean isExpanded;
+    private boolean isCompleted;
 
 
     public QuestionSet(int questionSetID, String name, String description, int imageID, Question[] questions) {
@@ -95,14 +96,63 @@ public class QuestionSet {
 
     public void setCurrentQuestionIndex(int currentQuestionIndex) {
         // To prevent any errors, validate first:
-        if (currentQuestionIndex < getQuestions().length) {
+        if (currentQuestionIndex >= 0 && currentQuestionIndex < getQuestions().length) {
             this.currentQuestionIndex = currentQuestionIndex;
         }
     }
 
     // Length
-
     public int length(){
         return this.questions.length;
+    }
+
+
+
+
+
+    public int calculateResult(){
+        return (int) (((float) calculatePointsEarned()/ (float) calculatePointsPossible()) * 100);
+    }
+
+    public int calculatePointsPossible() {
+        float totalPossible = 0;
+        for (Question question : this.questions) {
+            totalPossible += question.getPointsPossible();
+        }
+        return (int) totalPossible;
+    }
+
+
+    public int calculatePointsEarned(){
+
+        float totalEarned = 0;
+        for (Question question: this.questions) {
+            totalEarned += question.getPointsEarned();
+        }
+        return (int) totalEarned;
+    }
+
+    public int calculateNumberOfQuestionsSolved(){
+        int number = 0;
+        for (Question question: this.questions) {
+
+            if(question.getPointsEarned() == question.getPointsPossible()) {
+                number += 1;
+            }
+        }
+        return number;
+    }
+
+    public void reset(){
+
+        for (Question question: this.questions) {
+
+            // If the student has completed the question set, reset the values
+            // so that it can be done again.
+            question.setPointsEarned(0);
+            question.setAttempted(false);
+
+        }
+
     }
 }

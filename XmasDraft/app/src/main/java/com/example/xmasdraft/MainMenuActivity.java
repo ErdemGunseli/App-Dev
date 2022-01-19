@@ -3,6 +3,7 @@ package com.example.xmasdraft;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -13,6 +14,8 @@ import java.util.ArrayList;
 
 public class MainMenuActivity extends AppCompatActivity implements View.OnClickListener {
     private RecyclerView mainMenuRecyclerView;
+
+    private ImageView imgAccount, imgTasks, imgCreateTask, imgSettings;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +47,44 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
     private void initViews() {
         mainMenuRecyclerView = findViewById(R.id.mainMenuRecyclerView);
+
+        imgAccount = findViewById(R.id.imgAccount);
+        imgTasks = findViewById(R.id.imgTasks);
+        imgCreateTask = findViewById(R.id.imgCreateTask);
+        imgSettings = findViewById(R.id.imgSettings);
+
+        imgAccount.setOnClickListener(this);
+        imgTasks.setOnClickListener(this);
+        imgCreateTask.setOnClickListener(this);
+        imgSettings.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
+
+        switch (v.getId()){
+
+            case (R.id.imgAccount):
+                Toast.makeText(MainMenuActivity.this, "Account Clicked", Toast.LENGTH_SHORT).show();
+                break;
+
+            case (R.id.imgTasks):
+                Toast.makeText(MainMenuActivity.this, "Set Tasks Clicked", Toast.LENGTH_SHORT).show();
+                break;
+
+            case (R.id.imgCreateTask):
+                Toast.makeText(MainMenuActivity.this, "New Task Clicked", Toast.LENGTH_SHORT).show();
+                break;
+
+            case (R.id.imgSettings):
+                Toast.makeText(MainMenuActivity.this, "Settings Clicked", Toast.LENGTH_SHORT).show();
+                break;
+
+            default:
+                break;
+
+
+        }
 
     }
 }

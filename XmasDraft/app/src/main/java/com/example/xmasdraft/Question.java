@@ -1,7 +1,5 @@
 package com.example.xmasdraft;
 
-import android.widget.ImageView;
-
 public class Question {
 
     // Each question will have some text, an array of answer options, a correct answer and possibly an image.
@@ -10,11 +8,17 @@ public class Question {
     private int correctAnswerIndex;
     private int imageID;
 
-    public Question(String questionText, int imageID, String[] answers, int correctAnswerIndex) {
+    private boolean attempted;
+
+    private int pointsPossible;
+    private int pointsEarned = 0;
+
+    public Question(String questionText, int imageID, String[] answers, int correctAnswerIndex, int pointsPossible) {
         this.questionText = questionText;
         this.imageID = imageID;
         this.answers = answers;
         this.correctAnswerIndex = correctAnswerIndex;
+        this.pointsPossible = pointsPossible;
     }
 
     // Question Text
@@ -57,11 +61,43 @@ public class Question {
 
 
     // Marking the Question
-    public boolean checkAnswer(int chosenAnswerIndex){
-        if (correctAnswerIndex == chosenAnswerIndex){
-            return  true;
+    public boolean checkAnswer(int chosenAnswerIndex) {
+        if (correctAnswerIndex == chosenAnswerIndex) {
+
+            if (!attempted) {this.pointsEarned = this.pointsPossible;}
+            System.out.println("Points earned: " + this.pointsEarned);
+            return true;
         }
+
+        this.attempted = true;
         return false;
     }
 
+
+    public boolean isAttempted() {
+        return attempted;
+    }
+
+    public void setAttempted(boolean attempted) {
+        this.attempted = attempted;
+    }
+
+    public int getPointsPossible() {
+        return pointsPossible;
+    }
+
+    public void setPointsPossible(int pointsPossible) {
+        this.pointsPossible = pointsPossible;
+    }
+
+    public int getPointsEarned() {
+        return pointsEarned;
+    }
+
+    public void setPointsEarned(int pointsEarned) {
+        this.pointsEarned = pointsEarned;
+    }
 }
+
+
+

@@ -2,13 +2,18 @@ package com.example.xmasdraft;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,15 +22,16 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
     // Using this to get extra data from the Intent:
     public static final String QUESTION_SET_ID = "questionSetID";
 
-    private TextView txtQuestion, txtQuestionSetName, txtCurrentQuestionIndex;
+    private ScrollView svQuestionSet;
+    private TextView txtQuestion, txtQuestionSetName, txtCurrentQuestionIndex, txtPointsPossible;
     private RadioGroup rgQuestionAnswerOptions;
     private RadioButton answerA, answerB, answerC, answerD;
     private Button btnConfirm;
-    private ImageView imgQuestion;
-
+    private ImageView imgExit, imgQuestion, imgPrevious, imgNext;
 
     private QuestionSet questionSet;
     private Question currentQuestion;
+
 
 
     @Override
@@ -65,13 +71,21 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
 
         }
     }
-
+    /**
+     * Initialising View objects:
+     */
     private void initViews() {
-        txtQuestion = findViewById(R.id.txtQuestion);
+        svQuestionSet = findViewById(R.id.svQuestionSet);
+
         txtQuestionSetName = findViewById(R.id.txtQuestionSetName);
         txtCurrentQuestionIndex = findViewById(R.id.txtCurrentQuestionIndex);
+        txtPointsPossible = findViewById(R.id.txtPointsPossible);
+        txtQuestion = findViewById(R.id.txtQuestion);
 
+        imgExit = findViewById(R.id.imgExit);
         imgQuestion = findViewById(R.id.imgQuestion);
+        imgPrevious = findViewById(R.id.imgPrevious);
+        imgNext = findViewById(R.id.imgNext);
 
         rgQuestionAnswerOptions = findViewById(R.id.rgQuestionAnswerOptions);
         answerA = findViewById(R.id.answerA);
@@ -81,9 +95,17 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         btnConfirm = findViewById(R.id.btnConfirm);
 
         // Setting On Click Listeners:
-        btnConfirm.setOnClickListener(QuestionSetActivity.this);
+        imgExit.setOnClickListener(this);
+        imgPrevious.setOnClickListener(this);
+        imgNext.setOnClickListener(this);
+        btnConfirm.setOnClickListener(this);
     }
 
+
+    /**
+     * Sets question data depending on which question is currently being done.
+     * @param questionSet The question set from which the data should be set.
+     */
     private void setData(QuestionSet questionSet) {
 
         // Removing the check from the previous question:
@@ -99,28 +121,47 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
 
         txtCurrentQuestionIndex.setText("Question " + (questionSet.getCurrentQuestionIndex() + 1) + " of " + questionSet.getQuestions().length);
 
-        // If the question has an image, set the image:
-        if (currentQuestion.getImageID() != -1){
-            imgQuestion.setImageResource(currentQuestion.getImageID());
-        }
+
+        txtPointsPossible.setText(currentQuestion.getPointsPossible() + " Points");
+
+        // Set question set image (id = 0 if no image):
+        imgQuestion.setImageResource(currentQuestion.getImageID());
+
 
         answerA.setText(currentQuestion.getAnswers()[0]);
         answerB.setText(currentQuestion.getAnswers()[1]);
         answerC.setText(currentQuestion.getAnswers()[2]);
         answerD.setText(currentQuestion.getAnswers()[3]);
 
-        if (lastQuestion()){
+
+        // Sets the visibility of navigation images and the text of the confirm
+        // button depending on the current question:
+        if (firstQuestion()){
+            btnConfirm.setText("CONFIRM");
+            imgNext.setVisibility(View.VISIBLE);
+            imgPrevious.setVisibility(View.GONE);
+        }
+        else if (lastQuestion()){
             btnConfirm.setText("FINISH");
+            imgNext.setVisibility(View.GONE);
+            imgPrevious.setVisibility(View.VISIBLE);
+        }
+        else{
+            btnConfirm.setText("CONFIRM");
+            imgPrevious.setVisibility(View.VISIBLE);
+            imgNext.setVisibility(View.VISIBLE);
         }
 
     }
 
+    private boolean firstQuestion() {
+        // If the current question index is 1 less than length:
+        return questionSet.getCurrentQuestionIndex() == 0;
+    }
+
     private boolean lastQuestion() {
         // If the current question index is 1 less than length:
-        if (questionSet.getCurrentQuestionIndex() + 1 == questionSet.length()){
-            return true;
-        }
-        return false;
+        return questionSet.getCurrentQuestionIndex() + 1 == questionSet.length();
     }
 
 
@@ -130,43 +171,32 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         switch (v.getId()) {
 
             case (R.id.btnConfirm):
-
-                // If the index is not -1, an answer has been selected:
-                if (getCheckedRadioButtonIndex() != -1) {
-
-                    //TODO: Proceduralise
-
-                    // TODO: For now, if the answer is correct, we are moving immediately to the next question. To be changed!
-                    if (currentQuestion.checkAnswer(getCheckedRadioButtonIndex())) {
-
-                        if (lastQuestion()){
-                            // TODO: Should Go To Results Page!!
-                            // TODO: Should be finished() function!!
-
-                            // If they start the question set again, it will start from 0:
-                            questionSet.setCurrentQuestionIndex(0);
-
-                            // PlaceHolder:
-                            startActivity(new Intent(this, MainMenuActivity.class));
-
-                        } else {
-
-                            // Increasing the current question index by 1
-                            questionSet.setCurrentQuestionIndex(questionSet.getCurrentQuestionIndex() + 1);
-                            setData(questionSet);
-
-                        }
-                    } else {
-                        Toast.makeText(this, "Try Again, You Can Do It!", Toast.LENGTH_SHORT).show();
-
-                    }
-                } else {
-
-                    // Telling the user to select an answer.
-                    // Alternatively, this could be done using a Snack Bar.
-                    Toast.makeText(QuestionSetActivity.this, "Please Select An Answer", Toast.LENGTH_SHORT).show();
-                }
+                confirmClicked();
                 break;
+
+            case (R.id.imgExit):
+                startActivity(new Intent(this, MainMenuActivity.class));
+                break;
+
+            case (R.id.imgPrevious):
+                // Decreasing the current question index by 1
+                questionSet.setCurrentQuestionIndex(questionSet.getCurrentQuestionIndex() - 1);
+                setData(questionSet);
+                break;
+
+            case (R.id.imgNext):
+
+                // If the current question has been solved, they can go to the next question:
+                if (questionSet.getQuestions()[questionSet.getCurrentQuestionIndex()].isAttempted()){
+
+                    // Increasing the current question index by 1
+                    questionSet.setCurrentQuestionIndex(questionSet.getCurrentQuestionIndex() + 1);
+                    setData(questionSet);
+
+                }
+                else{
+                    Toast.makeText(this, "Try This Question First", Toast.LENGTH_SHORT).show();
+                }
 
             default:
                 break;
@@ -174,6 +204,50 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
 
         }
 
+    }
+
+    private void confirmClicked() {
+
+        // Scrolling to the top
+        svQuestionSet.smoothScrollTo(0,0);
+
+
+        // If the index is not -1, an answer has been selected:
+        if (getCheckedRadioButtonIndex() != -1) {
+
+            //TODO: Proceduralise
+
+            // TODO: For now, if the answer is correct, we are moving immediately to the next question. To be changed!
+            if (currentQuestion.checkAnswer(getCheckedRadioButtonIndex())) {
+
+                if (lastQuestion()){
+                    // TODO: Should Go To Results Page!!
+                    // TODO: Should be finished() function!!
+
+                    // If they start the question set again, it will start from 0:
+                    questionSet.setCurrentQuestionIndex(0);
+
+                    // Starting the Results Activity:
+                    startActivity(new Intent(this, ResultsActivity.class)
+                            .putExtra(QUESTION_SET_ID, questionSet.getQuestionSetID()));
+
+                } else {
+
+                    // Increasing the current question index by 1
+                    questionSet.setCurrentQuestionIndex(questionSet.getCurrentQuestionIndex() + 1);
+                    setData(questionSet);
+
+                }
+            } else {
+                Toast.makeText(this, "Try Again, You Can Do It!", Toast.LENGTH_SHORT).show();
+
+            }
+        } else {
+
+            // Telling the user to select an answer.
+            // Alternatively, this could be done using a Snack Bar.
+            Toast.makeText(QuestionSetActivity.this, "Please Select An Answer", Toast.LENGTH_SHORT).show();
+        }
     }
 
 

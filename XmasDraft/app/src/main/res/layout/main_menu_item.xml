@@ -8,8 +8,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvCollapsedMainMenuItem"
-        android:layout_width="150dp"
-        android:layout_height="200dp"
+        android:layout_width="175dp"
+        android:layout_height="225dp"
         android:layout_centerHorizontal="true"
         android:layout_margin="15dp"
         android:backgroundTint="@color/Surface1"
@@ -18,8 +18,12 @@
         app:cardCornerRadius="5dp">
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
+            android:layout_marginBottom="20dp"
+            >
 
             <TextView
                 android:id="@+id/txtQuestionSetName"
@@ -29,18 +33,17 @@
                 android:layout_marginStart="13dp"
                 android:layout_marginTop="13dp"
                 android:layout_marginEnd="13dp"
-
                 android:layout_marginBottom="13dp"
                 android:textAlignment="center"
-                android:textSize="21sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/imgQuestionSet"
-                android:layout_width="110dp"
-                android:layout_height="110dp"
+                android:layout_width="135dp"
+                android:layout_height="135dp"
                 android:layout_below="@id/txtQuestionSetName"
-                android:layout_centerInParent="true" />
+                android:layout_centerHorizontal="true" />
         </RelativeLayout>
 
 
@@ -62,7 +65,8 @@
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
 
             <TextView
                 android:id="@+id/txtQuestionSetDescription"
@@ -72,9 +76,7 @@
                 android:layout_marginStart="13dp"
                 android:layout_marginTop="13dp"
                 android:layout_marginEnd="13dp"
-
                 android:layout_marginBottom="13dp"
-                android:text="This question set is a sample. Blah blah blah blah blah blah blah blah blah blah."
                 android:textAlignment="center"
                 android:textSize="16sp"
                 android:textStyle="bold" />

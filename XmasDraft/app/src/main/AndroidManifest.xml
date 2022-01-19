@@ -26,6 +26,7 @@
         <activity android:name=".SignInActivity"/>
         <activity android:name=".SignUpActivity"/>
         <activity android:name=".MainMenuActivity"/>
+        <activity android:name=".ResultsActivity"/>
     </application>
 
 </manifest>
