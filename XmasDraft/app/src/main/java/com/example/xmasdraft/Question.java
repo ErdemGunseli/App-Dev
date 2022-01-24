@@ -106,6 +106,10 @@ public class Question {
     public int getChosenAnswerIndex() {return chosenAnswerIndex;}
 
     public void setChosenAnswerIndex(int chosenAnswerIndex) {this.chosenAnswerIndex = chosenAnswerIndex;}
+
+
+    //Testing...
+
 }
 
 
