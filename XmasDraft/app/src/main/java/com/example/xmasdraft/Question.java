@@ -13,6 +13,8 @@ public class Question {
     private int pointsPossible;
     private int pointsEarned = 0;
 
+    private int chosenAnswerIndex;
+
     public Question(String questionText, int imageID, String[] answers, int correctAnswerIndex, int pointsPossible) {
         this.questionText = questionText;
         this.imageID = imageID;
@@ -64,12 +66,15 @@ public class Question {
     public boolean checkAnswer(int chosenAnswerIndex) {
         if (correctAnswerIndex == chosenAnswerIndex) {
 
-            if (!attempted) {this.pointsEarned = this.pointsPossible;}
-            System.out.println("Points earned: " + this.pointsEarned);
+            if (!attempted) {
+                this.pointsEarned = this.pointsPossible;
+                this.chosenAnswerIndex = chosenAnswerIndex;
+            }
             return true;
         }
 
         this.attempted = true;
+        this.chosenAnswerIndex = chosenAnswerIndex;
         return false;
     }
 
@@ -97,6 +102,10 @@ public class Question {
     public void setPointsEarned(int pointsEarned) {
         this.pointsEarned = pointsEarned;
     }
+
+    public int getChosenAnswerIndex() {return chosenAnswerIndex;}
+
+    public void setChosenAnswerIndex(int chosenAnswerIndex) {this.chosenAnswerIndex = chosenAnswerIndex;}
 }
 
 

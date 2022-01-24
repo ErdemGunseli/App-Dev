@@ -80,10 +80,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginRight="25dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:layout_marginBottom="15dp"
-                    android:textSize="16sp"
+                    android:textSize="15sp"
                     android:layout_below="@id/txtQuestionSetName"
                     />
 
@@ -114,79 +114,89 @@
         android:elevation="100dp"
         app:cardCornerRadius="5dp">
 
-            <RelativeLayout
-                android:id="@+id/relQuestionAnswerOptions"
-                android:layout_gravity="center_horizontal"
+        <RelativeLayout
+            android:id="@+id/relQuestionAnswerOptions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="15dp">
+
+            <RadioGroup
+                android:id="@+id/rgQuestionAnswerOptions"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="25dp">
+                android:layout_height="wrap_content">
 
-                <RadioGroup
-                    android:id="@+id/rgQuestionAnswerOptions"
+                <RadioButton
+                    android:id="@+id/answerA"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <RadioButton
-                        android:id="@+id/answerA"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/Primary"
-                        android:textSize="13sp" />
-
-                    <RadioButton
-                        android:id="@+id/answerB"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/Primary"
-                        android:textSize="13sp" />
-
-                    <RadioButton
-                        android:id="@+id/answerC"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/Primary"
-                        android:textSize="13sp" />
-
-                    <RadioButton
-                        android:id="@+id/answerD"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/Primary"
-                        android:textSize="13sp" />
-
-
-                </RadioGroup>
-
-                <Button
-                    android:id="@+id/btnConfirm"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/rgQuestionAnswerOptions"
-                    android:layout_centerHorizontal="true"
-                    android:backgroundTint="@color/Accent"
-                    android:text="@string/confirm" />
+                    android:textColor="@color/Primary"
+                    android:textSize="13sp" />
 
-                <ImageView
-                    android:id="@+id/imgPrevious"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_below="@id/rgQuestionAnswerOptions"
-                    android:layout_margin="10dp"
-                    android:layout_toStartOf="@id/btnConfirm"
-                    android:src="@drawable/ic_previous" />
+                <RadioButton
+                    android:id="@+id/answerB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/Primary"
+                    android:textSize="13sp" />
 
-                <ImageView
-                    android:id="@+id/imgNext"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_below="@id/rgQuestionAnswerOptions"
-                    android:layout_margin="10dp"
-                    android:layout_toEndOf="@id/btnConfirm"
-                    android:src="@drawable/ic_next" />
+                <RadioButton
+                    android:id="@+id/answerC"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/Primary"
+                    android:textSize="13sp" />
+
+                <RadioButton
+                    android:id="@+id/answerD"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/Primary"
+                    android:textSize="13sp" />
 
 
+            </RadioGroup>
 
-            </RelativeLayout>
+            <TextView
+                android:id="@+id/txtMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rgQuestionAnswerOptions"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/Accent"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnConfirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtMessage"
+                android:layout_centerHorizontal="true"
+                android:backgroundTint="@color/Accent"
+                android:text="@string/confirm" />
+
+            <ImageView
+                android:id="@+id/imgPrevious"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_below="@id/txtMessage"
+                android:layout_margin="10dp"
+                android:layout_toStartOf="@id/btnConfirm"
+                android:src="@drawable/ic_previous" />
+
+            <ImageView
+                android:id="@+id/imgNext"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_below="@id/txtMessage"
+                android:layout_margin="10dp"
+                android:layout_toEndOf="@id/btnConfirm"
+                android:src="@drawable/ic_next" />
+
+
+        </RelativeLayout>
 
     </com.google.android.material.card.MaterialCardView>
 

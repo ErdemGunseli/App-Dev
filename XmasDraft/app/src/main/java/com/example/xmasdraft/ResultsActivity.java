@@ -4,6 +4,7 @@ package com.example.xmasdraft;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,6 +12,9 @@ import static com.example.xmasdraft.QuestionSetActivity.QUESTION_SET_ID;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class ResultsActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -21,6 +25,9 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
 
     private QuestionSet questionSet;
 
+    private RecyclerView rvQuestions;
+
+    private Button btnFinish;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +40,13 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         // Setting data from the intent:
         setDataFromIntent();
 
-        //TODO: To reset all chosen answers, points etc after the page is dismissed
+        ResultsRecyclerAdapter resultsRecyclerAdapter = new ResultsRecyclerAdapter(this);
+        resultsRecyclerAdapter.setQuestionSet(questionSet);
+
+        // Setting adapter to recycler view:
+        rvQuestions.setAdapter(resultsRecyclerAdapter);
+
+        rvQuestions.setLayoutManager(new LinearLayoutManager(this));
 
     }
 
@@ -63,13 +76,16 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void initViews() {
+        rvQuestions = findViewById(R.id.rvQuestions);
         imgExit = findViewById(R.id.imgExit);
         txtQuestionSetName = findViewById(R.id.txtQuestionSetName);
         txtResult = findViewById(R.id.txtResult);
         txtResultQuestions = findViewById(R.id.txtResultQuestions);
         txtResultPercentage = findViewById(R.id.txtResultPercentage);
+        btnFinish = findViewById(R.id.btnFinish);
 
         imgExit.setOnClickListener(this);
+        btnFinish.setOnClickListener(this);
 
     }
 
@@ -86,20 +102,16 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
+        int v = view.getId();
 
-        switch (view.getId()){
-
-            case (R.id.imgExit):
-                questionSet.reset();
-                startActivity(new Intent(this, MainMenuActivity.class));
-                break;
-
-
-            default:
-                break;
-
-
+        if (v == R.id.imgExit || v == R.id.btnFinish){
+            //TODO: Save data
+            questionSet.reset();
+            startActivity(new Intent(this, MainMenuActivity.class));
         }
 
+
     }
+
+
 }

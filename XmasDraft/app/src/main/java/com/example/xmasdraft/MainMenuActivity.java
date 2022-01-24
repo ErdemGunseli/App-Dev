@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class MainMenuActivity extends AppCompatActivity implements View.OnClickListener {
-    private RecyclerView mainMenuRecyclerView;
+    private RecyclerView rvMainMenu;
 
     private ImageView imgAccount, imgTasks, imgCreateTask, imgSettings;
 
@@ -33,7 +33,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         mainMenuRecyclerAdapter.setQuestionSets(Utils.getInstance().getQuestionSets());
 
         // Setting the adapter to the recycler view
-        mainMenuRecyclerView.setAdapter(mainMenuRecyclerAdapter);
+        rvMainMenu.setAdapter(mainMenuRecyclerAdapter);
 
         // We also need to set a layout manager for our Recycler View:
 
@@ -42,11 +42,11 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
         //Changing to Linear Layout Manager for the implementation of Expandable Card View:
 
-       mainMenuRecyclerView.setLayoutManager((new LinearLayoutManager(this)));
+        rvMainMenu.setLayoutManager((new LinearLayoutManager(this)));
     }
 
     private void initViews() {
-        mainMenuRecyclerView = findViewById(R.id.mainMenuRecyclerView);
+        rvMainMenu = findViewById(R.id.rvMainMenu);
 
         imgAccount = findViewById(R.id.imgAccount);
         imgTasks = findViewById(R.id.imgTasks);

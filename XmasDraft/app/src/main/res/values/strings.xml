@@ -21,8 +21,11 @@
 
     <string name="start_question_set">START</string>
 
+    <string name="finish">FINISH</string>
+
     <string name="exit">EXIT</string>
 
-    <string name="results">Results:</string>
+    <string name="results">Results: </string>
+    <string name="summary">Summary: </string>
 
 </resources>

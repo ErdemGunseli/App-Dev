@@ -128,7 +128,7 @@
             android:id="@+id/relQuestionAnswerOptions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="25dp">
+            android:layout_margin="15dp">
 
             <RadioGroup
                 android:id="@+id/rgQuestionAnswerOptions"
@@ -170,11 +170,24 @@
 
             </RadioGroup>
 
+
+            <TextView
+                android:id="@+id/txtMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rgQuestionAnswerOptions"
+                android:layout_margin="5dp"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="@color/Accent"
+                android:layout_centerHorizontal="true"
+                />
+
             <Button
                 android:id="@+id/btnConfirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/rgQuestionAnswerOptions"
+                android:layout_below="@id/txtMessage"
                 android:layout_centerHorizontal="true"
                 android:backgroundTint="@color/Accent"
                 android:text="@string/confirm" />
@@ -183,7 +196,7 @@
                 android:id="@+id/imgPrevious"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_below="@id/rgQuestionAnswerOptions"
+                android:layout_below="@id/txtMessage"
                 android:layout_margin="10dp"
                 android:layout_toStartOf="@id/btnConfirm"
                 android:src="@drawable/ic_previous" />
@@ -192,7 +205,7 @@
                 android:id="@+id/imgNext"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_below="@id/rgQuestionAnswerOptions"
+                android:layout_below="@id/txtMessage"
                 android:layout_margin="10dp"
                 android:layout_toEndOf="@id/btnConfirm"
                 android:src="@drawable/ic_next" />

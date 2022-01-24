@@ -1,98 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
 
-
-
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="35dp"
-        android:backgroundTint="@color/Surface1"
         >
 
-        <RelativeLayout
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvResults"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:layout_gravity="center_horizontal"
-            >
+            android:layout_height="wrap_content"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginEnd="35dp"
+            android:layout_marginBottom="35dp"
+            android:backgroundTint="@color/Surface1"
+            android:elevation="100dp"
+            app:cardCornerRadius="5dp">
 
-            <ImageView
-                android:id="@+id/imgExit"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentStart="true"
-                android:src="@drawable/ic_back"
-                />
-
-
-            <TextView
-                android:id="@+id/txtQuestionSetName"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_centerHorizontal="true"
-                />
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="10dp">
 
-            <TextView
-                android:id="@+id/txtResultsText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:textSize="16dp"
-                android:textStyle="bold"
-                android:text="@string/results"
-                android:layout_below="@id/imgExit"
-                />
+                <ImageView
+                    android:id="@+id/imgExit"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentStart="true"
+                    android:src="@drawable/ic_back" />
 
 
+                <TextView
+                    android:id="@+id/txtQuestionSetName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="15dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/Accent"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/txtResult"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                android:layout_below="@id/txtResultsText"
-                />
-
-
-            <TextView
-                android:id="@+id/txtResultQuestions"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                android:layout_below="@id/txtResult"
-                />
-
-
-
-            <TextView
-
-                android:id="@+id/txtResultPercentage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                android:layout_below="@id/txtResultQuestions"
-                />
+                <TextView
+                    android:id="@+id/txtResultsText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/imgExit"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:text="@string/results"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
 
+                <TextView
+                    android:id="@+id/txtResult"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtResultsText"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="15dp"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
 
 
+                <TextView
+                    android:id="@+id/txtResultQuestions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtResult"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="15dp"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
 
 
-        </RelativeLayout>
-    </com.google.android.material.card.MaterialCardView>
+                <TextView
+
+                    android:id="@+id/txtResultPercentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtResultQuestions"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="15dp"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/txtSummary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="35dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/Accent"
+            android:text="@string/summary"
+            android:layout_below="@id/cvResults"
+            />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvQuestions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtSummary"
+            android:layout_marginStart="35dp"
+            android:layout_marginEnd="35dp" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnFinish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/finish"
+            android:backgroundTint="@color/Accent"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/rvQuestions"
+            android:layout_marginBottom="35dp"
+            />
+
+
+    </RelativeLayout>
 
 </ScrollView>

@@ -23,7 +23,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
     public static final String QUESTION_SET_ID = "questionSetID";
 
     private ScrollView svQuestionSet;
-    private TextView txtQuestion, txtQuestionSetName, txtCurrentQuestionIndex, txtPointsPossible;
+    private TextView txtQuestion, txtQuestionSetName, txtCurrentQuestionIndex, txtPointsPossible, txtMessage;
     private RadioGroup rgQuestionAnswerOptions;
     private RadioButton answerA, answerB, answerC, answerD;
     private Button btnConfirm;
@@ -81,6 +81,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         txtCurrentQuestionIndex = findViewById(R.id.txtCurrentQuestionIndex);
         txtPointsPossible = findViewById(R.id.txtPointsPossible);
         txtQuestion = findViewById(R.id.txtQuestion);
+        txtMessage = findViewById(R.id.txtMessage);
 
         imgExit = findViewById(R.id.imgExit);
         imgQuestion = findViewById(R.id.imgQuestion);
@@ -110,6 +111,9 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
 
         // Removing the check from the previous question:
         rgQuestionAnswerOptions.clearCheck();
+
+        // Removing the 'Try Again' message:
+        txtMessage.setText("");
 
         txtQuestionSetName.setText(questionSet.getName());
 
@@ -187,7 +191,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
             case (R.id.imgNext):
 
                 // If the current question has been solved, they can go to the next question:
-                if (questionSet.getQuestions()[questionSet.getCurrentQuestionIndex()].isAttempted()){
+                if (currentQuestion.isAttempted() && currentQuestion.getPointsEarned() == currentQuestion.getPointsPossible()){
 
                     // Increasing the current question index by 1
                     questionSet.setCurrentQuestionIndex(questionSet.getCurrentQuestionIndex() + 1);
@@ -239,7 +243,9 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
 
                 }
             } else {
-                Toast.makeText(this, "Try Again, You Can Do It!", Toast.LENGTH_SHORT).show();
+                // If they have answered incorrectly:
+                txtMessage.setText("Try Again, You Can Do It!");
+                txtPointsPossible.setText("0 Points");
 
             }
         } else {
