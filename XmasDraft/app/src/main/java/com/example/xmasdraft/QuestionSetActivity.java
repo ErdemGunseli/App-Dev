@@ -150,7 +150,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
 
         // Set points accordingly:
         // Needed for if the screen is rotated after a question is done incorrectly.
-        if (currentQuestion.isAttempted()) {
+        if (currentQuestion.getAttempted() != 0) {
             txtPointsPossible.setText(currentQuestion.getPointsEarned() + " Points");
         }
         else{
@@ -217,7 +217,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
             case (R.id.imgNext):
 
                 // If the current question has been solved, they can go to the next question:
-                if (currentQuestion.isAttempted()){
+                if (currentQuestion.getAttempted() != 0){
 
                     // Increasing the current question index by 1
                     questionSet.setCurrentQuestionIndex(questionSet.getCurrentQuestionIndex() + 1);
@@ -273,7 +273,14 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
             } else {
                 // If they have answered incorrectly:
                 txtMessage.setText("Try Again, You Can Do It!");
-                txtPointsPossible.setText("0 Points");
+                //TODO: Not ideal, change
+
+                if (currentQuestion.getAttempted() == 1){
+                    txtPointsPossible.setText((currentQuestion.getPointsPossible() / 2) + " Points");
+                }
+                else{
+                    txtPointsPossible.setText("0 Points");
+                }
 
             }
         } else {

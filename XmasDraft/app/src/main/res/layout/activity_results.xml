@@ -68,28 +68,47 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/txtResultsText"
                     android:layout_centerHorizontal="true"
-                    android:layout_margin="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="15dp"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
 
                 <TextView
-                    android:id="@+id/txtResultQuestions"
+                    android:id="@+id/txtFirstAttempt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/txtResult"
                     android:layout_centerHorizontal="true"
-                    android:layout_margin="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtSecondAttempt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtFirstAttempt"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:textAlignment="center"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
 
                 <TextView
-
                     android:id="@+id/txtResultPercentage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/txtResultQuestions"
+                    android:layout_below="@id/txtSecondAttempt"
                     android:layout_centerHorizontal="true"
                     android:layout_margin="15dp"
                     android:textSize="16sp"

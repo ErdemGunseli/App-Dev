@@ -23,7 +23,7 @@ public class Question {
 
     private String type;
 
-    private boolean attempted;
+    private int attempted;
 
     private int pointsPossible;
     private int pointsEarned = 0;
@@ -98,24 +98,19 @@ public class Question {
             this.chosenAnswerIndex = chosenAnswerIndex;
 
             if (correctAnswerIndex == chosenAnswerIndex) {
+                this.calculatePointsEarned();
 
-                if (!attempted) {this.pointsEarned = this.pointsPossible;}
                 return true;
             }
-
         }
 
         else if (this.type.equals("written")){
 
-
             this.writtenAnswer = answer;
 
             if (answer.equals(this.answer)){
+                this.calculatePointsEarned();
 
-                if (!attempted) {
-                    this.pointsEarned = this.pointsPossible;
-
-                }
                 return true;
             }
 
@@ -123,17 +118,17 @@ public class Question {
 
 
         }
-        this.attempted = true;
+        this.attempted += 1;
         return false;
 
     }
 
 
-    public boolean isAttempted() {
+    public int getAttempted() {
         return attempted;
     }
 
-    public void setAttempted(boolean attempted) {
+    public void setAttempted(int attempted) {
         this.attempted = attempted;
     }
 
@@ -151,6 +146,18 @@ public class Question {
 
     public void setPointsEarned(int pointsEarned) {
         this.pointsEarned = pointsEarned;
+    }
+
+    private void calculatePointsEarned(){
+        if (attempted == 0) {
+            this.pointsEarned = this.pointsPossible;
+        }
+        else if (this.attempted == 1){
+            this.pointsEarned = this.pointsPossible / 2;
+        }
+        else{
+            this.pointsEarned = 0;
+        }
     }
 
     public int getChosenAnswerIndex() {return chosenAnswerIndex;}

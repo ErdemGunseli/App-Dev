@@ -132,15 +132,20 @@ public class QuestionSet {
         return (int) totalEarned;
     }
 
-    public int calculateNumberOfQuestionsSolved(){
-        int number = 0;
+    public int[] calculateNumberOfQuestionsSolved(){
+        int firstAttempt = 0;
+        int secondAttempt = 0;
         for (Question question: this.questions) {
 
+            // If they have earned any points from a question, consider it solved:
             if(question.getPointsEarned() == question.getPointsPossible()) {
-                number += 1;
+                firstAttempt += 1;
+            }
+            else if (question.getPointsEarned() == question.getPointsPossible() / 2){
+                secondAttempt += 1;
             }
         }
-        return number;
+        return new int[]{firstAttempt, secondAttempt};
     }
 
     public void reset(){
@@ -150,7 +155,7 @@ public class QuestionSet {
             // If the student has completed the question set, reset the values
             // so that it can be done again.
             question.setPointsEarned(0);
-            question.setAttempted(false);
+            question.setAttempted(0);
 
         }
 

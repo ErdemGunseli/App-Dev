@@ -21,7 +21,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
 
     private ImageView imgExit;
 
-    private TextView txtQuestionSetName, txtResult, txtResultQuestions, txtResultPercentage;
+    private TextView txtQuestionSetName, txtResult, txtFirstAttempt, txtSecondAttempt, txtResultPercentage;
 
     private QuestionSet questionSet;
 
@@ -80,7 +80,10 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         imgExit = findViewById(R.id.imgExit);
         txtQuestionSetName = findViewById(R.id.txtQuestionSetName);
         txtResult = findViewById(R.id.txtResult);
-        txtResultQuestions = findViewById(R.id.txtResultQuestions);
+
+        txtFirstAttempt = findViewById(R.id.txtFirstAttempt);
+        txtSecondAttempt = findViewById(R.id.txtSecondAttempt);
+
         txtResultPercentage = findViewById(R.id.txtResultPercentage);
         btnFinish = findViewById(R.id.btnFinish);
 
@@ -93,7 +96,11 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
 
         txtQuestionSetName.setText(questionSet.getName());
         txtResult.setText(questionSet.calculatePointsEarned() + " Points out of " + questionSet.calculatePointsPossible());
-        txtResultQuestions.setText("Solved " + questionSet.calculateNumberOfQuestionsSolved() + " out of " + questionSet.getQuestions().length);
+
+        txtFirstAttempt.setText("Solved " + questionSet.calculateNumberOfQuestionsSolved()[0] + " out of " + questionSet.getQuestions().length + " with one attempt.");
+        txtSecondAttempt.setText("Solved " + questionSet.calculateNumberOfQuestionsSolved()[1] + " out of the remaining " +
+                (questionSet.getQuestions().length - questionSet.calculateNumberOfQuestionsSolved()[0]) + " with two attempts.");
+
         txtResultPercentage.setText("Result: " + questionSet.calculateResult() + "%");
 
 
