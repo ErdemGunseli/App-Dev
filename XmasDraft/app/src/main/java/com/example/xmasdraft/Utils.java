@@ -40,6 +40,7 @@ public class Utils extends AppCompatActivity {
                 new Question("The answer to this question is not (B). What is the answer?",0, new String[]{"(A)\tThe Answer Is D", "(B)\tThe Answer Is A", "(C)\tThe Answer Is C", "(D)\tThere Is Not Enough Information"}, 2, 200),
                 new Question("Question 2. The answer is B.",R.drawable.ic_launcher_background, new String[]{"(A)\tSample", "(B)\tSample", "(C)\tSample", "(D)\tSample"}, 1, 150),
                 new Question("Question 3. The answer is D.", R.drawable.ic_launcher_background,  new String[]{"(A)\tSample", "(B)\tSample", "(C)\tSample", "(D)\tSample"}, 3, 100),
+                new Question("The answer is 123", R.drawable.ic_launcher_background, "123", 300)
         };
 
         questionSets.add(new QuestionSet(0, "Question Set 1", "The First Question Set", R.drawable.ic_launcher_background,

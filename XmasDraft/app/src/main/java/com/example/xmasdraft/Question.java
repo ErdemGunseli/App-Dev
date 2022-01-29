@@ -4,16 +4,33 @@ public class Question {
 
     // Each question will have some text, an array of answer options, a correct answer and possibly an image.
     private String questionText;
+    private int imageID;
+
+
+    // For Multiple Choice
     private String[] answers;
     private int correctAnswerIndex;
-    private int imageID;
+    private int chosenAnswerIndex;
+
+
+    // For Written
+    private String answer;
+    private String writtenAnswer;
+
+
+
+
+
+    private String type;
 
     private boolean attempted;
 
     private int pointsPossible;
     private int pointsEarned = 0;
 
-    private int chosenAnswerIndex;
+
+
+
 
     public Question(String questionText, int imageID, String[] answers, int correctAnswerIndex, int pointsPossible) {
         this.questionText = questionText;
@@ -21,6 +38,17 @@ public class Question {
         this.answers = answers;
         this.correctAnswerIndex = correctAnswerIndex;
         this.pointsPossible = pointsPossible;
+
+        this.type = "multipleChoice";
+    }
+
+    public Question(String questionText, int imageID, String answer, int pointsPossible){
+        this.questionText = questionText;
+        this.imageID = imageID;
+        this.answer = answer;
+        this.pointsPossible = pointsPossible;
+
+        this.type = "written";
     }
 
     // Question Text
@@ -63,19 +91,41 @@ public class Question {
 
 
     // Marking the Question
-    public boolean checkAnswer(int chosenAnswerIndex) {
-        if (correctAnswerIndex == chosenAnswerIndex) {
+    public boolean checkAnswer(int chosenAnswerIndex, String answer) {
 
-            if (!attempted) {
-                this.pointsEarned = this.pointsPossible;
-                this.chosenAnswerIndex = chosenAnswerIndex;
+        if (this.type.equals("multipleChoice")) {
+
+            this.chosenAnswerIndex = chosenAnswerIndex;
+
+            if (correctAnswerIndex == chosenAnswerIndex) {
+
+                if (!attempted) {this.pointsEarned = this.pointsPossible;}
+                return true;
             }
-            return true;
+
         }
 
+        else if (this.type.equals("written")){
+
+
+            this.writtenAnswer = answer;
+
+            if (answer.equals(this.answer)){
+
+                if (!attempted) {
+                    this.pointsEarned = this.pointsPossible;
+
+                }
+                return true;
+            }
+
+
+
+
+        }
         this.attempted = true;
-        this.chosenAnswerIndex = chosenAnswerIndex;
         return false;
+
     }
 
 
@@ -108,6 +158,29 @@ public class Question {
     public void setChosenAnswerIndex(int chosenAnswerIndex) {this.chosenAnswerIndex = chosenAnswerIndex;}
 
 
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getWrittenAnswer() {
+        return writtenAnswer;
+    }
+
+    public void setWrittenAnswer(String writtenAnswer) {
+        this.writtenAnswer = writtenAnswer;
+    }
 }
 
 

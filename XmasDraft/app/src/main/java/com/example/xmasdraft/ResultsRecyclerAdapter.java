@@ -50,10 +50,14 @@ public class ResultsRecyclerAdapter extends RecyclerView.Adapter<ResultsRecycler
 
         holder.imgQuestion.setImageResource(currentQuestion.getImageID());
 
-        holder.txtCorrectAnswer.setText("Your Answer: " + answers[chosenAnswerIndex]);
-
-        holder.txtChosenAnswer.setText("Correct Answer: " + answers[correctAnswerIndex]);
-
+        if (currentQuestion.getType().equals("multipleChoice")) {
+            holder.txtCorrectAnswer.setText("Your Answer: " + answers[chosenAnswerIndex]);
+            holder.txtChosenAnswer.setText("Correct Answer: " + answers[correctAnswerIndex]);
+        }
+        else if (currentQuestion.getType().equals("written")) {
+            holder.txtCorrectAnswer.setText("Your Answer: " + currentQuestion.getWrittenAnswer());
+            holder.txtChosenAnswer.setText("Correct Answer: " + currentQuestion.getAnswer());
+        }
     }
 
 

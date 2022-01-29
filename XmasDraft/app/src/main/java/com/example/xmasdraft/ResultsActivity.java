@@ -106,6 +106,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
 
         if (v == R.id.imgExit || v == R.id.btnFinish){
             //TODO: Save data
+            questionSet.setCompleted(true);
             questionSet.reset();
             startActivity(new Intent(this, MainMenuActivity.class));
         }

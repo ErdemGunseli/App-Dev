@@ -111,7 +111,7 @@ public class QuestionSet {
 
 
     public int calculateResult(){
-        return (int) (((float) calculatePointsEarned()/ (float) calculatePointsPossible()) * 100);
+        return (int) (((float) calculatePointsEarned() / (float) calculatePointsPossible()) * 100);
     }
 
     public int calculatePointsPossible() {
@@ -154,5 +154,13 @@ public class QuestionSet {
 
         }
 
+    }
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
     }
 }

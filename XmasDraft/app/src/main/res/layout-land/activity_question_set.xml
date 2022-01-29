@@ -171,23 +171,39 @@
             </RadioGroup>
 
 
+            <EditText
+                android:id="@+id/edtTxtAnswer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtMessage"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10dp"
+                android:background="@color/Primary"
+                android:hint="@string/answer"
+                android:inputType="numberDecimal"
+                android:padding="10dp"
+                android:textColor="@color/Secondary"
+                android:textSize="16sp"
+                android:maxLength="10"
+                />
+
+
             <TextView
                 android:id="@+id/txtMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/rgQuestionAnswerOptions"
-                android:layout_margin="5dp"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                android:textColor="@color/Accent"
                 android:layout_centerHorizontal="true"
-                />
+                android:layout_marginTop="5dp"
+                android:textColor="@color/Accent"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btnConfirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/txtMessage"
+                android:layout_below="@id/edtTxtAnswer"
                 android:layout_centerHorizontal="true"
                 android:backgroundTint="@color/Accent"
                 android:text="@string/confirm" />
@@ -196,7 +212,7 @@
                 android:id="@+id/imgPrevious"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_below="@id/txtMessage"
+                android:layout_below="@id/edtTxtAnswer"
                 android:layout_margin="10dp"
                 android:layout_toStartOf="@id/btnConfirm"
                 android:src="@drawable/ic_previous" />
@@ -205,10 +221,11 @@
                 android:id="@+id/imgNext"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_below="@id/txtMessage"
+                android:layout_below="@id/edtTxtAnswer"
                 android:layout_margin="10dp"
                 android:layout_toEndOf="@id/btnConfirm"
                 android:src="@drawable/ic_next" />
+
         </RelativeLayout>
         </ScrollView>
 

@@ -21,7 +21,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            >
+            android:layout_margin="15dp">
 
             <TextView
                 android:id="@+id/txtCurrentQuestionIndex"
@@ -31,36 +31,33 @@
                 android:layout_margin="15dp"
                 android:textColor="@color/Accent"
                 android:textSize="13sp"
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/txtPointsPossible"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/txtCurrentQuestionIndex"
-            android:layout_margin="15dp"
-            android:textColor="@color/Accent"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            />
+            <TextView
+                android:id="@+id/txtPointsPossible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:layout_toEndOf="@id/txtCurrentQuestionIndex"
+                android:textColor="@color/Accent"
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/txtQuestion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtPointsPossible"
-            android:layout_margin="15dp"
-            android:textSize="15sp"
-            />
+            <TextView
+                android:id="@+id/txtQuestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtPointsPossible"
+                android:layout_margin="15dp"
+                android:textSize="15sp" />
 
-        <ImageView
-            android:id="@+id/imgQuestion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtQuestion"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="15dp"/>
+            <ImageView
+                android:id="@+id/imgQuestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtQuestion"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="15dp"/>
 
         </RelativeLayout>
 

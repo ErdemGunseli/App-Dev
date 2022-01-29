@@ -10,6 +10,7 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -28,6 +29,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
     private RadioButton answerA, answerB, answerC, answerD;
     private Button btnConfirm;
     private ImageView imgExit, imgQuestion, imgPrevious, imgNext;
+    private EditText edtTxtAnswer;
 
     private QuestionSet questionSet;
     private Question currentQuestion;
@@ -94,6 +96,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         answerC = findViewById(R.id.answerC);
         answerD = findViewById(R.id.answerD);
         btnConfirm = findViewById(R.id.btnConfirm);
+        edtTxtAnswer = findViewById(R.id.edtTxtAnswer);
 
         // Setting On Click Listeners:
         imgExit.setOnClickListener(this);
@@ -108,34 +111,57 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
      * @param questionSet The question set from which the data should be set.
      */
     private void setData(QuestionSet questionSet) {
+        // We are getting the current question index to set the correct values:
+        currentQuestion = questionSet.getQuestions()[questionSet.getCurrentQuestionIndex()];
 
-        // Removing the check from the previous question:
-        rgQuestionAnswerOptions.clearCheck();
+        if (currentQuestion.getType().equals("multipleChoice")) {
+            rgQuestionAnswerOptions.setVisibility(View.VISIBLE);
+            edtTxtAnswer.setVisibility(View.GONE);
+            // Removing the check from the previous question:
+            rgQuestionAnswerOptions.clearCheck();
+
+            answerA.setText(currentQuestion.getAnswers()[0]);
+            answerB.setText(currentQuestion.getAnswers()[1]);
+            answerC.setText(currentQuestion.getAnswers()[2]);
+            answerD.setText(currentQuestion.getAnswers()[3]);
+
+        }
+
+        else if (currentQuestion.getType().equals("written")){
+
+            rgQuestionAnswerOptions.setVisibility(View.GONE);
+            edtTxtAnswer.setVisibility(View.VISIBLE);
+        }
+
+
+
 
         // Removing the 'Try Again' message:
         txtMessage.setText("");
 
         txtQuestionSetName.setText(questionSet.getName());
 
-        // We are getting the current question index to set the correct values:
-        currentQuestion = questionSet.getQuestions()[questionSet.getCurrentQuestionIndex()];
+
 
         txtQuestion.setText(currentQuestion.getQuestionText());
 
 
         txtCurrentQuestionIndex.setText("Question " + (questionSet.getCurrentQuestionIndex() + 1) + " of " + questionSet.getQuestions().length);
 
-
-        txtPointsPossible.setText(currentQuestion.getPointsPossible() + " Points");
+        // Set points accordingly:
+        // Needed for if the screen is rotated after a question is done incorrectly.
+        if (currentQuestion.isAttempted()) {
+            txtPointsPossible.setText(currentQuestion.getPointsEarned() + " Points");
+        }
+        else{
+            txtPointsPossible.setText(currentQuestion.getPointsPossible() + " Points");
+        }
 
         // Set question set image (id = 0 if no image):
         imgQuestion.setImageResource(currentQuestion.getImageID());
 
 
-        answerA.setText(currentQuestion.getAnswers()[0]);
-        answerB.setText(currentQuestion.getAnswers()[1]);
-        answerC.setText(currentQuestion.getAnswers()[2]);
-        answerD.setText(currentQuestion.getAnswers()[3]);
+
 
 
         // Sets the visibility of navigation images and the text of the confirm
@@ -191,7 +217,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
             case (R.id.imgNext):
 
                 // If the current question has been solved, they can go to the next question:
-                if (currentQuestion.isAttempted() && currentQuestion.getPointsEarned() == currentQuestion.getPointsPossible()){
+                if (currentQuestion.isAttempted()){
 
                     // Increasing the current question index by 1
                     questionSet.setCurrentQuestionIndex(questionSet.getCurrentQuestionIndex() + 1);
@@ -199,7 +225,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
 
                 }
                 else{
-                    Toast.makeText(this, "Try This Question First", Toast.LENGTH_SHORT).show();
+                    txtMessage.setText("Try This Question First!");
                 }
 
             default:
@@ -216,13 +242,15 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         svQuestionSet.smoothScrollTo(0,0);
 
 
-        // If the index is not -1, an answer has been selected:
-        if (getCheckedRadioButtonIndex() != -1) {
+        // If an answer has been selected / written
+        if ((currentQuestion.getType().equals("multipleChoice") && getCheckedRadioButtonIndex() != -1)
+        || (currentQuestion.getType().equals("written") && !edtTxtAnswer.getText().toString().equals("")))
+        {
 
             //TODO: Proceduralise
 
             // TODO: For now, if the answer is correct, we are moving immediately to the next question. To be changed!
-            if (currentQuestion.checkAnswer(getCheckedRadioButtonIndex())) {
+            if (currentQuestion.checkAnswer(getCheckedRadioButtonIndex(), edtTxtAnswer.getText().toString())) {
 
                 if (lastQuestion()){
                     // TODO: Should Go To Results Page!!
@@ -251,8 +279,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         } else {
 
             // Telling the user to select an answer.
-            // Alternatively, this could be done using a Snack Bar.
-            Toast.makeText(QuestionSetActivity.this, "Please Select An Answer", Toast.LENGTH_SHORT).show();
+           txtMessage.setText("Please Enter An Answer");
         }
     }
 

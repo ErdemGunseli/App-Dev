@@ -157,6 +157,24 @@
 
             </RadioGroup>
 
+            <EditText
+                android:id="@+id/edtTxtAnswer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:padding="10dp"
+                android:hint="@string/answer"
+                android:background="@color/Primary"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/txtMessage"
+                android:textColor="@color/Secondary"
+                android:textSize="16sp"
+                android:inputType="numberDecimal"
+                android:maxLength="10"
+
+                />
+
+
             <TextView
                 android:id="@+id/txtMessage"
                 android:layout_width="wrap_content"
@@ -172,7 +190,7 @@
                 android:id="@+id/btnConfirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/txtMessage"
+                android:layout_below="@id/edtTxtAnswer"
                 android:layout_centerHorizontal="true"
                 android:backgroundTint="@color/Accent"
                 android:text="@string/confirm" />
@@ -181,7 +199,7 @@
                 android:id="@+id/imgPrevious"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_below="@id/txtMessage"
+                android:layout_below="@id/edtTxtAnswer"
                 android:layout_margin="10dp"
                 android:layout_toStartOf="@id/btnConfirm"
                 android:src="@drawable/ic_previous" />
@@ -190,7 +208,7 @@
                 android:id="@+id/imgNext"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_below="@id/txtMessage"
+                android:layout_below="@id/edtTxtAnswer"
                 android:layout_margin="10dp"
                 android:layout_toEndOf="@id/btnConfirm"
                 android:src="@drawable/ic_next" />
