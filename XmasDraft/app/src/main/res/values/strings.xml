@@ -28,6 +28,6 @@
     <string name="answer">Answer</string>
 
     <string name="results">Results: </string>
-    <string name="summary">Summary: </string>
+    <string name="review">REVIEW: </string>
 
 </resources>

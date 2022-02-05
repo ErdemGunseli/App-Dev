@@ -95,7 +95,10 @@ public class Question {
 
         if (this.type.equals("multipleChoice")) {
 
-            this.chosenAnswerIndex = chosenAnswerIndex;
+            // Their initial answer
+            if (attempted == 0) {
+                this.chosenAnswerIndex = chosenAnswerIndex;
+            }
 
             if (correctAnswerIndex == chosenAnswerIndex) {
                 this.calculatePointsEarned();
@@ -106,7 +109,9 @@ public class Question {
 
         else if (this.type.equals("written")){
 
-            this.writtenAnswer = answer;
+            if (attempted == 0) {
+                this.writtenAnswer = answer;
+            }
 
             if (answer.equals(this.answer)){
                 this.calculatePointsEarned();

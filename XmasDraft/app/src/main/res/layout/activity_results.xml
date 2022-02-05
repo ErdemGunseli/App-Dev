@@ -47,31 +47,32 @@
                     android:textColor="@color/Accent"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/txtResultsText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/imgExit"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginStart="15dp"
+
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/pieResults"
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    android:layout_below="@id/txtQuestionSetName"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
                     android:layout_marginTop="15dp"
-                    android:layout_marginEnd="15dp"
                     android:layout_marginBottom="15dp"
-                    android:text="@string/results"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:layout_centerHorizontal="true"
+                    />
 
 
                 <TextView
                     android:id="@+id/txtResult"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/txtResultsText"
+                    android:layout_below="@id/pieResults"
                     android:layout_centerHorizontal="true"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginEnd="15dp"
                     android:layout_marginBottom="15dp"
+                    android:textColor="@color/Accent"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
@@ -111,6 +112,7 @@
                     android:layout_below="@id/txtSecondAttempt"
                     android:layout_centerHorizontal="true"
                     android:layout_margin="15dp"
+                    android:textColor="@color/Accent"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -126,7 +128,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="@color/Accent"
-            android:text="@string/summary"
+            android:text="@string/review"
             android:layout_below="@id/cvResults"
             />
 

@@ -2,6 +2,7 @@ package com.example.xmasdraft;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,16 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
+
+import java.util.ArrayList;
+
 public class ResultsActivity extends AppCompatActivity implements View.OnClickListener {
 
 
@@ -28,6 +39,8 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
     private RecyclerView rvQuestions;
 
     private Button btnFinish;
+
+    private PieChart pieResults;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +100,8 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         txtResultPercentage = findViewById(R.id.txtResultPercentage);
         btnFinish = findViewById(R.id.btnFinish);
 
+        pieResults = findViewById(R.id.pieResults);
+
         imgExit.setOnClickListener(this);
         btnFinish.setOnClickListener(this);
 
@@ -98,11 +113,81 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         txtResult.setText(questionSet.calculatePointsEarned() + " Points out of " + questionSet.calculatePointsPossible());
 
         txtFirstAttempt.setText("Solved " + questionSet.calculateNumberOfQuestionsSolved()[0] + " out of " + questionSet.getQuestions().length + " with one attempt.");
-        txtSecondAttempt.setText("Solved " + questionSet.calculateNumberOfQuestionsSolved()[1] + " out of the remaining " +
-                (questionSet.getQuestions().length - questionSet.calculateNumberOfQuestionsSolved()[0]) + " with two attempts.");
+
+        int remaining = (questionSet.getQuestions().length - questionSet.calculateNumberOfQuestionsSolved()[0]);
+
+        // Only present if score isn't 100%
+        if (remaining > 0) {
+            txtSecondAttempt.setVisibility(View.VISIBLE);
+            txtSecondAttempt.setText("Solved " + questionSet.calculateNumberOfQuestionsSolved()[1] + " out of the remaining " +
+                    (remaining) + " with two attempts.");
+        }
+        else{
+            txtSecondAttempt.setVisibility(View.GONE);
+        }
 
         txtResultPercentage.setText("Result: " + questionSet.calculateResult() + "%");
 
+        setUpPieChart();
+        loadPieChart();
+
+
+
+    }
+
+    private void loadPieChart() {
+        ArrayList<PieEntry> entries = new ArrayList<>();
+
+        int firstAttempt = questionSet.calculateNumberOfQuestionsSolved()[0];
+        int secondAttempt = questionSet.calculateNumberOfQuestionsSolved()[1];
+        int moreAttempts = questionSet.getQuestions().length - (questionSet.calculateNumberOfQuestionsSolved()[0] + questionSet.calculateNumberOfQuestionsSolved()[1]);
+
+
+        // If greater than 0, show in chart:
+        if (firstAttempt > 0) {
+            entries.add(new PieEntry(firstAttempt, "1 Attempt"));
+        }
+        if (secondAttempt > 0){
+            entries.add(new PieEntry(secondAttempt, "2 Attempts"));
+        }
+        if (moreAttempts > 0) {
+            entries.add(new PieEntry(moreAttempts, "Over 2 Attempts"));
+        }
+
+
+        ArrayList<Integer> colors = new ArrayList<>();
+        for (int color: ColorTemplate.MATERIAL_COLORS){
+            colors.add(color);
+        }
+
+
+
+
+        PieDataSet dataSet = new PieDataSet(entries, "");
+        dataSet.setColors(colors);
+
+        PieData data = new PieData(dataSet);
+        data.setDrawValues(true);
+        data.setValueFormatter(new PercentFormatter(pieResults));
+        data.setValueTextSize(11f);
+        data.setValueTextColor(getResources().getColor(R.color.Primary));
+
+        pieResults.setData(data);
+        pieResults.invalidate();
+    }
+
+    private void setUpPieChart(){
+
+        // 'donut' shape
+        pieResults.setDrawHoleEnabled(true);
+        pieResults.setHoleColor(getResources().getColor(R.color.Surface1));
+        pieResults.setUsePercentValues(true);
+        pieResults.setEntryLabelTextSize(13);
+        pieResults.setEntryLabelColor(getResources().getColor(R.color.Secondary));
+        pieResults.setCenterText("RESULTS");
+        pieResults.setCenterTextColor(getResources().getColor(R.color.Primary));
+        pieResults.setCenterTextSize(14);
+        pieResults.getDescription().setText("");
 
 
     }
