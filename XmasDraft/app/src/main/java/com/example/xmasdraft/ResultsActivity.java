@@ -32,7 +32,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
 
     private ImageView imgExit;
 
-    private TextView txtQuestionSetName, txtResult, txtFirstAttempt, txtSecondAttempt, txtResultPercentage;
+    private TextView txtQuestionSetName, txtResult, txtFirstAttempt, txtSecondAttempt, txtResultPercentage, txtFailed;
 
     private QuestionSet questionSet;
 
@@ -41,6 +41,10 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
     private Button btnFinish;
 
     private PieChart pieResults;
+
+
+    private ArrayList<String> failedTopics = new ArrayList<>();
+    private  ArrayList<String> failedModels = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +64,8 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         rvQuestions.setAdapter(resultsRecyclerAdapter);
 
         rvQuestions.setLayoutManager(new LinearLayoutManager(this));
+
+
 
     }
 
@@ -98,6 +104,8 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         txtSecondAttempt = findViewById(R.id.txtSecondAttempt);
 
         txtResultPercentage = findViewById(R.id.txtResultPercentage);
+        txtFailed = findViewById(R.id.txtFailed);
+
         btnFinish = findViewById(R.id.btnFinish);
 
         pieResults = findViewById(R.id.pieResults);
@@ -107,7 +115,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    private void setData(QuestionSet questionSet){
+    private void setData(QuestionSet questionSet) {
 
         txtQuestionSetName.setText(questionSet.getName());
         txtResult.setText(questionSet.calculatePointsEarned() + " Points out of " + questionSet.calculatePointsPossible());
@@ -121,16 +129,43 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
             txtSecondAttempt.setVisibility(View.VISIBLE);
             txtSecondAttempt.setText("Solved " + questionSet.calculateNumberOfQuestionsSolved()[1] + " out of the remaining " +
                     (remaining) + " with two attempts.");
-        }
-        else{
+        } else {
             txtSecondAttempt.setVisibility(View.GONE);
         }
 
         txtResultPercentage.setText("Result: " + questionSet.calculateResult() + "%");
 
+
+        // Calculating the topics and models that the student failed.
+        calculateFailed();
+
+
+        // Adding the failed topics and question types:
+
+        if (this.failedTopics.size() > 0){
+            txtFailed.append("\nPractice the following topics:\n");
+        }
+        int count = 1;
+        for (String topic: this.failedTopics) {
+            if (topic != null){
+                txtFailed.append("\t" + count + ") " + topic + "\n");
+                count += 1;
+            }
+        }
+
+        if (this.failedModels.size() > 0){
+            txtFailed.append("\nPractice the following question types:\n");
+        }
+        count = 1;
+        for (String model: this.failedModels){
+            if (model != null) {
+                txtFailed.append("\t" + count + ") " + model + "\n");
+                count += 1;
+            }
+        }
+
         setUpPieChart();
         loadPieChart();
-
 
 
     }
@@ -144,23 +179,25 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
 
 
         // If greater than 0, show in chart:
-        if (firstAttempt > 0) {
-            entries.add(new PieEntry(firstAttempt, "1 Attempt"));
-        }
-        if (secondAttempt > 0){
-            entries.add(new PieEntry(secondAttempt, "2 Attempts"));
-        }
-        if (moreAttempts > 0) {
-            entries.add(new PieEntry(moreAttempts, "Over 2 Attempts"));
-        }
+        String label1 = "";
+        String label2 = "";
+        String labelOther = "";
+
+        if (firstAttempt > 0 ){label1 = "1st Attempt";}
+        entries.add(new PieEntry(firstAttempt, label1));
+
+        if (secondAttempt > 0 ){label2 = "2nd Attempt";}
+        entries.add(new PieEntry(secondAttempt, label2));
+
+        if (moreAttempts > 0){labelOther = "Other";}
+        entries.add(new PieEntry(moreAttempts, labelOther));
+
 
 
         ArrayList<Integer> colors = new ArrayList<>();
-        for (int color: ColorTemplate.MATERIAL_COLORS){
+        for (int color : ColorTemplate.MATERIAL_COLORS) {
             colors.add(color);
         }
-
-
 
 
         PieDataSet dataSet = new PieDataSet(entries, "");
@@ -176,7 +213,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         pieResults.invalidate();
     }
 
-    private void setUpPieChart(){
+    private void setUpPieChart() {
 
         // 'donut' shape
         pieResults.setDrawHoleEnabled(true);
@@ -196,15 +233,31 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
         int v = view.getId();
 
-        if (v == R.id.imgExit || v == R.id.btnFinish){
+        if (v == R.id.imgExit || v == R.id.btnFinish) {
             //TODO: Save data
             questionSet.setCompleted(true);
             questionSet.reset();
             startActivity(new Intent(this, MainMenuActivity.class));
         }
 
-
     }
 
+    private void calculateFailed() {
 
+        for (Question question : questionSet.getQuestions()) {
+            String topic = question.getTopic();
+            String model = question.getModel();
+
+            // If answered incorrectly, add the topic/model to arraylist.
+           if (question.getPointsPossible() != question.getPointsEarned()){
+               if (!this.failedTopics.contains(topic)){
+                   this.failedTopics.add(topic);
+               }
+               if (!this.failedModels.contains(model)){
+                   this.failedModels.add(model);
+               }
+           }
+        }
+
+    }
 }

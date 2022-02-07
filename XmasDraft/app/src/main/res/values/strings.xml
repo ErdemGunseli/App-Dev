@@ -19,15 +19,25 @@
     <string name="pin">Parental Pin: </string>
     <string name="confirm_pin">Confirm Parental Pin: </string>
 
-    <string name="start_question_set">START</string>
 
-    <string name="finish">FINISH</string>
+    <string name="start_question_set">Start</string>
+    <string name="continue_question_set">Continue</string>
+    <string name="number_of_questions">%o Questions</string>
+    <string name="on_question">On Question %o</string>
 
-    <string name="exit">EXIT</string>
 
+    <string name="question_x_of_x">Question %o of %o</string>
+    <string name="points">%o Points</string>
+    <string name="reveal_answer">Show Answer</string>
+    <string name="try_first">Try This Question First!</string>
+    <string name="try_again">Try Again, You Can Do It!</string>
+    <string name="enter_answer">Please Enter An Answer</string>
+    <string name="finish">Finish</string>
+    <string name="exit">Exit</string>
     <string name="answer">Answer</string>
 
+
     <string name="results">Results: </string>
-    <string name="review">REVIEW: </string>
+    <string name="review">Review: </string>
 
 </resources>

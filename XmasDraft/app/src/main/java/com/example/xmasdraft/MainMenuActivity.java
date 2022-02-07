@@ -6,11 +6,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 
 public class MainMenuActivity extends AppCompatActivity implements View.OnClickListener {
     private RecyclerView rvMainMenu;
@@ -61,6 +59,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
+        //TODO: Temporary, change!
 
         switch (v.getId()){
 

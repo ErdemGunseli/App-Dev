@@ -48,18 +48,16 @@
                     android:textStyle="bold" />
 
 
-
                 <com.github.mikephil.charting.charts.PieChart
                     android:id="@+id/pieResults"
                     android:layout_width="300dp"
                     android:layout_height="300dp"
                     android:layout_below="@id/txtQuestionSetName"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginEnd="25dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="15dp"
                     android:layout_centerHorizontal="true"
-                    />
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginBottom="15dp" />
 
 
                 <TextView
@@ -113,8 +111,20 @@
                     android:layout_centerHorizontal="true"
                     android:layout_margin="15dp"
                     android:textColor="@color/Accent"
-                    android:textSize="16sp"
+                    android:textSize="19sp"
                     android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/txtFailed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtResultPercentage"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="15dp"
+                    android:textColor="@color/Accent"
+                    android:textSize="16sp"
+                    />
 
             </RelativeLayout>
 

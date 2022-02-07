@@ -32,12 +32,10 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        String buttonName;
 
         switch (v.getId()){
 
             // Go to the appropriate activity depending on the Button clicked.
-
             case (R.id.btnSignUp):
                 startActivity(new Intent(this, SignUpActivity.class));
                 break;
@@ -52,9 +50,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
             default:
                 break;
 
-
         }
-
 
     }
 

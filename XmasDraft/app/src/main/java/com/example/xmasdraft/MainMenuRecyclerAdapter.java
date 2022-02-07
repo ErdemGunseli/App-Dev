@@ -2,6 +2,7 @@ package com.example.xmasdraft;
 
 import static com.example.xmasdraft.QuestionSetActivity.QUESTION_SET_ID;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -45,13 +46,27 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
+        QuestionSet questionSet = questionSets.get(position);
+
         // We can directly access txtContactName from the ViewHolder class despite it being a
         // private attribute, because it is a subclass of the contactsRecyclerAdapter class.
-        holder.txtQuestionSetName.setText(questionSets.get(position).getName());
+        holder.txtQuestionSetName.setText(questionSet.getName());
 
-        holder.txtQuestionSetDescription.setText(questionSets.get(position).getDescription());
 
-        holder.imgQuestionSet.setImageResource(questionSets.get(position).getImageId());
+        // X Questions
+        holder.txtNumberOfQuestions.setText(String.format(context.getString(R.string.number_of_questions), questionSet.getQuestions().length));
+
+        // If the question set has been started:
+        if (questionSet.getCurrentQuestionIndex() != 0) {
+            // On Question X
+            holder.txtCurrentQuestionIndex.setText(String.format(context.getString(R.string.on_question), (questionSet.getCurrentQuestionIndex() + 1)));
+            // Continue
+            holder.btnStartQuestionSet.setText(context.getString(R.string.continue_question_set));
+        }
+
+        holder.txtQuestionSetDescription.setText(questionSet.getDescription());
+
+        holder.imgQuestionSet.setImageResource(questionSet.getImageId());
 
         // We are expanding / collapsing the Card View:
 
@@ -85,7 +100,7 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
     // It is responsible for generating the View objects.
     public class ViewHolder extends RecyclerView.ViewHolder {
         private RelativeLayout relMainMenuItem;
-        private TextView txtQuestionSetName, txtQuestionSetDescription;
+        private TextView txtQuestionSetName, txtQuestionSetDescription, txtNumberOfQuestions, txtCurrentQuestionIndex;
         private ImageView imgQuestionSet;
         private CardView cvCollapsedMainMenuItem, cvExpandedMainMenuItem;
         private Button btnStartQuestionSet;
@@ -110,7 +125,7 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
 
                     switch (v.getId()) {
 
-                        case R.id.cvCollapsedMainMenuItem:
+                        case (R.id.cvCollapsedMainMenuItem):
                             // If the Relative View has been clicked, expand if collapsed; collapse if expanded:
                             questionSet.setExpanded(!questionSets.get(getAdapterPosition()).isExpanded());
 
@@ -119,7 +134,7 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
                             notifyItemChanged(getAdapterPosition());
                             break;
 
-                        case R.id.btnStartQuestionSet:
+                        case (R.id.btnStartQuestionSet):
                             // We are launching the Question Set from which we will retrieve which
                             // question set was clicked and change the questions accordingly.
 
@@ -144,6 +159,8 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
             relMainMenuItem = itemView.findViewById(R.id.relMainMenuItem);
             txtQuestionSetName = itemView.findViewById(R.id.txtQuestionSetName);
             imgQuestionSet = itemView.findViewById(R.id.imgQuestionSet);
+            txtNumberOfQuestions= itemView.findViewById(R.id.txtNumberOfQuestions);
+            txtCurrentQuestionIndex = itemView.findViewById(R.id.txtCurrentQuestionIndex);
             txtQuestionSetDescription = itemView.findViewById(R.id.txtQuestionSetDescription);
 
             cvCollapsedMainMenuItem = itemView.findViewById(R.id.cvCollapsedMainMenuItem);
@@ -156,6 +173,7 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
     }
 
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setQuestionSets(ArrayList<QuestionSet> questionSets) {
         // We will later use this method to pass the data into the contacts array list.
         this.questionSets = questionSets;

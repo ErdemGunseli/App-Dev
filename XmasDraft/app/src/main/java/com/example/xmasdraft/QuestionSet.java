@@ -18,6 +18,12 @@ public class QuestionSet {
     private boolean isExpanded;
     private boolean isCompleted;
 
+    private ArrayList<String> topics = new ArrayList<>();
+    private ArrayList<String> models = new ArrayList<>();
+
+
+
+
 
     public QuestionSet(int questionSetID, String name, String description, int imageID, Question[] questions) {
         this.questionSetID = questionSetID;
@@ -26,7 +32,24 @@ public class QuestionSet {
         this.imageId = imageID;
         this.questions = questions;
         this.currentQuestionIndex = 0;
+        arrangeTopics_Models();
+
         this.isExpanded = false;
+    }
+
+    private void arrangeTopics_Models() {
+        for (Question question : this.questions) {
+            String model = question.getModel();
+            String topic = question.getTopic();
+
+            if (!this.topics.contains(topic)){
+                this.topics.add(topic);
+            }
+            if (!this.models.contains(model)){
+                this.models.add(model);
+            }
+
+        }
     }
 
     // Name
@@ -106,10 +129,6 @@ public class QuestionSet {
         return this.questions.length;
     }
 
-
-
-
-
     public int calculateResult(){
         return (int) (((float) calculatePointsEarned() / (float) calculatePointsPossible()) * 100);
     }
@@ -167,5 +186,21 @@ public class QuestionSet {
 
     public void setCompleted(boolean completed) {
         isCompleted = completed;
+    }
+
+    public ArrayList<String> getTopics() {
+        return topics;
+    }
+
+    public void setTopics(ArrayList<String> topics) {
+        this.topics = topics;
+    }
+
+    public ArrayList<String> getModels() {
+        return models;
+    }
+
+    public void setModels(ArrayList<String> models) {
+        this.models = models;
     }
 }

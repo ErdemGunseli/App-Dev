@@ -157,21 +157,41 @@
 
             </RadioGroup>
 
+
+
             <EditText
                 android:id="@+id/edtTxtAnswer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:padding="10dp"
-                android:hint="@string/answer"
-                android:background="@color/Primary"
-                android:layout_centerHorizontal="true"
                 android:layout_below="@id/txtMessage"
-                android:textColor="@color/Secondary"
-                android:textSize="16sp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="@color/Primary"
+                android:hint="@string/answer"
                 android:inputType="numberDecimal"
                 android:maxLength="10"
+                android:padding="10dp"
+                android:textColor="@color/Secondary"
+                android:textSize="16sp" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnRevealAnswer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/edtTxtAnswer"
+                android:layout_below="@id/txtMessage"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:textColor="@color/Accent"
+                android:text="@string/reveal_answer"
                 />
 
 

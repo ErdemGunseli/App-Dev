@@ -27,7 +27,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
     private TextView txtQuestion, txtQuestionSetName, txtCurrentQuestionIndex, txtPointsPossible, txtMessage;
     private RadioGroup rgQuestionAnswerOptions;
     private RadioButton answerA, answerB, answerC, answerD;
-    private Button btnConfirm;
+    private Button btnConfirm, btnRevealAnswer;
     private ImageView imgExit, imgQuestion, imgPrevious, imgNext;
     private EditText edtTxtAnswer;
 
@@ -96,6 +96,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         answerC = findViewById(R.id.answerC);
         answerD = findViewById(R.id.answerD);
         btnConfirm = findViewById(R.id.btnConfirm);
+        btnRevealAnswer = findViewById(R.id.btnRevealAnswer);
         edtTxtAnswer = findViewById(R.id.edtTxtAnswer);
 
         // Setting On Click Listeners:
@@ -103,6 +104,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         imgPrevious.setOnClickListener(this);
         imgNext.setOnClickListener(this);
         btnConfirm.setOnClickListener(this);
+        btnRevealAnswer.setOnClickListener(this);
     }
 
 
@@ -117,6 +119,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         if (currentQuestion.getType().equals("multipleChoice")) {
             rgQuestionAnswerOptions.setVisibility(View.VISIBLE);
             edtTxtAnswer.setVisibility(View.GONE);
+            btnRevealAnswer.setVisibility(View.GONE);
             // Removing the check from the previous question:
             rgQuestionAnswerOptions.clearCheck();
 
@@ -131,6 +134,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
 
             rgQuestionAnswerOptions.setVisibility(View.GONE);
             edtTxtAnswer.setVisibility(View.VISIBLE);
+            btnRevealAnswer.setVisibility(View.VISIBLE);
         }
 
 
@@ -145,15 +149,23 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
 
         txtQuestion.setText(currentQuestion.getQuestionText());
 
-
-        txtCurrentQuestionIndex.setText("Question " + (questionSet.getCurrentQuestionIndex() + 1) + " of " + questionSet.getQuestions().length);
+        // Question X of X
+        txtCurrentQuestionIndex.setText(String.format(getString(R.string.question_x_of_x),(questionSet.getCurrentQuestionIndex() + 1), questionSet.getQuestions().length));
 
         // Set points accordingly:
         // Needed for if the screen is rotated after a question is done incorrectly.
-        if (currentQuestion.getAttempted() != 0) {
+        //TODO: Fix Problem With String References::::
+        if (currentQuestion.getAttempted() > 1) {
+            //X Points
+            //txtPointsPossible.setText(String.format(getString(R.string.points), currentQuestion.getPointsEarned()));
             txtPointsPossible.setText(currentQuestion.getPointsEarned() + " Points");
         }
+        else if (currentQuestion.getAttempted() == 1){
+            txtPointsPossible.setText((currentQuestion.getPointsPossible() / 2) + " Points");
+        }
         else{
+            //X Points
+            //txtPointsPossible.setText(String.format(getString(R.string.points), currentQuestion.getPointsPossible()));
             txtPointsPossible.setText(currentQuestion.getPointsPossible() + " Points");
         }
 
@@ -167,17 +179,17 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         // Sets the visibility of navigation images and the text of the confirm
         // button depending on the current question:
         if (firstQuestion()){
-            btnConfirm.setText("CONFIRM");
+            btnConfirm.setText(getString(R.string.confirm));
             imgNext.setVisibility(View.VISIBLE);
             imgPrevious.setVisibility(View.GONE);
         }
         else if (lastQuestion()){
-            btnConfirm.setText("FINISH");
+            btnConfirm.setText(getString(R.string.finish));
             imgNext.setVisibility(View.GONE);
             imgPrevious.setVisibility(View.VISIBLE);
         }
         else{
-            btnConfirm.setText("CONFIRM");
+            btnConfirm.setText(getString(R.string.confirm));
             imgPrevious.setVisibility(View.VISIBLE);
             imgNext.setVisibility(View.VISIBLE);
         }
@@ -191,7 +203,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
 
     private boolean lastQuestion() {
         // If the current question index is 1 less than length:
-        return questionSet.getCurrentQuestionIndex() + 1 == questionSet.length();
+        return questionSet.getCurrentQuestionIndex() == questionSet.length() - 1;
     }
 
 
@@ -199,10 +211,6 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
 
         switch (v.getId()) {
-
-            case (R.id.btnConfirm):
-                confirmClicked();
-                break;
 
             case (R.id.imgExit):
                 startActivity(new Intent(this, MainMenuActivity.class));
@@ -217,7 +225,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
             case (R.id.imgNext):
 
                 // If the current question has been solved, they can go to the next question:
-                if (currentQuestion.getAttempted() != 0){
+                if (currentQuestion.getAttempted() > 0){
 
                     // Increasing the current question index by 1
                     questionSet.setCurrentQuestionIndex(questionSet.getCurrentQuestionIndex() + 1);
@@ -225,8 +233,21 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
 
                 }
                 else{
-                    txtMessage.setText("Try This Question First!");
+                    txtMessage.setText(getString(R.string.try_first));
                 }
+                break;
+
+            case (R.id.btnConfirm):
+                confirmClicked();
+                break;
+
+            case (R.id.btnRevealAnswer)    :
+                currentQuestion.setAttempted(2);
+                currentQuestion.setPointsEarned(0);
+                txtMessage.setText(currentQuestion.getAnswer());
+                // No points if they reveal the answer.
+                txtPointsPossible.setText(String.format(getString(R.string.points), 0));
+                break;
 
             default:
                 break;
@@ -272,21 +293,23 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
                 }
             } else {
                 // If they have answered incorrectly:
-                txtMessage.setText("Try Again, You Can Do It!");
-                //TODO: Not ideal, change
-
-                if (currentQuestion.getAttempted() == 1){
-                    txtPointsPossible.setText((currentQuestion.getPointsPossible() / 2) + " Points");
-                }
-                else{
-                    txtPointsPossible.setText("0 Points");
+                txtMessage.setText(getString(R.string.try_again));
+                // Do not penalise if they have answered correctly before
+                if (currentQuestion.getPointsEarned() == 0) {
+                    if (currentQuestion.getAttempted() == 1) {
+                        //TODO: Fix string reference::
+                        txtPointsPossible.setText((currentQuestion.getPointsPossible() / 2) + " Points");
+                        // txtPointsPossible.setText(String.format(getString(R.string.points), currentQuestion.getPointsPossible() / 2));
+                    } else {
+                        txtPointsPossible.setText(String.format(getString(R.string.points), 0));
+                    }
                 }
 
             }
         } else {
 
-            // Telling the user to select an answer.
-           txtMessage.setText("Please Enter An Answer");
+            // Telling the user to enter an answer.
+           txtMessage.setText(getString(R.string.enter_answer));
         }
     }
 

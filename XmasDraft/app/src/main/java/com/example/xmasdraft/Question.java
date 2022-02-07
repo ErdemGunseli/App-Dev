@@ -7,6 +7,8 @@ public class Question {
     private int imageID;
 
 
+    private String type;
+
     // For Multiple Choice
     private String[] answers;
     private int correctAnswerIndex;
@@ -18,12 +20,11 @@ public class Question {
     private String writtenAnswer;
 
 
+    private String topic;
+    // The type/model of the question
+    private String model;
 
-
-
-    private String type;
-
-    private int attempted;
+    private int attempted = 0;
 
     private int pointsPossible;
     private int pointsEarned = 0;
@@ -32,7 +33,9 @@ public class Question {
 
 
 
-    public Question(String questionText, int imageID, String[] answers, int correctAnswerIndex, int pointsPossible) {
+    public Question(String topic, String model, String questionText, int imageID, String[] answers, int correctAnswerIndex, int pointsPossible) {
+        this.model = model;
+        this.topic = topic;
         this.questionText = questionText;
         this.imageID = imageID;
         this.answers = answers;
@@ -42,7 +45,9 @@ public class Question {
         this.type = "multipleChoice";
     }
 
-    public Question(String questionText, int imageID, String answer, int pointsPossible){
+    public Question(String topic, String model, String questionText, int imageID, String answer, int pointsPossible){
+        this.model = model;
+        this.topic = topic;
         this.questionText = questionText;
         this.imageID = imageID;
         this.answer = answer;
@@ -96,26 +101,26 @@ public class Question {
         if (this.type.equals("multipleChoice")) {
 
             // Their initial answer
-            if (attempted == 0) {
+            if (this.attempted == 0) {
                 this.chosenAnswerIndex = chosenAnswerIndex;
             }
 
             if (correctAnswerIndex == chosenAnswerIndex) {
                 this.calculatePointsEarned();
-
+                this.attempted += 1;
                 return true;
             }
         }
 
         else if (this.type.equals("written")){
 
-            if (attempted == 0) {
+            if (this.attempted == 0) {
                 this.writtenAnswer = answer;
             }
 
             if (answer.equals(this.answer)){
                 this.calculatePointsEarned();
-
+                this.attempted += 1;
                 return true;
             }
 
@@ -153,15 +158,15 @@ public class Question {
         this.pointsEarned = pointsEarned;
     }
 
-    private void calculatePointsEarned(){
-        if (attempted == 0) {
-            this.pointsEarned = this.pointsPossible;
-        }
-        else if (this.attempted == 1){
-            this.pointsEarned = this.pointsPossible / 2;
-        }
-        else{
-            this.pointsEarned = 0;
+    public void calculatePointsEarned(){
+
+        // If they got it right first, do not penalise:
+        if (this.pointsEarned == 0) {
+            if (attempted == 0) {
+                this.pointsEarned = this.pointsPossible;
+            } else if (this.attempted == 1) {
+                this.pointsEarned = this.pointsPossible / 2;
+            }
         }
     }
 
@@ -192,6 +197,22 @@ public class Question {
 
     public void setWrittenAnswer(String writtenAnswer) {
         this.writtenAnswer = writtenAnswer;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 }
 
