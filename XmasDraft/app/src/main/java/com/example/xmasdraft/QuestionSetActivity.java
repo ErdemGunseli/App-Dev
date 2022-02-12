@@ -157,16 +157,16 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         //TODO: Fix Problem With String References::::
         if (currentQuestion.getAttempted() > 1) {
             //X Points
-            //txtPointsPossible.setText(String.format(getString(R.string.points), currentQuestion.getPointsEarned()));
-            txtPointsPossible.setText(currentQuestion.getPointsEarned() + " Points");
+            txtPointsPossible.setText(String.format(getString(R.string.points), currentQuestion.getPointsEarned()));
         }
         else if (currentQuestion.getAttempted() == 1){
-            txtPointsPossible.setText((currentQuestion.getPointsPossible() / 2) + " Points");
+            // X Points
+            txtPointsPossible.setText(String.format(getString(R.string.points), (currentQuestion.getPointsPossible() / 2)));
         }
         else{
             //X Points
-            //txtPointsPossible.setText(String.format(getString(R.string.points), currentQuestion.getPointsPossible()));
-            txtPointsPossible.setText(currentQuestion.getPointsPossible() + " Points");
+            txtPointsPossible.setText(String.format(getString(R.string.points), (currentQuestion.getPointsPossible())));
+            //txtPointsPossible.setText(currentQuestion.getPointsPossible() + " Points");
         }
 
         // Set question set image (id = 0 if no image):
@@ -262,20 +262,15 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         // Scrolling to the top
         svQuestionSet.smoothScrollTo(0,0);
 
-
         // If an answer has been selected / written
         if ((currentQuestion.getType().equals("multipleChoice") && getCheckedRadioButtonIndex() != -1)
         || (currentQuestion.getType().equals("written") && !edtTxtAnswer.getText().toString().equals("")))
         {
 
-            //TODO: Proceduralise
-
-            // TODO: For now, if the answer is correct, we are moving immediately to the next question. To be changed!
+            // TODO: For now, if the answer is correct, we are moving immediately to the next question. Maybe change this?
             if (currentQuestion.checkAnswer(getCheckedRadioButtonIndex(), edtTxtAnswer.getText().toString())) {
 
                 if (lastQuestion()){
-                    // TODO: Should Go To Results Page!!
-                    // TODO: Should be finished() function!!
 
                     // If they start the question set again, it will start from 0:
                     questionSet.setCurrentQuestionIndex(0);
@@ -283,9 +278,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
                     // Starting the Results Activity:
                     startActivity(new Intent(this, ResultsActivity.class)
                             .putExtra(QUESTION_SET_ID, questionSet.getQuestionSetID()));
-
                 } else {
-
                     // Increasing the current question index by 1
                     questionSet.setCurrentQuestionIndex(questionSet.getCurrentQuestionIndex() + 1);
                     setData(questionSet);
@@ -297,9 +290,9 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
                 // Do not penalise if they have answered correctly before
                 if (currentQuestion.getPointsEarned() == 0) {
                     if (currentQuestion.getAttempted() == 1) {
-                        //TODO: Fix string reference::
-                        txtPointsPossible.setText((currentQuestion.getPointsPossible() / 2) + " Points");
-                        // txtPointsPossible.setText(String.format(getString(R.string.points), currentQuestion.getPointsPossible() / 2));
+
+                        // X Points
+                        txtPointsPossible.setText(String.format(getString(R.string.points), currentQuestion.getPointsPossible() / 2));
                     } else {
                         txtPointsPossible.setText(String.format(getString(R.string.points), 0));
                     }

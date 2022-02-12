@@ -48,8 +48,7 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
 
         QuestionSet questionSet = questionSets.get(position);
 
-        // We can directly access txtContactName from the ViewHolder class despite it being a
-        // private attribute, because it is a subclass of the contactsRecyclerAdapter class.
+        // We can access these private attributes directly since they are from a subclass:
         holder.txtQuestionSetName.setText(questionSet.getName());
 
 
@@ -90,7 +89,6 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
     @Override
     public int getItemCount() {
         // This method returns the number of items.
-        // Since our contacts are stored in the contacts array list, we can just return the size of that.
         return questionSets.size();
     }
 

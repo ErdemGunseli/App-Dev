@@ -85,30 +85,36 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private void confirmClicked(){
         // Displays appropriate Snack Bar if inputs are invalid:
         if (!inputsFilled(inputs)){
-            showSnackBar(relSignUp, "Please Fill In All The Fields", "OK");
+            showSnackBar(relSignUp, getString(R.string.empty_fields), getString(R.string.ok));
         }
-        else if (!isValid(new EditText[]{edtTxtParentName, edtTxtStudentName, edtTxtPassword}, 6)){
-            showSnackBar(relSignUp,"Check The Lengths Of The Inputs", "OK");
+        else if (!isValid(new EditText[]{edtTxtParentName, edtTxtStudentName}, 2)) {
+            showSnackBar(relSignUp, getString(R.string.input_lengths), getString(R.string.ok));
+        }
+        else if (!isValid(new EditText[]{edtTxtPassword}, 6)){
+            showSnackBar(relSignUp,getString(R.string.check_password), getString(R.string.ok));
         }
         else if (!isValidEmail(edtTxtEmail.getText().toString())){
-            showSnackBar(relSignUp,"Check The Email", "OK");
+            showSnackBar(relSignUp,getString(R.string.check_email), getString(R.string.ok));
         }
-
         else if (!edtTxtPassword.getText().toString().equals(edtTxtConfirmPassword.getText().toString())){
-            showSnackBar(relSignUp, "The Passwords Do Not Match", "OK");
+            showSnackBar(relSignUp, getString(R.string.passwords_do_not_match), getString(R.string.ok));
         }
         else if (!isValid(new EditText[]{edtTxtPin}, 4)){
-            showSnackBar(relSignUp, "The Pin Needs To Be 4 Digits", "OK");
+            showSnackBar(relSignUp, getString(R.string.pin_length), getString(R.string.ok));
         }
         else if (!edtTxtPin.getText().toString().equals(edtTxtConfirmPin.getText().toString())){
-            showSnackBar(relSignUp, "The Pins Do Not Match", "OK");
+            showSnackBar(relSignUp, getString(R.string.pins_do_not_match), getString(R.string.ok));
         }
         else{
-            // We are creating an account:
-            Account currentUserAccount = new Account(edtTxtParentName.getText().toString(),
+            // We are declaring an account depending on the data entered by the user:
+            // TODO: Use This!!
+            Account userAccount = new Account(edtTxtParentName.getText().toString(),
                     edtTxtStudentName.getText().toString(), edtTxtEmail.getText().toString(),
                     edtTxtPassword.getText().toString(),
                     edtTxtPin.getText().toString());
+
+            // Setting the account:
+            Utils.getInstance().setUserAccount(userAccount);
 
             // Going to the main menu activity:
             startActivity(new Intent(this, MainMenuActivity.class));

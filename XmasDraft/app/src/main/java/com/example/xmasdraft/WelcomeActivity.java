@@ -45,6 +45,8 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
                 break;
 
             case (R.id.btnContinueAsGuest):
+                // Creating a guest account:
+                Utils.getInstance().setUserAccount(new Account());
                 startActivity(new Intent(this, MainMenuActivity.class));
                 break;
             default:

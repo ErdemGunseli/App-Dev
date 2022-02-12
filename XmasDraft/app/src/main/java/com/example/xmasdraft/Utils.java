@@ -1,5 +1,6 @@
 package com.example.xmasdraft;
 
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -7,6 +8,12 @@ import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.lang.reflect.Array;
@@ -15,6 +22,8 @@ import java.util.ArrayList;
 public class Utils extends AppCompatActivity {
 
     private static Utils instance;
+
+    private Account userAccount;
 
     // TODO: More arrays??
     private static ArrayList<QuestionSet> questionSets;
@@ -96,4 +105,60 @@ public class Utils extends AppCompatActivity {
         return null;
     }
 
+    public Account getUserAccount() {
+        return userAccount;
+    }
+
+    public void setUserAccount(Account userAccount) {
+        this.userAccount = userAccount;
+    }
+
+    public void createPieChart(Context context, PieChart pieChart, int[] values, String description, String[] labels, int labelColour, String centerText, int textColour, int backgroundColour){
+
+        /// Setting Up:
+        pieChart.setDrawHoleEnabled(true);
+        pieChart.setHoleColor(context.getResources().getColor(backgroundColour));
+        pieChart.setUsePercentValues(true);
+        pieChart.setEntryLabelTextSize(13);
+        pieChart.setEntryLabelColor(context.getResources().getColor(labelColour));
+        pieChart.setCenterText(centerText);
+        pieChart.setCenterTextColor(context.getResources().getColor(textColour));
+        pieChart.setCenterTextSize(14);
+        pieChart.getDescription().setText(description);
+
+        /// Loading:
+        ArrayList<PieEntry> entries = new ArrayList<>();
+
+        // If the value is greater than 0, give it a label:
+        // Add it to the pie chart either way (for correct colour assignment)
+        String label;
+        for (int index = 0; index < values.length; index++){
+            label = null;
+            if (values[index] > 0){
+               label = labels[index];
+            }
+            entries.add(new PieEntry(values[index], label));
+        }
+
+        ArrayList<Integer> colors = new ArrayList<>();
+        // Getting colours of the segments of the pie chart:
+        for (int color : ColorTemplate.MATERIAL_COLORS) {
+            colors.add(color);
+        }
+
+
+        PieDataSet dataSet = new PieDataSet(entries, null);
+        dataSet.setColors(colors);
+
+        PieData data = new PieData(dataSet);
+        data.setDrawValues(true);
+        data.setValueFormatter(new PercentFormatter(pieChart));
+        data.setValueTextSize(11f);
+        data.setValueTextColor(context.getResources().getColor(textColour));
+
+        pieChart.setData(data);
+        pieChart.invalidate();
+
+
+    }
 }

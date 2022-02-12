@@ -64,10 +64,12 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
             case (R.id.btnForgotPassword):
                 if (isValidEmail(edtTxtEmail.getText().toString())) {
-                    showSnackBar(relSignIn, "Email Sent", "OK");
+                    // Email sent if email is valid:
+                    showSnackBar(relSignIn, getString(R.string.email_sent), getString(R.string.ok));
                 }
                 else{
-                    showSnackBar(relSignIn, "Check The Email", "OK");
+                    // If Email invalid, they need to check:
+                    showSnackBar(relSignIn, getString(R.string.check_email), getString(R.string.ok));
                 }
                 break;
 
@@ -87,17 +89,22 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private void confirmClicked() {
         // Displays appropriate Snack Bar if inputs are invalid:
         if (!inputsFilled(inputs)){
-           showSnackBar(relSignIn, "Please Fill In All The Fields", "OK");
+            // If all of the inputs are not filled, they need to check:
+           showSnackBar(relSignIn, getString(R.string.empty_fields), getString(R.string.ok));
         }
 
         else if (!isValidEmail(edtTxtEmail.getText().toString())){
-            showSnackBar(relSignIn,"Check The Email", "OK");
+            // If Email invalid, they need to check:
+            showSnackBar(relSignIn,getString(R.string.check_email), getString(R.string.ok));
         }
         else if (!isValid(edtTxtPassword.getText().toString(), 6)) {
-            showSnackBar(relSignIn, "Check The Password", "OK");
+            // If Password invalid, they need to check:
+            showSnackBar(relSignIn, getString(R.string.check_password), getString(R.string.ok));
         }
         else{
-            showSnackBar(relSignIn, "User Not Found", "OK");
+            // User not found:
+            showSnackBar(relSignIn, getString(R.string.user_not_found), getString(R.string.ok));
+            // Here, I would access a server to check for the details but I do not have it:
         }
     }
 

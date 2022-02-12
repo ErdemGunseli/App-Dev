@@ -88,11 +88,21 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
 
                     // Setting the data from the Question Set to our View item:
                     setData(questionSet);
+
+                    // Saving the Question Set to the account's list of Question Sets Completed:
+                    saveQuestionSet();
                 }
             }
 
         }
     }
+
+
+    private void saveQuestionSet(){
+        // Adding the question set to the account's list of completed question sets:
+        Utils.getInstance().getUserAccount().addQuestionSet(questionSet);
+    }
+
 
     private void initViews() {
         rvQuestions = findViewById(R.id.rvQuestions);
@@ -118,22 +128,29 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
     private void setData(QuestionSet questionSet) {
 
         txtQuestionSetName.setText(questionSet.getName());
-        txtResult.setText(questionSet.calculatePointsEarned() + " Points out of " + questionSet.calculatePointsPossible());
 
-        txtFirstAttempt.setText("Solved " + questionSet.calculateNumberOfQuestionsSolved()[0] + " out of " + questionSet.getQuestions().length + " with one attempt.");
+        // X Points out of X
+        txtResult.setText(String.format(getString(R.string.x_points_out_of_x), questionSet.calculatePointsEarned(), questionSet.calculatePointsPossible()));
 
+        // Solved X out of X with one attempt.
+        txtFirstAttempt.setText(String.format(getString(R.string.solved_x_out_of_x_1attempt),questionSet.calculateNumberOfQuestionsSolved()[0], questionSet.getQuestions().length ));
+
+        // Calculating the remaining questions:
         int remaining = (questionSet.getQuestions().length - questionSet.calculateNumberOfQuestionsSolved()[0]);
 
         // Only present if score isn't 100%
         if (remaining > 0) {
             txtSecondAttempt.setVisibility(View.VISIBLE);
-            txtSecondAttempt.setText("Solved " + questionSet.calculateNumberOfQuestionsSolved()[1] + " out of the remaining " +
-                    (remaining) + " with two attempts.");
+
+           // Solved X out of the remaining X with two attempts.
+            txtSecondAttempt.setText(String.format(getString(R.string.solved_x_out_of_x_2attempts),  questionSet.calculateNumberOfQuestionsSolved()[1], (remaining) ));
         } else {
+            // If 100%, we don't need it:
             txtSecondAttempt.setVisibility(View.GONE);
         }
 
-        txtResultPercentage.setText("Result: " + questionSet.calculateResult() + "%");
+        // Result: X%
+        txtResultPercentage.setText(String.format(getString(R.string.result_percent), questionSet.calculateResult()));
 
 
         // Calculating the topics and models that the student failed.
@@ -143,7 +160,8 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         // Adding the failed topics and question types:
 
         if (this.failedTopics.size() > 0){
-            txtFailed.append("\nPractice the following topics:\n");
+            // Practice the following topics:
+            txtFailed.append(getString(R.string.practice_topics));
         }
         int count = 1;
         for (String topic: this.failedTopics) {
@@ -154,7 +172,8 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         }
 
         if (this.failedModels.size() > 0){
-            txtFailed.append("\nPractice the following question types:\n");
+            // Practice the following question types:
+            txtFailed.append(getString(R.string.practice_models));
         }
         count = 1;
         for (String model: this.failedModels){
@@ -164,70 +183,80 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
             }
         }
 
-        setUpPieChart();
-        loadPieChart();
-
-
-    }
-
-    private void loadPieChart() {
-        ArrayList<PieEntry> entries = new ArrayList<>();
-
+        // Creating values for the pie chart:
         int firstAttempt = questionSet.calculateNumberOfQuestionsSolved()[0];
         int secondAttempt = questionSet.calculateNumberOfQuestionsSolved()[1];
         int moreAttempts = questionSet.getQuestions().length - (questionSet.calculateNumberOfQuestionsSolved()[0] + questionSet.calculateNumberOfQuestionsSolved()[1]);
 
+        int[] values = {firstAttempt, secondAttempt, moreAttempts};
+        String[] labels = {"1st Attempt", "2nd Attempt", "3rd Attempt"};
 
-        // If greater than 0, show in chart:
-        String label1 = "";
-        String label2 = "";
-        String labelOther = "";
-
-        if (firstAttempt > 0 ){label1 = "1st Attempt";}
-        entries.add(new PieEntry(firstAttempt, label1));
-
-        if (secondAttempt > 0 ){label2 = "2nd Attempt";}
-        entries.add(new PieEntry(secondAttempt, label2));
-
-        if (moreAttempts > 0){labelOther = "Other";}
-        entries.add(new PieEntry(moreAttempts, labelOther));
-
-
-
-        ArrayList<Integer> colors = new ArrayList<>();
-        for (int color : ColorTemplate.MATERIAL_COLORS) {
-            colors.add(color);
-        }
-
-
-        PieDataSet dataSet = new PieDataSet(entries, "");
-        dataSet.setColors(colors);
-
-        PieData data = new PieData(dataSet);
-        data.setDrawValues(true);
-        data.setValueFormatter(new PercentFormatter(pieResults));
-        data.setValueTextSize(11f);
-        data.setValueTextColor(getResources().getColor(R.color.Primary));
-
-        pieResults.setData(data);
-        pieResults.invalidate();
-    }
-
-    private void setUpPieChart() {
-
-        // 'donut' shape
-        pieResults.setDrawHoleEnabled(true);
-        pieResults.setHoleColor(getResources().getColor(R.color.Surface1));
-        pieResults.setUsePercentValues(true);
-        pieResults.setEntryLabelTextSize(13);
-        pieResults.setEntryLabelColor(getResources().getColor(R.color.Secondary));
-        pieResults.setCenterText("RESULTS");
-        pieResults.setCenterTextColor(getResources().getColor(R.color.Primary));
-        pieResults.setCenterTextSize(14);
-        pieResults.getDescription().setText("");
+        // Creating the Pie Chart
+        Utils.getInstance().createPieChart(this, pieResults, values, "", labels,
+                R.color.Secondary, getString(R.string.results),
+                R.color.Primary, R.color.Surface1);
 
 
     }
+
+//    private void loadPieChart() {
+//        ArrayList<PieEntry> entries = new ArrayList<>();
+//
+//
+//
+//        // If greater than 0, show in chart:
+//        String label1 = null;
+//        String label2 = null;
+//        String labelOther = null;
+//
+//        // First Attempt
+//        if (firstAttempt > 0 ){label1 = getString(R.string.first_attempt);}
+//        entries.add(new PieEntry(firstAttempt, label1));
+//
+//        // Second Attempt
+//        if (secondAttempt > 0 ){label2 = getString(R.string.second_attempt);}
+//        entries.add(new PieEntry(secondAttempt, label2));
+//
+//        // Other
+//        if (moreAttempts > 0){labelOther = getString(R.string.other);}
+//        entries.add(new PieEntry(moreAttempts, labelOther));
+//
+//
+//
+//        ArrayList<Integer> colors = new ArrayList<>();
+//        for (int color : ColorTemplate.MATERIAL_COLORS) {
+//            colors.add(color);
+//        }
+//
+//
+//        PieDataSet dataSet = new PieDataSet(entries, null);
+//        dataSet.setColors(colors);
+//
+//        PieData data = new PieData(dataSet);
+//        data.setDrawValues(true);
+//        data.setValueFormatter(new PercentFormatter(pieResults));
+//        data.setValueTextSize(11f);
+//        data.setValueTextColor(getResources().getColor(R.color.Primary));
+//
+//        pieResults.setData(data);
+//        pieResults.invalidate();
+//    }
+//
+//    private void setUpPieChart() {
+//
+//        // 'donut' shape
+//        pieResults.setDrawHoleEnabled(true);
+//        pieResults.setHoleColor(getResources().getColor(R.color.Surface1));
+//        pieResults.setUsePercentValues(true);
+//        pieResults.setEntryLabelTextSize(13);
+//        pieResults.setEntryLabelColor(getResources().getColor(R.color.Secondary));
+//        pieResults.setCenterText(getString(R.string.results));
+//        pieResults.setCenterTextColor(getResources().getColor(R.color.Primary));
+//        pieResults.setCenterTextSize(14);
+//        pieResults.getDescription().setText("");
+//
+//
+//    }
 
     @Override
     public void onClick(View view) {

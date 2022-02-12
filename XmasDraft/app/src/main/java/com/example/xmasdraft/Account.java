@@ -7,13 +7,9 @@ public class Account {
 
     private String parentName, studentName, email, password, pin;
 
-    private float timeSpent;
+    private String accountType;
 
-    private int numberOfActivitiesCompleted;
-    private ArrayList<String> activitiesCompleted;
-
-    private float averageScore;
-    private ArrayList<Float> activityScores;
+    private ArrayList<QuestionSet> questionSetsCompleted = new ArrayList<>();
 
 
     public Account(String parentName, String studentName, String email, String password, String pin) {
@@ -22,7 +18,15 @@ public class Account {
         this.email = email;
         this.password = password;
         this.pin = pin;
+        this.accountType = "Member";
     }
+
+    public Account(){
+        this.accountType = "Guest";
+    }
+
+
+
 
     public String getParentName() {
         return parentName;
@@ -62,5 +66,18 @@ public class Account {
 
     public void setPin(String pin) {
         this.pin = pin;
+    }
+
+
+    public ArrayList<QuestionSet> getQuestionSetsCompleted() {
+        return questionSetsCompleted;
+    }
+
+    public void setQuestionSetsCompleted(ArrayList<QuestionSet> questionSetsCompleted) {
+        this.questionSetsCompleted = questionSetsCompleted;
+    }
+
+    public void addQuestionSet(QuestionSet questionSet){
+        this.questionSetsCompleted.add(questionSet);
     }
 }

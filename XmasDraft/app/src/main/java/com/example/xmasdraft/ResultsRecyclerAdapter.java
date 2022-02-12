@@ -42,28 +42,43 @@ public class ResultsRecyclerAdapter extends RecyclerView.Adapter<ResultsRecycler
         int correctAnswerIndex = currentQuestion.getCorrectAnswerIndex();
         int chosenAnswerIndex = currentQuestion.getChosenAnswerIndex();
 
-        holder.txtCurrentQuestionIndex.setText("Question " + (position + 1) + " of " + questionSet.getQuestions().length);
+        // We can access these private attributes directly since they are from a subclass:
 
-        holder.txtPointsPossible.setText(currentQuestion.getPointsEarned() + " / "+ currentQuestion.getPointsPossible() + " Points");
+        // Question X of X
+        holder.txtCurrentQuestionIndex.setText(String.format(context.getString(R.string.question_x_of_x), (position + 1), questionSet.getQuestions().length));
+
+        // X / X Points
+        holder.txtPointsPossible.setText(String.format(context.getString(R.string.x_x_points), currentQuestion.getPointsEarned(), currentQuestion.getPointsPossible()));
 
         holder.txtQuestion.setText(currentQuestion.getQuestionText());
 
         holder.imgQuestion.setImageResource(currentQuestion.getImageID());
 
         if (currentQuestion.getType().equals("multipleChoice")) {
-            holder.txtChosenAnswer.setText("Your Initial Answer: " + answers[chosenAnswerIndex]);
-            holder.txtCorrectAnswer.setText("Correct Answer: " + answers[correctAnswerIndex]);
+
+            // Your Initial Answer: X
+            holder.txtChosenAnswer.setText(String.format(context.getString(R.string.initial_answer), answers[chosenAnswerIndex]));
+
+            // Correct Answer: X
+            holder.txtCorrectAnswer.setText(String.format(context.getString(R.string.correct_answer), answers[correctAnswerIndex]));
+
         }
         else if (currentQuestion.getType().equals("written")) {
+
+            // If they revealed the answer, the variable storing their answer will be null, so use "?".
+            // Otherwise, set text as variable.
+
+            String chosenAnswer = "?";
+
             if (currentQuestion.getWrittenAnswer() != null) {
-                holder.txtChosenAnswer.setText("Your Initial Answer: " + currentQuestion.getWrittenAnswer());
+                chosenAnswer = currentQuestion.getWrittenAnswer();
             }
-            else{
-                holder.txtChosenAnswer.setText("Your Initial Answer: ?");
-            }
+                // Your Initial Answer: X
+                holder.txtChosenAnswer.setText(String.format(context.getString(R.string.initial_answer), chosenAnswer));
 
+                // Correct Answer: X
+                holder.txtCorrectAnswer.setText(String.format(context.getString(R.string.correct_answer), currentQuestion.getAnswer()));
 
-            holder.txtCorrectAnswer.setText("Correct Answer: " + currentQuestion.getAnswer());
         }
     }
 
@@ -71,7 +86,6 @@ public class ResultsRecyclerAdapter extends RecyclerView.Adapter<ResultsRecycler
     @Override
     public int getItemCount() {
         // This method returns the number of items.
-        // Since our contacts are stored in the contacts array list, we can just return the size of that.
         return questionSet.getQuestions().length;
     }
 
