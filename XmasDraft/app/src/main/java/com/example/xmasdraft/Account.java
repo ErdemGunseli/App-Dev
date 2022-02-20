@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Account {
     // A class to hold the account details.
-
+//test
     private String parentName, studentName, email, password, pin;
 
     private String accountType;
