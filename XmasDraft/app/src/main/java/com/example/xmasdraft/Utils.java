@@ -125,6 +125,7 @@ public class Utils extends AppCompatActivity {
         pieChart.setCenterTextColor(context.getResources().getColor(textColour));
         pieChart.setCenterTextSize(14);
         pieChart.getDescription().setText(description);
+        pieChart.getDescription().setTextSize(11);
 
         /// Loading:
         ArrayList<PieEntry> entries = new ArrayList<>();

@@ -9,7 +9,7 @@ public class Account {
 
     private String accountType;
 
-    private ArrayList<QuestionSet> questionSetsCompleted = new ArrayList<>();
+    private ArrayList<QuestionSetHistory> questionSetsCompleted = new ArrayList<>();
 
 
     public Account(String parentName, String studentName, String email, String password, String pin) {
@@ -24,9 +24,6 @@ public class Account {
     public Account(){
         this.accountType = "Guest";
     }
-
-
-
 
     public String getParentName() {
         return parentName;
@@ -68,16 +65,25 @@ public class Account {
         this.pin = pin;
     }
 
+    public String getAccountType() {
+        return accountType;
+    }
 
-    public ArrayList<QuestionSet> getQuestionSetsCompleted() {
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
+    }
+
+    public ArrayList<QuestionSetHistory> getQuestionSetsCompleted() {
         return questionSetsCompleted;
     }
 
-    public void setQuestionSetsCompleted(ArrayList<QuestionSet> questionSetsCompleted) {
+    public void setQuestionSetsCompleted(ArrayList<QuestionSetHistory> questionSetsCompleted) {
         this.questionSetsCompleted = questionSetsCompleted;
     }
 
-    public void addQuestionSet(QuestionSet questionSet){
-        this.questionSetsCompleted.add(questionSet);
+    public void addQuestionSet(QuestionSetHistory questionSetHistory) {
+        this.questionSetsCompleted.add(questionSetHistory);
     }
+
+
 }

@@ -58,7 +58,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         switch (v.getId()) {
 
             case (R.id.btnBack):
-                startActivity(new Intent(this, WelcomeActivity.class));
+                // Go back to the previous activity:
+                finish();
                 break;
 
 

@@ -48,7 +48,7 @@
                     android:textColor="@color/Primary"
                     android:textColorHint="@color/Primary"
                     android:textSize="16sp"
-
+                    android:inputType="textCapSentences"
                     />
 
 
@@ -63,7 +63,7 @@
                     android:textColor="@color/Primary"
                     android:textColorHint="@color/Primary"
                     android:textSize="16sp"
-
+                    android:inputType="textCapSentences"
                     />
 
                 <EditText

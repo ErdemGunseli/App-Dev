@@ -25,7 +25,9 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ResultsActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -100,7 +102,20 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
 
     private void saveQuestionSet(){
         // Adding the question set to the account's list of completed question sets:
-        Utils.getInstance().getUserAccount().addQuestionSet(questionSet);
+
+        Calendar calendar = Calendar.getInstance();
+
+
+        Utils.getInstance().getUserAccount().addQuestionSet(new QuestionSetHistory(
+                questionSet.getName(),
+                questionSet.calculatePointsEarned(),
+                questionSet.calculatePointsPossible(),
+                questionSet.calculateResult(),
+                questionSet.calculateNumberOfQuestionsSolved()[0],
+                questionSet.calculateNumberOfQuestionsSolved()[1],
+                questionSet.getQuestions().length,
+                DateFormat.getDateInstance().format(Calendar.getInstance().getTime())
+        ));
     }
 
 
@@ -199,72 +214,12 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
-//    private void loadPieChart() {
-//        ArrayList<PieEntry> entries = new ArrayList<>();
-//
-//
-//
-//        // If greater than 0, show in chart:
-//        String label1 = null;
-//        String label2 = null;
-//        String labelOther = null;
-//
-//        // First Attempt
-//        if (firstAttempt > 0 ){label1 = getString(R.string.first_attempt);}
-//        entries.add(new PieEntry(firstAttempt, label1));
-//
-//        // Second Attempt
-//        if (secondAttempt > 0 ){label2 = getString(R.string.second_attempt);}
-//        entries.add(new PieEntry(secondAttempt, label2));
-//
-//        // Other
-//        if (moreAttempts > 0){labelOther = getString(R.string.other);}
-//        entries.add(new PieEntry(moreAttempts, labelOther));
-//
-//
-//
-//        ArrayList<Integer> colors = new ArrayList<>();
-//        for (int color : ColorTemplate.MATERIAL_COLORS) {
-//            colors.add(color);
-//        }
-//
-//
-//        PieDataSet dataSet = new PieDataSet(entries, null);
-//        dataSet.setColors(colors);
-//
-//        PieData data = new PieData(dataSet);
-//        data.setDrawValues(true);
-//        data.setValueFormatter(new PercentFormatter(pieResults));
-//        data.setValueTextSize(11f);
-//        data.setValueTextColor(getResources().getColor(R.color.Primary));
-//
-//        pieResults.setData(data);
-//        pieResults.invalidate();
-//    }
-//
-//    private void setUpPieChart() {
-//
-//        // 'donut' shape
-//        pieResults.setDrawHoleEnabled(true);
-//        pieResults.setHoleColor(getResources().getColor(R.color.Surface1));
-//        pieResults.setUsePercentValues(true);
-//        pieResults.setEntryLabelTextSize(13);
-//        pieResults.setEntryLabelColor(getResources().getColor(R.color.Secondary));
-//        pieResults.setCenterText(getString(R.string.results));
-//        pieResults.setCenterTextColor(getResources().getColor(R.color.Primary));
-//        pieResults.setCenterTextSize(14);
-//        pieResults.getDescription().setText("");
-//
-//
-//    }
 
     @Override
     public void onClick(View view) {
         int v = view.getId();
 
         if (v == R.id.imgExit || v == R.id.btnFinish) {
-            //TODO: Save data
-            questionSet.setCompleted(true);
             questionSet.reset();
             startActivity(new Intent(this, MainMenuActivity.class));
         }

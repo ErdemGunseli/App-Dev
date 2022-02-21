@@ -86,7 +86,12 @@ public class ResultsRecyclerAdapter extends RecyclerView.Adapter<ResultsRecycler
     @Override
     public int getItemCount() {
         // This method returns the number of items.
-        return questionSet.getQuestions().length;
+
+        // Avoid null pointer exception
+        if (questionSet != null){
+            return questionSet.getQuestions().length;
+        }
+        return 0;
     }
 
 

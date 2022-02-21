@@ -89,7 +89,12 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
     @Override
     public int getItemCount() {
         // This method returns the number of items.
-        return questionSets.size();
+
+        // Avoid null pointer exception
+        if (questionSets != null){
+            return questionSets.size();
+        }
+        return 0;
     }
 
 
@@ -115,6 +120,7 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
 
             // We cannot implement View.OnClickListener as we would need to be in this method.
             View.OnClickListener onClickListener = new View.OnClickListener() {
+                @SuppressLint("NotifyDataSetChanged")
                 @Override
                 public void onClick(View v) {
 
@@ -124,12 +130,28 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
                     switch (v.getId()) {
 
                         case (R.id.cvCollapsedMainMenuItem):
-                            // If the Relative View has been clicked, expand if collapsed; collapse if expanded:
-                            questionSet.setExpanded(!questionSets.get(getAdapterPosition()).isExpanded());
 
-                            // We normally would have used notifyDataSetChanged(), but because we are only
-                            // changing a single item, we can use this instead:
-                            notifyItemChanged(getAdapterPosition());
+                            // Record the state of the target item so that it can be reversed:
+                            boolean state = questionSets.get(getAdapterPosition()).isExpanded();
+
+                            // Then, collapse all question sets:
+                            for (QuestionSet qs: questionSets){
+                                qs.setExpanded(false);
+
+                            }
+
+                            // Lastly, reverse the state of the target item:
+                            // This way, 0 or 1 item can be expanded at a time.
+                            questionSet.setExpanded(!state);
+
+                            // using notifyDataSetChanged here causes the animations to not occur,
+                            // because only one can occur at a time,
+                            // so changing items one by one
+                            for (int i = 0; i < getItemCount(); i++){
+                                notifyItemChanged(i);
+                            }
+
+
                             break;
 
                         case (R.id.btnStartQuestionSet):

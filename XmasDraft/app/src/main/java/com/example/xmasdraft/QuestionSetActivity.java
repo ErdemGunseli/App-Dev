@@ -213,6 +213,8 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         switch (v.getId()) {
 
             case (R.id.imgExit):
+                // Not using finish() so that the main menu can be refreshed, displaying where we
+                // left off etc.
                 startActivity(new Intent(this, MainMenuActivity.class));
                 break;
 

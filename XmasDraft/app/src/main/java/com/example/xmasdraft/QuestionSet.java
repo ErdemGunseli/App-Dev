@@ -16,12 +16,11 @@ public class QuestionSet {
     private Question[] questions;
     private int currentQuestionIndex;
     private boolean isExpanded;
-    private boolean isCompleted;
 
     private ArrayList<String> topics = new ArrayList<>();
     private ArrayList<String> models = new ArrayList<>();
 
-
+    private String dateCompleted;
 
 
 
@@ -164,7 +163,7 @@ public class QuestionSet {
                 secondAttempt += 1;
             }
         }
-        return new int[]{firstAttempt, secondAttempt};
+        return new int[] {firstAttempt, secondAttempt};
     }
 
     public void reset(){
@@ -177,16 +176,8 @@ public class QuestionSet {
             question.setAttempted(0);
 
         }
-
     }
 
-    public boolean isCompleted() {
-        return isCompleted;
-    }
-
-    public void setCompleted(boolean completed) {
-        isCompleted = completed;
-    }
 
     public ArrayList<String> getTopics() {
         return topics;
