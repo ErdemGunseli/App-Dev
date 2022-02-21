@@ -1,9 +1,11 @@
 package com.example.xmasdraft;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,6 +26,8 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
     private TextView txtDetailsText, txtDetails;
 
     private Button btnTryQuestions, btnSignUp, btnSignIn;
+
+    private ImageView imgExit;
 
 
 
@@ -108,11 +112,12 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         btnTryQuestions = findViewById(R.id.btnTryQuestions);
         btnSignUp = findViewById(R.id.btnSignUp);
         btnSignIn = findViewById(R.id.btnSignIn);
+        imgExit = findViewById(R.id.imgExit);
 
         btnTryQuestions.setOnClickListener(this);
         btnSignUp.setOnClickListener(this);
         btnSignIn.setOnClickListener(this);
-
+        imgExit.setOnClickListener(this);
     }
 
     
@@ -132,6 +137,14 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
 
             case (R.id.btnSignIn):
                 startActivity(new Intent(this, SignInActivity.class));
+                break;
+
+            case (R.id.imgExit):
+                finish();
+                break;
+
+
+            default:
                 break;
         }
 

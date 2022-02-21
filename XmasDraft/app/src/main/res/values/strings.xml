@@ -40,7 +40,7 @@
 
     <string name="question_x_of_x">Question %d of %d</string>
     <string name="points">%d Points</string>
-    <string name="reveal_answer">Show Answer</string>
+    <string name="reveal_answer">Show\nAnswer</string>
     <string name="try_first">Try This Question First!</string>
     <string name="try_again">Try Again, You Can Do It!</string>
     <string name="enter_answer">Please Enter An Answer</string>

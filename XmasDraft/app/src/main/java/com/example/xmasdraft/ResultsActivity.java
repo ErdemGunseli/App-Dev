@@ -207,9 +207,18 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         String[] labels = {"1st Attempt", "2nd Attempt", "3rd Attempt"};
 
         // Creating the Pie Chart
-        Utils.getInstance().createPieChart(this, pieResults, values, "", labels,
-                R.color.Secondary, getString(R.string.results),
-                R.color.Primary, R.color.Surface1);
+        Utils.getInstance().createPieChart(this, pieResults,
+                values,
+                13,
+                "",
+                0,
+                labels,
+                13,
+                R.color.Secondary,
+                getString(R.string.results),
+                16,
+                R.color.Primary,
+                R.color.Surface1);
 
 
     }

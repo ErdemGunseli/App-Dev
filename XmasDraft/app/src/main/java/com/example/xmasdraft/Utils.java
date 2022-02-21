@@ -21,6 +21,8 @@ import java.util.ArrayList;
 
 public class Utils extends AppCompatActivity {
 
+    // What's UP!!!!!!!!!!!!!
+
     private static Utils instance;
 
     private Account userAccount;
@@ -113,19 +115,19 @@ public class Utils extends AppCompatActivity {
         this.userAccount = userAccount;
     }
 
-    public void createPieChart(Context context, PieChart pieChart, int[] values, String description, String[] labels, int labelColour, String centerText, int textColour, int backgroundColour){
+    public void createPieChart(Context context, PieChart pieChart, int[] values, int valueTextSize, String description, int descriptionTextSize, String[] labels, int labelTextSize, int labelColour, String centerText, int centerTextSize, int textColour, int backgroundColour){
 
         /// Setting Up:
         pieChart.setDrawHoleEnabled(true);
         pieChart.setHoleColor(context.getResources().getColor(backgroundColour));
         pieChart.setUsePercentValues(true);
-        pieChart.setEntryLabelTextSize(13);
+        pieChart.setEntryLabelTextSize(labelTextSize);
         pieChart.setEntryLabelColor(context.getResources().getColor(labelColour));
         pieChart.setCenterText(centerText);
         pieChart.setCenterTextColor(context.getResources().getColor(textColour));
-        pieChart.setCenterTextSize(14);
+        pieChart.setCenterTextSize(centerTextSize);
         pieChart.getDescription().setText(description);
-        pieChart.getDescription().setTextSize(11);
+        pieChart.getDescription().setTextSize(descriptionTextSize);
 
         /// Loading:
         ArrayList<PieEntry> entries = new ArrayList<>();
@@ -154,7 +156,7 @@ public class Utils extends AppCompatActivity {
         PieData data = new PieData(dataSet);
         data.setDrawValues(true);
         data.setValueFormatter(new PercentFormatter(pieChart));
-        data.setValueTextSize(11f);
+        data.setValueTextSize(valueTextSize);
         data.setValueTextColor(context.getResources().getColor(textColour));
 
         pieChart.setData(data);

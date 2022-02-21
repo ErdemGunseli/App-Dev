@@ -64,9 +64,19 @@ public class AccountHistoryRecyclerAdapter extends RecyclerView.Adapter<AccountH
         String[] labels = {"1st Attempt", "2nd Attempt", "3rd Attempt"};
 
         // Creating the Pie Chart
-        Utils.getInstance().createPieChart(context, holder.pieHistory, values, questionSetHistory.getDateCompleted(), labels,
-                R.color.Secondary, context.getString(R.string.results),
-                R.color.Primary, R.color.Surface3);
+        Utils.getInstance().createPieChart(context,
+                holder.pieHistory,
+                values,
+                11,
+                questionSetHistory.getDateCompleted(),
+                11,
+                labels,
+                0,
+                R.color.Secondary,
+                context.getString(R.string.results),
+                13,
+                R.color.Primary,
+                R.color.Surface3);
 
     }
 
