@@ -21,8 +21,6 @@ import java.util.ArrayList;
 
 public class Utils extends AppCompatActivity {
 
-    // What's UP!!!!!!!!!!!!!
-
     private static Utils instance;
 
     private Account userAccount;
