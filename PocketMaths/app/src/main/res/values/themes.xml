@@ -1,0 +1,39 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.PocketMaths" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/Menu</item>
+
+        <!-- Customize your theme here. -->
+        <item name="android:textColor">@color/Primary</item>
+
+        <item name="fontFamily">@font/metropolis_light</item>
+
+        <item name="android:windowBackground">@drawable/default_symbols_background_bitmap</item>
+
+        <item name="materialCardViewStyle">@style/cv1</item>
+
+    </style>
+
+    <!-- CardView Theme -->
+
+    <style name="cv1" parent="">
+        <item name="cardBackgroundColor">@color/Surface1</item>
+        <item name="elevation">100dp</item>
+        <item name="cardCornerRadius">5dp</item>
+    </style>
+
+    <style name="cv2" parent="">
+        <item name="cardBackgroundColor">@color/Surface2</item>
+        <item name="elevation">100dp</item>
+        <item name="cardCornerRadius">5dp</item>
+    </style>
+
+    <style name="cv3" parent="">
+        <item name="cardBackgroundColor">@color/Surface3</item>
+        <item name="elevation">100dp</item>
+        <item name="cardCornerRadius">5dp</item>
+    </style>
+
+</resources>

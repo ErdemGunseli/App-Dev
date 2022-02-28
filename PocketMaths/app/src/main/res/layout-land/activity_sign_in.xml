@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relSignIn"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        >
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvSignIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="35dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp">
+
+            <TextView
+                android:id="@+id/txtSignIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_centerHorizontal="true"
+                android:text="@string/sign_in"
+                android:textSize="21sp"
+                android:textStyle="bold" />
+
+
+
+            <EditText
+                android:id="@+id/edtTxtEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtSignIn"
+                android:inputType="textEmailAddress"
+                android:maxLength="50"
+                android:textColor="@color/Primary"
+                android:textColorHint="@color/Primary"
+                android:textSize="16sp"
+                android:hint="@string/email"
+                />
+
+
+            <EditText
+                android:id="@+id/edtTxtPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edtTxtEmail"
+                android:layout_marginTop="20dp"
+                android:inputType="textPassword"
+                android:maxLength="20"
+                android:textColor="@color/Primary"
+                android:textColorHint="@color/Primary"
+                android:hint="@string/password"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btnForgotPassword"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edtTxtPassword"
+                android:layout_marginTop="15dp"
+                android:text="@string/forgot_password"
+                android:textColor="@color/Accent"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnBack"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btnForgotPassword"
+                android:text="@string/back"
+                android:textColor="@color/Accent"
+                android:textSize="12sp"
+                android:layout_alignParentStart="true"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnConfirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btnForgotPassword"
+                android:layout_toRightOf="@id/btnBack"
+                android:backgroundTint="@color/Accent"
+                android:text="@string/confirm" />
+
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+    </ScrollView>
+
+
+
+</RelativeLayout>
