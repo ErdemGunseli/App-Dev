@@ -1,5 +1,8 @@
 package com.example.PocketMaths;
 
+import static com.example.PocketMaths.Account.Guest;
+import static com.example.PocketMaths.Account.Member;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +22,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     private Button btnBack, btnConfirm;
 
-    EditText[] inputs;
+    private EditText[] inputs;
 
 
     @Override
@@ -104,36 +107,38 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             Utils.getInstance().showSnackBar(this,relSignUp, getString(R.string.pins_do_not_match), getString(R.string.ok));
         }
         else{
-            // We are declaring an account depending on the data entered by the user:
-            Account account = Utils.getInstance().getUserAccount();
-
-            // If they do not have a guest account:
-            if (account == null) {
-                Account userAccount = new Account(edtTxtParentName.getText().toString(),
-                        edtTxtStudentName.getText().toString(), edtTxtEmail.getText().toString(),
-                        edtTxtPassword.getText().toString(),
-                        edtTxtPin.getText().toString());
-
-                // Setting the account:
-                Utils.getInstance().setUserAccount(userAccount);
-
-            }
-            // If they have a quest account:
-            else if (account.getAccountType().equals("Guest")){
-                account.setParentName(edtTxtParentName.getText().toString());
-                account.setStudentName(edtTxtStudentName.getText().toString());
-                account.setEmail(edtTxtEmail.getText().toString());
-                account.setPassword(edtTxtPassword.getText().toString());
-                account.setPin(edtTxtPin.getText().toString());
-                account.setAccountType("Member");
-            }
-
-            // Going to the main menu activity:
-            startActivity(new Intent(this, MainMenuActivity.class));
+            updateAccount();
         }
 
     }
 
+    private void updateAccount(){
+        // We are declaring an account depending on the data entered by the user:
+        Account account = Utils.getInstance().getUserAccount();
 
+        // If they do not have a guest account:
+        if (account == null) {
+            Account userAccount = new Account(edtTxtParentName.getText().toString(),
+                    edtTxtStudentName.getText().toString(), edtTxtEmail.getText().toString(),
+                    edtTxtPassword.getText().toString(),
+                    edtTxtPin.getText().toString());
+
+            // Setting the account:
+            Utils.getInstance().setUserAccount(userAccount);
+
+        }
+        // If they have a quest account:
+        else if (account.getAccountType().equals(Guest)){
+            account.setParentName(edtTxtParentName.getText().toString());
+            account.setStudentName(edtTxtStudentName.getText().toString());
+            account.setEmail(edtTxtEmail.getText().toString());
+            account.setPassword(edtTxtPassword.getText().toString());
+            account.setPin(edtTxtPin.getText().toString());
+            account.setAccountType(Member);
+        }
+
+        // Going to the main menu activity:
+        startActivity(new Intent(this, MainMenuActivity.class));
+    }
 
 }

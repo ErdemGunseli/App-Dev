@@ -69,7 +69,7 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
             // On Question X
             holder.txtCurrentQuestionIndex.setText(String.format(context.getString(R.string.on_question), (questionSet.getCurrentQuestionIndex() + 1)));
             // Continue
-            holder.btnStartQuestionSet.setText(context.getString(R.string.continue_question_set));
+            holder.btnStartQuestionSet.setText(context.getString(R.string.continue_));
         }
 
         holder.txtQuestionSetDescription.setText(questionSet.getDescription());

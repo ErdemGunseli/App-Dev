@@ -1,5 +1,8 @@
 package com.example.PocketMaths;
 
+import static com.example.PocketMaths.Account.Guest;
+import static com.example.PocketMaths.Account.Member;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -71,7 +74,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
     private void setData() {
         Account account = Utils.getInstance().getUserAccount();
 
-        if (account.getAccountType().equals("Guest")){
+        if (account.getAccountType().equals(Guest)){
             // If they have not made an account, we cannot display their details.
             txtDetails.setVisibility(View.GONE);
             btnChangeDetails.setVisibility(View.GONE);
@@ -82,7 +85,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
             btnSignIn.setVisibility(View.VISIBLE);
 
         }
-        else if (account.getAccountType().equals("Member")){
+        else if (account.getAccountType().equals(Member)){
 
             // If they have made an account, display their details.
             txtDetails.setVisibility(View.VISIBLE);
@@ -124,6 +127,8 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         btnSignUp.setOnClickListener(this);
         btnSignIn.setOnClickListener(this);
         imgExit.setOnClickListener(this);
+
+
     }
 
     
@@ -134,6 +139,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         switch (view.getId()){
 
             case (R.id.btnTryQuestions):
+            case (R.id.imgExit):
                 startActivity(new Intent(this, MainMenuActivity.class));
                 break;
 
@@ -145,13 +151,12 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
                 startActivity(new Intent(this, SignInActivity.class));
                 break;
 
-            case (R.id.imgExit):
-                finish();
-                break;
-
             case (R.id.btnChangeDetails):
-                Toast.makeText(this, "CHANGE DETAILS", Toast.LENGTH_SHORT).show();
-                // TODO: This should take the user to a relevant page!!
+                Utils.getInstance().setTargetClass(ChangeDetailsActivity.class);
+
+                // Taking the user to the pin confirmation page with the
+                // target activity passed as extra intent:
+                startActivity(new Intent(this, PinVerificationActivity.class));
                 break;
 
             case (R.id.btnSignOut):

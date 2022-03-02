@@ -2,7 +2,7 @@ package com.example.PocketMaths;
 
 import java.util.Date;
 
-public class QuestionSetHistory {
+public class QuestionSetResult {
 
     private String name;
 
@@ -19,7 +19,7 @@ public class QuestionSetHistory {
     private String dateCompleted;
 
 
-    public QuestionSetHistory(String name, int pointsEarned, int pointsPossible, int result, int firstAttempt, int secondAttempt, int numberOfQuestions, String dateCompleted) {
+    public QuestionSetResult(String name, int pointsEarned, int pointsPossible, int result, int firstAttempt, int secondAttempt, int numberOfQuestions, String dateCompleted) {
         this.name = name;
         this.pointsEarned = pointsEarned;
         this.pointsPossible = pointsPossible;

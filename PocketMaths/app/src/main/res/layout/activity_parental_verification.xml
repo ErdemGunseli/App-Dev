@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relPinVerification"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="25dp"
+        android:layout_centerInParent="true"
+
+        >
+
+        <RelativeLayout
+            android:layout_margin="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <TextView
+                android:id="@+id/txtPin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:text="@string/enter_pin"
+                android:textColor="@color/Accent"
+                android:textStyle="bold"
+                android:textSize="21sp" />
+
+        <EditText
+            android:id="@+id/edtTxtPin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/txtPin"
+            android:layout_marginBottom="25dp"
+            android:textSize="30sp"
+            android:hint="@string/parental_pin"
+            android:inputType="numberPassword"
+            />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btnContinue"
+                android:layout_centerHorizontal="true"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:text="@string/cancel"
+                android:textColor="@color/Accent"
+                android:textSize="12sp"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnContinue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edtTxtPin"
+                android:layout_centerHorizontal="true"
+                android:text="@string/continue_"
+
+                                />
+
+
+
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</RelativeLayout>

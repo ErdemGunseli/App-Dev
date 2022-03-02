@@ -17,7 +17,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
     private Button btnForgotPassword, btnBack, btnConfirm;
 
-    EditText[] inputs;
+    private EditText[] inputs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

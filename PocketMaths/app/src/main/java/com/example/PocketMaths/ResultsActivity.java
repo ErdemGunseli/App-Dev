@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.PocketMaths.R;
 import com.github.mikephil.charting.charts.PieChart;
 
 import java.text.DateFormat;
@@ -99,7 +98,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         Calendar calendar = Calendar.getInstance();
 
 
-        Utils.getInstance().getUserAccount().addQuestionSet(new QuestionSetHistory(
+        Utils.getInstance().getUserAccount().addQuestionSet(new QuestionSetResult(
                 questionSet.getName(),
                 questionSet.calculatePointsEarned(),
                 questionSet.calculatePointsPossible(),

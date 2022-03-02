@@ -9,7 +9,11 @@ public class Account {
 
     private String accountType;
 
-    private ArrayList<QuestionSetHistory> questionSetsCompleted = new ArrayList<>();
+    public static final String Member = "Member";
+    public static final String Guest = "Guest";
+
+
+    private ArrayList<QuestionSetResult> questionSetsCompleted = new ArrayList<>();
 
 
     public Account(String parentName, String studentName, String email, String password, String pin) {
@@ -73,17 +77,24 @@ public class Account {
         this.accountType = accountType;
     }
 
-    public ArrayList<QuestionSetHistory> getQuestionSetsCompleted() {
+    public ArrayList<QuestionSetResult> getQuestionSetsCompleted() {
         return questionSetsCompleted;
     }
 
-    public void setQuestionSetsCompleted(ArrayList<QuestionSetHistory> questionSetsCompleted) {
+    public void setQuestionSetsCompleted(ArrayList<QuestionSetResult> questionSetsCompleted) {
         this.questionSetsCompleted = questionSetsCompleted;
     }
 
-    public void addQuestionSet(QuestionSetHistory questionSetHistory) {
+    public void addQuestionSet(QuestionSetResult questionSetHistory) {
         this.questionSetsCompleted.add(questionSetHistory);
     }
 
+
+    public boolean checkPin(String pin){
+        if (pin.equals(this.pin)){
+            return true;
+        }
+        return false;
+    }
 
 }

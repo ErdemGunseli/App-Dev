@@ -19,6 +19,10 @@ import java.util.ArrayList;
 
 public class Utils extends AppCompatActivity {
 
+    // Target Class used for Pin Checking, initialised to the main menu:
+    private Class<?> targetClass = MainMenuActivity.class;
+
+    // Singleton Class
     private static Utils instance;
 
     private Account userAccount;
@@ -220,5 +224,14 @@ public class Utils extends AppCompatActivity {
                 .show();
     }
 
+    public Class<?> getTargetClass() {
+        return targetClass;
+    }
 
+    public void setTargetClass(Class<?> targetClass) {
+        if (targetClass != null){
+            this.targetClass = targetClass;
+
+        }
+    }
 }

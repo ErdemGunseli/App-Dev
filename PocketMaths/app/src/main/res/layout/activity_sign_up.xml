@@ -14,8 +14,7 @@
             android:id="@+id/cvSignUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="35dp"
-            >
+            android:layout_margin="35dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -42,12 +41,11 @@
                     android:layout_below="@id/txtSignUp"
                     android:layout_marginTop="15dp"
                     android:hint="@string/your_name"
+                    android:inputType="textCapSentences"
                     android:maxLength="20"
                     android:textColor="@color/Primary"
                     android:textColorHint="@color/Primary"
-                    android:textSize="16sp"
-                    android:inputType="textCapSentences"
-                    />
+                    android:textSize="16sp" />
 
 
                 <EditText
@@ -57,12 +55,11 @@
                     android:layout_below="@id/edtTxtParentName"
                     android:layout_marginTop="15dp"
                     android:hint="@string/student_name"
+                    android:inputType="textCapSentences"
                     android:maxLength="20"
                     android:textColor="@color/Primary"
                     android:textColorHint="@color/Primary"
-                    android:textSize="16sp"
-                    android:inputType="textCapSentences"
-                    />
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/edtTxtEmail"
@@ -154,7 +151,6 @@
                     android:layout_below="@id/edtTxtConfirmPin"
                     android:layout_marginTop="20dp"
                     android:layout_toEndOf="@id/btnBack"
-                    android:backgroundTint="@color/Accent"
                     android:text="@string/confirm" />
 
 

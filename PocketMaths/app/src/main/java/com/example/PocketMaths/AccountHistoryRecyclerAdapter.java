@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.PocketMaths.R;
 import com.github.mikephil.charting.charts.PieChart;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ public class AccountHistoryRecyclerAdapter extends RecyclerView.Adapter<AccountH
 
     // We need an array list to pass the list of different contacts to the adapter class.
     // If we do not initialise this array list, we will get a null pointer exception.
-    private ArrayList<QuestionSetHistory> questionSets = Utils.getInstance().getUserAccount().getQuestionSetsCompleted();
+    private ArrayList<QuestionSetResult> questionSets = Utils.getInstance().getUserAccount().getQuestionSetsCompleted();
 
     private Context context;
 
@@ -41,7 +40,7 @@ public class AccountHistoryRecyclerAdapter extends RecyclerView.Adapter<AccountH
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        QuestionSetHistory questionSetHistory = questionSets.get(position);
+        QuestionSetResult questionSetHistory = questionSets.get(position);
 
         // Question Set Name:
         holder.txtQuestionSetName.setText(questionSetHistory.getName());
@@ -121,7 +120,7 @@ public class AccountHistoryRecyclerAdapter extends RecyclerView.Adapter<AccountH
 
 
     @SuppressLint("NotifyDataSetChanged")
-    public void setQuestionSets(ArrayList<QuestionSetHistory> questionSets) {
+    public void setQuestionSets(ArrayList<QuestionSetResult> questionSets) {
         // We will later use this method to pass the data into the contacts array list.
         this.questionSets = questionSets;
 

@@ -35,19 +35,14 @@
                 android:textStyle="bold" />
 
 
-
             <EditText
                 android:id="@+id/edtTxtEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txtSignIn"
-                android:inputType="textEmailAddress"
-                android:maxLength="50"
-                android:textColor="@color/Primary"
-                android:textColorHint="@color/Primary"
-                android:textSize="16sp"
                 android:hint="@string/email"
-                />
+                android:inputType="textEmailAddress"
+                android:maxLength="50"/>
 
 
             <EditText
@@ -58,10 +53,7 @@
                 android:layout_marginTop="20dp"
                 android:inputType="textPassword"
                 android:maxLength="20"
-                android:textColor="@color/Primary"
-                android:textColorHint="@color/Primary"
-                android:hint="@string/password"
-                android:textSize="16sp" />
+                android:hint="@string/password"/>
 
             <Button
                 android:id="@+id/btnForgotPassword"
@@ -72,8 +64,7 @@
                 android:layout_marginTop="15dp"
                 android:text="@string/forgot_password"
                 android:textColor="@color/Accent"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:textSize="12sp"/>
 
             <Button
                 android:id="@+id/btnBack"
@@ -81,19 +72,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/btnForgotPassword"
+                android:layout_alignParentStart="true"
                 android:text="@string/back"
                 android:textColor="@color/Accent"
-                android:textSize="12sp"
-                android:layout_alignParentStart="true"
-                android:textStyle="bold" />
+                android:textSize="12sp" />
 
             <Button
                 android:id="@+id/btnConfirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/btnForgotPassword"
-                android:layout_toRightOf="@id/btnBack"
-                android:backgroundTint="@color/Accent"
+                android:layout_toEndOf="@id/btnBack"
                 android:text="@string/confirm" />
 
 

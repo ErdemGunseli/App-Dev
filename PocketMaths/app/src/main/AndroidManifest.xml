@@ -24,10 +24,11 @@
         <activity android:name=".SignInActivity"/>
         <activity android:name=".SignUpActivity"/>
         <activity android:name=".MainMenuActivity"
-            android:windowSoftInputMode="adjustNothing">
-        </activity>
+            android:windowSoftInputMode="adjustNothing"/>
         <activity android:name=".ResultsActivity"/>
         <activity android:name=".AccountActivity"/>
+        <activity android:name=".PinVerificationActivity"/>
+        <activity android:name=".ChangeDetailsActivity"/>
     </application>
 
 </manifest>
