@@ -39,7 +39,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ArrayList<Contact> contacts = new ArrayList<>();
 
-    private ListRecyclerAdapter listRecyclerAdapter = new ListRecyclerAdapter(this);
+    private DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
+
+
+    private ListRecyclerAdapter listRecyclerAdapter = new ListRecyclerAdapter(this, databaseHelper);
+
 
 
     @Override
@@ -49,10 +53,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         initViews();
 
+        setData();
+
         rvList.setLayoutManager(new LinearLayoutManager(this));
         rvList.setAdapter(listRecyclerAdapter);
+    }
 
-
+    private void setData(){
+        contacts = databaseHelper.getDatabase();
+        listRecyclerAdapter.setContacts(contacts);
     }
 
     private void initViews() {
@@ -97,24 +106,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     Contact contact = new Contact(contacts.size(), firstName, lastName, age, isAdmin);
 
-                    DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
+                    if (databaseHelper.add(contact)){showSnackBar(svMain, getString(R.string.success), getString(R.string.ok));}
 
-                    boolean success = databaseHelper.add(contact);
-
-                    if (success){
-                        showSnackBar(svMain, getString(R.string.success), getString(R.string.ok));
-                    }
-
-                    contacts.add(contact);
-                    listRecyclerAdapter.setContacts(contacts);
+                    listRecyclerAdapter.setContacts(databaseHelper.getDatabase());
                 } else {
                     showSnackBar(svMain, getString(R.string.check_inputs), getString(R.string.ok));
                 }
                 break;
 
             case (R.id.btnClear):
-                contacts = new ArrayList<>();
-                listRecyclerAdapter.setContacts(contacts);
+
+                // Deleting every item:
+                for (Contact contact: databaseHelper.getDatabase()){
+                    databaseHelper.delete(contact);
+                }
+
+                // Setting new empty database:
+                setData();
                 break;
 
 

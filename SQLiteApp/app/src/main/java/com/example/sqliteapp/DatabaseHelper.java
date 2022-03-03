@@ -2,14 +2,18 @@ package com.example.sqliteapp;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
 public class DatabaseHelper  extends SQLiteOpenHelper {
+
+    // Data Access Object (DAO) is considered a best-practice in software design.
 
     public static final String CONTACT_TABLE = "CONTACT_TABLE";
     public static final String COLUMN_CONTACT_ID = "COLUMN_CONTACT_ID";
@@ -26,7 +30,6 @@ public class DatabaseHelper  extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database) {
         // Called the first time the database is accessed.
-        String tableName ="CONTACT_TABLE";
         String createTableStatement = "CREATE TABLE " + CONTACT_TABLE +
                 " (" + COLUMN_CONTACT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_CONTACT_FIRST_NAME + " TEXT, " +
@@ -69,17 +72,84 @@ public class DatabaseHelper  extends SQLiteOpenHelper {
     public ArrayList<Contact> getDatabase(){
         ArrayList<Contact> contacts = new ArrayList<>();
 
+        // Getting every item from the contact table:
         String queryString = "SELECT * FROM " + CONTACT_TABLE;
 
         // We do not need the writable database:
         // We are not getting the writable database as one instance of it can exist:
         SQLiteDatabase database = this.getReadableDatabase();
+        
+        // We could choose execute SQL or raw query. We are using raw query for the cursor return data type:
+        // This function also has selectionArgs as a parameter which is a string array that will
+        // replace any question marks in the query string.
+
+        Cursor cursor = database.rawQuery(queryString, null);
+
+        // A cursor is the result set from a SQL statement - a complex array of items (rows upon rows etc.)
+
+        // Moving to the first result in the result set:
+        // This will return true if there are results obtained.
+        if (cursor.moveToFirst()){
+          // Looping through the cursor and creating new customer objects for each row, inserting each
+          // into the return list:
+
+          do {
+              // Introducing local variables for the data types we expect to receive:
+
+              // If there was not an integer at the specified index, the program would crash:
+              int contactID = cursor.getInt(0);
+
+              String contactFirstName = cursor.getString(1);
+
+              String contactLastName = cursor.getString(2);
+
+              int contactAge = cursor.getInt(3);
 
 
+              // To get the boolean value, we have to convert the result from an integer to a boolean:
+              // In SQLite, there is no such thing as a boolean data type, rather an integer that is either 0 or 1:
+              boolean contactIsAdmin = (cursor.getInt(4) == 1);
+
+
+              Contact contact = new Contact(contactID, contactFirstName, contactLastName, contactAge, contactIsAdmin);
+
+              contacts.add(contact);
+
+          } while(cursor.moveToNext());
+        }
+
+        // Cleaning Up:
+        cursor.close();
+        database.close();
 
         return contacts;
     }
 
+
+
+    public boolean delete(Contact contact){
+
+        boolean success = false;
+
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        // Delete from the contact table an item in which the contact ids match:
+        String queryString = "DELETE FROM " + CONTACT_TABLE + " WHERE " + COLUMN_CONTACT_ID  + " = " +  contact.getId();
+
+        // This will return the deleted item:
+        Cursor cursor = database.rawQuery(queryString, null);
+
+        // Checking to see if there has been a deleted item:
+        if (cursor.moveToFirst()){
+            success = true;
+        }
+
+        // Cleaning Up:
+        cursor.close();
+        database.close();
+
+        return success;
+    }
 
 
 }

@@ -214,7 +214,7 @@ public class Utils extends AppCompatActivity {
         // Shows Snack Bar:
         Snackbar.make(layout, mainText, Snackbar.LENGTH_LONG)
                 .setAction(actionText, new View.OnClickListener() {
-                    @Override
+                    @Override 
                     public void onClick(View v) {
                     }
                 })

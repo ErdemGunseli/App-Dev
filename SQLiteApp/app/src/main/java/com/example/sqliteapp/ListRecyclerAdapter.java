@@ -20,8 +20,11 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
 
     private Context context;
 
-    public ListRecyclerAdapter(Context context){
+    private DatabaseHelper databaseHelper;
+
+    public ListRecyclerAdapter(Context context, DatabaseHelper databaseHelper){
         this.context = context;
+        this.databaseHelper = databaseHelper;
     }
 
     @Override
@@ -89,8 +92,21 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
     }
 
     public void deleteItem(int position){
-        this.contacts.remove(position);
-        notifyDataSetChanged();
+        // Deleting specified item:
+        Toast.makeText(context, "ATTEMPTING TO DELETE ITEM IN INDEX " + position, Toast.LENGTH_SHORT).show();
+
+        if (databaseHelper.delete(contacts.get(position))){
+            Toast.makeText(context, "DELETION APPEARS SUCCESSFUL", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(context, "DELETION APPEARS UNSUCCESSFUL", Toast.LENGTH_SHORT).show();
+        }
+
+        // Setting updated database:
+        setContacts(databaseHelper.getDatabase());
+
+        //Item Changed:
+        notifyItemChanged(position);
     }
 
     public void setContacts(ArrayList<Contact> contacts){
