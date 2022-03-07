@@ -1,6 +1,7 @@
 package com.example.PocketMaths;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Account {
     // A class to hold the account details.
@@ -17,16 +18,16 @@ public class Account {
 
 
     public Account(String parentName, String studentName, String email, String password, String pin) {
-        this.parentName = parentName;
-        this.studentName = studentName;
-        this.email = email;
+        this.parentName = parentName.toUpperCase(Locale.ROOT);
+        this.studentName = studentName.toUpperCase(Locale.ROOT);
+        this.email = email.toLowerCase(Locale.ROOT);
         this.password = password;
         this.pin = pin;
-        this.accountType = "Member";
+        this.accountType = Member;
     }
 
     public Account(){
-        this.accountType = "Guest";
+        this.accountType = Guest;
     }
 
     public String getParentName() {

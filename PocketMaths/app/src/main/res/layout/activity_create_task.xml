@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/svCreateTask"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="25dp"
+        >
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+
+            >
+
+            <ImageView
+                android:id="@+id/imgExit"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignBottom="@id/txtCreateTask"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/ic_back" />
+
+            <TextView
+                android:id="@+id/txtCreateTask"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:text="@string/create_task"
+                android:textColor="@color/Accent"
+                android:textSize="21sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:layout_margin="15dp"
+                android:id="@+id/edtTxtTaskName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtCreateTask"
+
+                android:hint="@string/task_name"
+                android:inputType="text"
+                android:maxLength="20"
+                android:textSize="16sp" />
+
+            <Spinner
+                android:id="@+id/spQuestionSets"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edtTxtTaskName" />
+
+
+            <TextView
+                android:id="@+id/txtAddReward"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/spQuestionSets"
+                android:layout_margin="15dp"
+                android:text="@string/add_reward"
+                android:textSize="16sp" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/swAddReward"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/txtAddReward"
+                android:layout_marginStart="25dp"
+                android:layout_toEndOf="@id/txtAddReward" />
+
+            <EditText
+                android:id="@+id/edtTxtReward"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_below="@id/txtAddReward"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:textSize="16sp"
+                android:layout_marginBottom="15dp"
+                android:inputType="text"
+                android:maxLength="20" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCreate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edtTxtReward"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:text="@string/create" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvTasks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btnCreate"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                app:reverseLayout="true" />
+
+
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</ScrollView>

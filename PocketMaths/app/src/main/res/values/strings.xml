@@ -4,7 +4,6 @@
     <string name="sign_up">Sign Up</string>
     <string name="sign_in">Sign In</string>
     <string name="continue_as_guest">Continue As Guest</string>
-    <string name="ellipsis">...</string>
 
     <string name="email">Email:\t</string>
     <string name="password">Password:</string>
@@ -21,8 +20,9 @@
     <string name="email_sent">Email Sent</string>
     <string name="check_email">Check The Email</string>
     <string name="check_password">Check The Password</string>
+    <string name="check_password_length">Choose A Longer Password</string>
     <string name="user_not_found">User Not Found</string>
-    <string name="empty_fields">Please Fill In All The Fields</string>
+    <string name="empty_inputs">Please Fill In All The Inputs</string>
     <string name="input_lengths">Please Check The Lengths Of The Inputs</string>
     <string name="passwords_do_not_match">The Passwords Do Not Match</string>
     <string name="pin_length">The Pin Needs To Be 4 Digits</string>
@@ -70,6 +70,19 @@
     <string name="parental_pin">- - - -</string>
     <string name="incorrect_pin">Nice Try, Incorrect Pin</string>
     <string name="cancel">Cancel</string>
+    <string name="account_needed">Account Needed</string>
+
     <string name="save_changes">Save Changes</string>
+
+    <string name="create_task">Create Task</string>
+    <string name="create">Create</string>
+    <string name="remaining_tasks">Remaining Tasks:</string>
+    <string name="task_name">Task Name:</string>
+    <string name="add_reward">Reward</string>
+    <string name="reward">Reward:</string>
+    <string name="create_task_details"> Task Name: %s\n %s</string>
+    <string name="reward_details">Task Reward: %s</string>
+    <string name="completed">Completed</string>
+    <string name="not_completed">Not Completed</string>
 
 </resources>

@@ -11,7 +11,7 @@ android:background="#efefef">
 <androidx.cardview.widget.CardView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:elevation="1dp"
+    android:elevation="100dp"
     app:cardCornerRadius="10dp"
     android:layout_margin="25dp"
     android:padding="15dp"
@@ -89,11 +89,10 @@ android:background="#efefef">
             android:id="@+id/swActivate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
             android:layout_below="@id/edtTxtAge"
-            android:layout_toEndOf="@id/txtActivate"
             android:layout_alignBaseline="@id/txtActivate"
-            />
+            android:layout_marginStart="25dp"
+            android:layout_toEndOf="@id/txtActivate" />
 
 
         <RelativeLayout

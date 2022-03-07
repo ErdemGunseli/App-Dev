@@ -5,11 +5,11 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvPinVerification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="25dp"
         android:layout_centerInParent="true"
-
         >
 
         <RelativeLayout
@@ -45,6 +45,15 @@
             />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnContinue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edtTxtPin"
+                android:layout_centerHorizontal="true"
+                android:text="@string/continue_"
+                />
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -56,16 +65,59 @@
                 android:textSize="12sp"
                 />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnContinue"
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvSign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/cvPinVerification"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="25dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="15dp">
+
+            <TextView
+                android:id="@+id/txtNeedAccount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/edtTxtPin"
                 android:layout_centerHorizontal="true"
-                android:text="@string/continue_"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:text="@string/account_needed"
+                android:textColor="@color/Accent"
+                android:textSize="21sp"
+                android:textStyle="bold" />
 
-                                />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSignUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtNeedAccount"
+                android:layout_centerHorizontal="true"
+                android:text="@string/sign_up" />
 
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSignIn"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btnSignUp"
+                android:layout_centerHorizontal="true"
+                android:text="@string/sign_in"
+                android:textColor="@color/Accent"
+                android:textSize="12sp" />
 
 
         </RelativeLayout>

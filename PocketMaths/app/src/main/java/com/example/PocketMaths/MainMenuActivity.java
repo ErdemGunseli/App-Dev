@@ -104,7 +104,6 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        //TODO: Don't forget to make the main menu buttons functional::
 
         switch (v.getId()){
 
@@ -118,7 +117,8 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                 break;
 
             case (R.id.imgCreateTask):
-                Toast.makeText(MainMenuActivity.this, "New Task Clicked", Toast.LENGTH_SHORT).show();
+                Utils.getInstance().setTargetClass(CreateTaskActivity.class);
+                startActivity(new Intent(this, PinVerificationActivity.class));
                 break;
 
             case (R.id.imgSettings):

@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.PocketMaths.R;
+import java.util.Locale;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -86,13 +86,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private void confirmClicked(){
         // Displays appropriate Snack Bar if inputs are invalid:
         if (!Utils.getInstance().inputsFilled(inputs)){
-            Utils.getInstance().showSnackBar(this,relSignUp, getString(R.string.empty_fields), getString(R.string.ok));
+            Utils.getInstance().showSnackBar(this,relSignUp, getString(R.string.empty_inputs), getString(R.string.ok));
         }
         else if (!Utils.getInstance().isValid(new EditText[]{edtTxtParentName, edtTxtStudentName}, 2)) {
             Utils.getInstance().showSnackBar(this,relSignUp, getString(R.string.input_lengths), getString(R.string.ok));
         }
         else if (!Utils.getInstance().isValid(new EditText[]{edtTxtPassword}, 6)){
-            Utils.getInstance().showSnackBar(this,relSignUp,getString(R.string.check_password), getString(R.string.ok));
+            Utils.getInstance().showSnackBar(this,relSignUp,getString(R.string.check_password_length), getString(R.string.ok));
         }
         else if (!Utils.getInstance().isValidEmail(edtTxtEmail.getText().toString())){
             Utils.getInstance().showSnackBar(this,relSignUp,getString(R.string.check_email), getString(R.string.ok));
@@ -109,7 +109,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         else{
             updateAccount();
         }
-
     }
 
     private void updateAccount(){
@@ -129,9 +128,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
         // If they have a quest account:
         else if (account.getAccountType().equals(Guest)){
-            account.setParentName(edtTxtParentName.getText().toString());
-            account.setStudentName(edtTxtStudentName.getText().toString());
-            account.setEmail(edtTxtEmail.getText().toString());
+            account.setParentName(edtTxtParentName.getText().toString().toUpperCase(Locale.ROOT));
+            account.setStudentName(edtTxtStudentName.getText().toString().toUpperCase(Locale.ROOT));
+            account.setEmail(edtTxtEmail.getText().toString().toLowerCase(Locale.ROOT));
             account.setPassword(edtTxtPassword.getText().toString());
             account.setPin(edtTxtPin.getText().toString());
             account.setAccountType(Member);

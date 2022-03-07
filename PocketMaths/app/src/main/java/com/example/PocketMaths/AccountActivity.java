@@ -31,7 +31,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
 
     private ImageView imgExit;
 
-
+    //TODO: Display Account Details Better
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

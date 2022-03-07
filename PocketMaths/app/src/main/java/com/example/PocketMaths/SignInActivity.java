@@ -8,8 +8,6 @@ import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.PocketMaths.R;
-
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener {
     private RelativeLayout relSignIn;
 
@@ -89,7 +87,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         // Displays appropriate Snack Bar if inputs are invalid:
         if (!Utils.getInstance().inputsFilled(inputs)){
             // If all of the inputs are not filled, they need to check:
-            Utils.getInstance().showSnackBar(this, relSignIn, getString(R.string.empty_fields), getString(R.string.ok));
+            Utils.getInstance().showSnackBar(this, relSignIn, getString(R.string.empty_inputs), getString(R.string.ok));
         }
 
         else if (!Utils.getInstance().isValidEmail(edtTxtEmail.getText().toString())){
@@ -103,7 +101,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         else{
             // User not found:
             Utils.getInstance().showSnackBar(this, relSignIn, getString(R.string.user_not_found), getString(R.string.ok));
-            // TODO: Here, I would access a server to check for the details but I do not have it:
+            // TODO: Here, I would access a server to check for the details but I do not have it. Will I code one?
         }
     }
 

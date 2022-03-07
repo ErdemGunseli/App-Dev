@@ -1,6 +1,5 @@
 package com.example.PocketMaths;
 
-import static com.example.PocketMaths.Account.Guest;
 import static com.example.PocketMaths.Account.Member;
 
 import android.content.Intent;
@@ -92,7 +91,7 @@ public class ChangeDetailsActivity extends AppCompatActivity implements View.OnC
     private void saveChangesClicked() {
         // Displays appropriate Snack Bar if inputs are invalid:
         if (!Utils.getInstance().inputsFilled(inputs)){
-            Utils.getInstance().showSnackBar(this,relChangeDetails, getString(R.string.empty_fields), getString(R.string.ok));
+            Utils.getInstance().showSnackBar(this,relChangeDetails, getString(R.string.empty_inputs), getString(R.string.ok));
         }
         else if (!Utils.getInstance().isValid(new EditText[]{edtTxtParentName, edtTxtStudentName}, 2)) {
             Utils.getInstance().showSnackBar(this,relChangeDetails, getString(R.string.input_lengths), getString(R.string.ok));

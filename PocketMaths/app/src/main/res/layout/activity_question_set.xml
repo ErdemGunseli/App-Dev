@@ -126,29 +126,25 @@
                     android:id="@+id/answerA"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/Primary"
-                    android:textSize="13sp" />
+                    android:layout_marginTop="15dp"/>
 
                 <RadioButton
                     android:id="@+id/answerB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/Primary"
-                    android:textSize="13sp" />
+                    android:layout_marginTop="15dp" />
 
                 <RadioButton
                     android:id="@+id/answerC"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/Primary"
-                    android:textSize="13sp" />
+                    android:layout_marginTop="15dp" />
 
                 <RadioButton
                     android:id="@+id/answerD"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/Primary"
-                    android:textSize="13sp" />
+                    android:layout_marginTop="15dp"/>
 
 
             </RadioGroup>
@@ -160,16 +156,17 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txtMessage"
                 android:layout_centerHorizontal="true"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:background="@color/Primary"
                 android:hint="@string/answer"
                 android:inputType="numberDecimal"
                 android:maxLength="10"
                 android:padding="10dp"
                 android:textColor="@color/Secondary"
+                android:textColorHint="@color/Secondary"
                 android:textSize="16sp" />
 
             <com.google.android.material.button.MaterialButton

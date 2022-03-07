@@ -1,6 +1,7 @@
-package com.example.sqliteapp;
+package com.example.PocketMaths;
 
 import android.content.Context;
+import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,63 +10,63 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
-public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapter.ViewHolder> {
+public class TaskCreateRecyclerAdapter extends RecyclerView.Adapter<TaskCreateRecyclerAdapter.ViewHolder> {
 
-    private ArrayList<Contact> contacts = new ArrayList<>();
+    private ArrayList<Task> tasks = new ArrayList<>();
 
     private Context context;
 
     private DatabaseHelper databaseHelper;
 
-    public ListRecyclerAdapter(Context context, DatabaseHelper databaseHelper){
+
+    public TaskCreateRecyclerAdapter(Context context, DatabaseHelper databaseHelper){
         this.context = context;
         this.databaseHelper = databaseHelper;
+
     }
 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.create_task_item, parent, false);
         return new ViewHolder(view);
-
 
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Contact contact = contacts.get(position);
+        Task task = tasks.get(position);
 
-        String activatedText;
-        if (contact.isAdmin()){
-            activatedText = context.getString(R.string.admin);
+        String reward;
+
+        if (task.getReward().isEmpty()){
+            reward = "";
         }
         else{
-            activatedText = context.getString(R.string.not_Admin);
+            reward = (String) String.format(context.getString(R.string.reward_details), task.getReward());
         }
 
-
-        holder.txtDetails.setText(String.format(context.getString(R.string.list_item),
-                        contact.getFirstName(),
-                        contact.getLastName(),
-                        contact.getAge(),
-                        contact.getId(),
-                        activatedText));
+        //TODO: Mention Question Set
+        holder.txtCreateTaskDetails.setText(String.format(context.getString(R.string.create_task_details),
+                task.getName(), reward));
 
 
     }
 
     @Override
     public int getItemCount() {
-        return contacts.size();
+        return tasks.size();
     }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView txtDetails;
+        private TextView txtCreateTaskDetails;
         private ImageView imgDelete;
 
         public ViewHolder(View itemView) {
@@ -75,26 +76,28 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
         }
 
         private void initViews() {
-            txtDetails = itemView.findViewById(R.id.txtDetails);
+            txtCreateTaskDetails = itemView.findViewById(R.id.txtCreateTaskDetails);
             imgDelete = itemView.findViewById(R.id.imgDelete);
-
 
             imgDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    deleteItem(getAdapterPosition());
+                    deleteTask(getAdapterPosition());
                 }
             });
         }
-
-
     }
 
-    public void deleteItem(int position){
-        // Deleting specified item:
-        Toast.makeText(context, "ATTEMPTING TO DELETE ITEM IN INDEX " + position, Toast.LENGTH_SHORT).show();
+    public void setTasks(ArrayList<Task> tasks){
+        this.tasks = tasks;
+        notifyDataSetChanged();
+    }
 
-        if (databaseHelper.deleteUser(contacts.get(position))){
+
+    public void deleteTask(int position){
+        // Deleting specified item:
+
+        if (databaseHelper.deleteTask(tasks.get(position))){
             Toast.makeText(context, "DELETION APPEARS SUCCESSFUL", Toast.LENGTH_SHORT).show();
         }
         else{
@@ -102,14 +105,15 @@ public class ListRecyclerAdapter extends RecyclerView.Adapter<ListRecyclerAdapte
         }
 
         // Setting updated database:
-        setContacts(databaseHelper.getDatabase());
+        setTasks(databaseHelper.getTasks());
 
         //Item Changed:
         notifyItemChanged(position);
+
+        //TODO: Problem, delete button needs to be clicked twice
+        //TODO: Doesn't actually delete when clicked the first time after an activity is started??????
+
     }
 
-    public void setContacts(ArrayList<Contact> contacts){
-        this.contacts = contacts;
-        notifyDataSetChanged();
-    }
+
 }

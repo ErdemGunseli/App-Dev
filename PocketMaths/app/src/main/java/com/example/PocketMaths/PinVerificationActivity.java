@@ -7,42 +7,61 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
-import java.util.Objects;
+import androidx.cardview.widget.CardView;
 
 public class PinVerificationActivity extends AppCompatActivity implements View.OnClickListener{
 
     private RelativeLayout relPinVerification;
 
+    private CardView cvPinVerification, cvSign;
+
     private TextView txtPin;
 
-    private Button btnContinue, btnCancel;
+    private Button btnContinue, btnCancel, btnSignUp, btnSignIn;
 
     private EditText edtTxtPin;
 
-    private Intent target;
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_parental_verification);
+        setContentView(R.layout.activity_pin_verification);
 
         initViews();
+
+        // Deciding what to display depending on account type:
+        Account account = Utils.getInstance().getUserAccount();
+
+        if (account.getAccountType() == Account.Guest){
+            cvSign.setVisibility(View.VISIBLE);
+            cvPinVerification.setVisibility(View.GONE);
+        }
+        else{
+            cvSign.setVisibility(View.GONE);
+            cvPinVerification.setVisibility(View.VISIBLE);
+        }
+
 
     }
 
     private void initViews() {
         relPinVerification = findViewById(R.id.relPinVerification);
+        cvPinVerification = findViewById(R.id.cvPinVerification);
         txtPin = findViewById(R.id.txtPin);
         btnContinue = findViewById(R.id.btnContinue);
+
         btnCancel = findViewById(R.id.btnCancel);
         edtTxtPin = findViewById(R.id.edtTxtPin);
 
+        cvSign = findViewById(R.id.cvSign);
+        btnSignUp = findViewById(R.id.btnSignUp);
+        btnSignIn = findViewById(R.id.btnSignIn);
+
         btnContinue.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
+        btnSignUp.setOnClickListener(this);
+        btnSignIn.setOnClickListener(this);
+
     }
 
 
@@ -59,6 +78,14 @@ public class PinVerificationActivity extends AppCompatActivity implements View.O
 
             case (R.id.btnCancel):
                 onBackPressed();
+                break;
+
+            case (R.id.btnSignUp):
+                startActivity(new Intent(this, SignUpActivity.class));
+                break;
+
+            case (R.id.btnSignIn):
+                startActivity(new Intent(this, SignInActivity.class));
                 break;
 
             default:

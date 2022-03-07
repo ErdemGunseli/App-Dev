@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
-public class DatabaseHelper  extends SQLiteOpenHelper {
+public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Data Access Object (DAO) is considered a best-practice in software design.
 
@@ -127,28 +127,20 @@ public class DatabaseHelper  extends SQLiteOpenHelper {
 
 
 
-    public boolean delete(Contact contact){
+    public boolean deleteUser(Contact contact){
 
-        boolean success = false;
+         SQLiteDatabase database = this.getWritableDatabase();
 
-        SQLiteDatabase database = this.getWritableDatabase();
+         long result = database.delete(CONTACT_TABLE, COLUMN_CONTACT_ID + "=?", new String[] {String.valueOf(contact.getId())});
 
-        // Delete from the contact table an item in which the contact ids match:
-        String queryString = "DELETE FROM " + CONTACT_TABLE + " WHERE " + COLUMN_CONTACT_ID  + " = " +  contact.getId();
+         database.close();
 
-        // This will return the deleted item:
-        Cursor cursor = database.rawQuery(queryString, null);
+         if (result == -1){
+             return false;
+         }
 
-        // Checking to see if there has been a deleted item:
-        if (cursor.moveToFirst()){
-            success = true;
-        }
+         return true;
 
-        // Cleaning Up:
-        cursor.close();
-        database.close();
-
-        return success;
     }
 
 

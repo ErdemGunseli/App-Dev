@@ -265,7 +265,6 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         || (currentQuestion.getType().equals("written") && !edtTxtAnswer.getText().toString().equals("")))
         {
 
-            // TODO: For now, if the answer is correct, we are moving immediately to the next question. Maybe change this? - Probably Not, I like it this way and it's simple.
             if (currentQuestion.checkAnswer(getCheckedRadioButtonIndex(), edtTxtAnswer.getText().toString())) {
 
                 if (lastQuestion()){

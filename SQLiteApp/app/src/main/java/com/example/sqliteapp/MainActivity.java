@@ -7,16 +7,12 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ScrollView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -118,7 +114,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 // Deleting every item:
                 for (Contact contact: databaseHelper.getDatabase()){
-                    databaseHelper.delete(contact);
+                   if (databaseHelper.deleteUser(contact)){
+                       Toast.makeText(this, "DELETION APPEARS SUCCESSFUL", Toast.LENGTH_SHORT).show();
+                   }
+                   else{
+                       Toast.makeText(this, "DELETION APPEARS UNSUCCESSFUL", Toast.LENGTH_SHORT).show();
+                   }
+
                 }
 
                 // Setting new empty database:

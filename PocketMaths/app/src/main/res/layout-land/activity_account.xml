@@ -100,9 +100,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/txtDetailsText"
                     android:layout_margin="15dp"
-                    android:textColor="@color/Secondary"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textColor="@color/Accent"
+                    android:textSize="16sp"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnChangeDetails"
