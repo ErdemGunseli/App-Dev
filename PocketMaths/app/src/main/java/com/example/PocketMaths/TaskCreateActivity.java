@@ -45,7 +45,7 @@ public class TaskCreateActivity extends AppCompatActivity implements View.OnClic
 
     private RecyclerView rvTasks;
 
-    private DatabaseHelper databaseHelper = new DatabaseHelper(this,TASKS_TABLE_CREATE_SQLs );
+    private DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
     private TaskCreateRecyclerAdapter taskCreateRecyclerAdapter = new TaskCreateRecyclerAdapter(this, databaseHelper);
 

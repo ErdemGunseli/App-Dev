@@ -36,7 +36,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
 
     private PieChart pieResults;
 
-    private DatabaseHelper databaseHelper = new DatabaseHelper(this, DatabaseHelper.QUESTION_SET_RESULT_TABLE_CREATE_SQLs);
+    private DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
 
 

@@ -19,7 +19,7 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
 
     private RecyclerView rvTasks;
 
-    private DatabaseHelper databaseHelper = new DatabaseHelper(this,TASKS_TABLE_CREATE_SQLs );
+    private DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
     private TaskViewRecyclerAdapter taskViewRecyclerAdapter = new TaskViewRecyclerAdapter(this, databaseHelper);
 

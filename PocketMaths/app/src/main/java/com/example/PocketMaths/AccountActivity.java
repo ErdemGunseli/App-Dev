@@ -41,7 +41,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         
         setData();
 
-        DatabaseHelper databaseHelper = new DatabaseHelper(this, DatabaseHelper.QUESTION_SET_RESULT_TABLE_CREATE_SQLs);
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
         AccountHistoryRecyclerAdapter accountHistoryRecyclerAdapter = new AccountHistoryRecyclerAdapter(this);
         accountHistoryRecyclerAdapter.setQuestionSets(databaseHelper.getQuestionSetResults());

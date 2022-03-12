@@ -97,18 +97,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             COLUMN_DATE_COMPLETED + " INTEGER)";
 
 
-
-    private String createSQL;
-
-    public DatabaseHelper(@Nullable Context context, String createSQL) {
+    public DatabaseHelper(@Nullable Context context) {
         //TODO: Pass Create and Delete statements:
         super(context, "database", null, 1);
-        this.createSQL = createSQL;
     }
 
     @Override
     public void onCreate(SQLiteDatabase database) {
-        database.execSQL(this.createSQL);
+        //// Creating all tables:
+
+        // Create Tasks table:
+        database.execSQL("CREATE TABLE IF NOT EXISTS " + TASKS_TABLE +
+                " (" + COLUMN_TASK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_TASK_NAME + " TEXT, " +
+                COLUMN_TASK_REWARD + " TEXT, " +
+                COLUMN_TASK_QUESTION_SET_ID + " INTEGER, " +
+                COLUMN_TASK_COMPLETED + " BOOL)");
+
+        // Creating Question Set Results table:
+        database.execSQL("CREATE TABLE IF NOT EXISTS " + QUESTION_SET_RESULTS_TABLE +
+                " (" + QUESTION_SET_RESULT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_QUESTION_SET_ID + " INTEGER, " +
+                COLUMN_QUESTION_SET_POINTS_EARNED + " INTEGER, " +
+                COLUMN_QUESTION_SET_POINTS_POSSIBLE + " INTEGER, " +
+                COLUMN_FIRST_ATTEMPT + " INTEGER, " +
+                COLUMN_SECOND_ATTEMPT + " INTEGER, " +
+                COLUMN_MORE_ATTEMPTS + " INTEGER, " +
+                COLUMN_DATE_COMPLETED + " INTEGER)");
+
+
+
     }
 
 
