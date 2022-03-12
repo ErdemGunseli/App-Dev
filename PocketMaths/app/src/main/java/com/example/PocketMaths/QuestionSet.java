@@ -163,7 +163,9 @@ public class QuestionSet {
                 secondAttempt += 1;
             }
         }
-        return new int[] {firstAttempt, secondAttempt};
+        int moreAttempts = this.questions.length - firstAttempt - secondAttempt;
+
+        return new int[] {firstAttempt, secondAttempt, moreAttempts};
     }
 
     public void reset(){
@@ -173,7 +175,7 @@ public class QuestionSet {
             // If the student has completed the question set, reset the values
             // so that it can be done again.
             question.setPointsEarned(0);
-            question.setAttempted(0);
+            question.setAttempts(0);
 
         }
     }

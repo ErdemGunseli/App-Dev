@@ -3,77 +3,80 @@ package com.example.PocketMaths;
 public class Question {
 
     // Each question will have some text, an array of answer options, a correct answer and possibly an image.
-    private String questionText;
-    private int imageID;
-
+    private int id;
+    private String text;
+    private int imageId;
 
     private String type;
 
+    public static final String WRITTEN = "written";
+    public static final String MULTIPLE_CHOICE = "multipleChoice";
+
+
+
     // For Multiple Choice
-    private String[] answers;
+    private String[] answerOptions;
     private int correctAnswerIndex;
     private int chosenAnswerIndex;
 
-
     // For Written
-    private String answer;
+    private String correctWrittenAnswer;
     private String writtenAnswer;
-
 
     private String topic;
     // The type/model of the question
     private String model;
 
-    private int attempted = 0;
+    private int attempts = 0;
 
     private int pointsPossible;
     private int pointsEarned = 0;
 
+    //TODO: Get id from questions table:
 
-
-
-
-    public Question(String topic, String model, String questionText, int imageID, String[] answers, int correctAnswerIndex, int pointsPossible) {
+    public Question(String topic, String model, String text, int imageId, String[] answerOptions, int correctAnswerIndex, int pointsPossible) {
         this.model = model;
         this.topic = topic;
-        this.questionText = questionText;
-        this.imageID = imageID;
-        this.answers = answers;
+        this.text = text;
+        this.imageId = imageId;
+        this.answerOptions = answerOptions;
         this.correctAnswerIndex = correctAnswerIndex;
         this.pointsPossible = pointsPossible;
 
-        this.type = "multipleChoice";
+        this.type = MULTIPLE_CHOICE;
     }
 
-    public Question(String topic, String model, String questionText, int imageID, String answer, int pointsPossible){
+    public Question(String topic, String model, String text, int imageId, String answer, int pointsPossible){
         this.model = model;
         this.topic = topic;
-        this.questionText = questionText;
-        this.imageID = imageID;
-        this.answer = answer;
+        this.text = text;
+        this.imageId = imageId;
+        this.correctWrittenAnswer = answer;
         this.pointsPossible = pointsPossible;
 
-        this.type = "written";
+        this.type = WRITTEN;
     }
 
     // Question Text
-    public String getQuestionText() {
-        return questionText;
+    public String getText() {
+        return text;
     }
 
-    public void setQuestionText(String questionText) {
-        this.questionText = questionText;
+    public void setText(String text) {
+        this.text = text;
     }
 
 
     // Possible Answers
-    public String[] getAnswers() {
-        return answers;
+    public String[] getAnswerOptions() {
+        return answerOptions;
     }
 
-    public void setAnswers(String[] answers) {
-        this.answers = answers;
+    public void setAnswerOptions(String[] answerOptions) {
+        this.answerOptions = answerOptions;
     }
+
+
 
 
     // Correct Answer Index
@@ -86,12 +89,12 @@ public class Question {
     }
 
     // Image ID (optional)
-    public int getImageID() {
-        return imageID;
+    public int getImageId() {
+        return imageId;
     }
 
-    public void setImageID(int imageID) {
-        this.imageID = imageID;
+    public void setImageId(int imageId) {
+        this.imageId = imageId;
     }
 
 
@@ -101,26 +104,26 @@ public class Question {
         if (this.type.equals("multipleChoice")) {
 
             // Their initial answer
-            if (this.attempted == 0) {
+            if (this.attempts == 0) {
                 this.chosenAnswerIndex = chosenAnswerIndex;
             }
 
             if (correctAnswerIndex == chosenAnswerIndex) {
                 this.calculatePointsEarned();
-                this.attempted += 1;
+                this.attempts += 1;
                 return true;
             }
         }
 
         else if (this.type.equals("written")){
 
-            if (this.attempted == 0) {
+            if (this.attempts == 0) {
                 this.writtenAnswer = answer;
             }
 
-            if (answer.equals(this.answer)){
+            if (answer.equals(this.correctWrittenAnswer)){
                 this.calculatePointsEarned();
-                this.attempted += 1;
+                this.attempts += 1;
                 return true;
             }
 
@@ -128,18 +131,18 @@ public class Question {
 
 
         }
-        this.attempted += 1;
+        this.attempts += 1;
         return false;
 
     }
 
 
-    public int getAttempted() {
-        return attempted;
+    public int getAttempts() {
+        return attempts;
     }
 
-    public void setAttempted(int attempted) {
-        this.attempted = attempted;
+    public void setAttempts(int attempts) {
+        this.attempts = attempts;
     }
 
     public int getPointsPossible() {
@@ -162,9 +165,9 @@ public class Question {
 
         // If they got it right first, do not penalise:
         if (this.pointsEarned == 0) {
-            if (attempted == 0) {
+            if (attempts == 0) {
                 this.pointsEarned = this.pointsPossible;
-            } else if (this.attempted == 1) {
+            } else if (this.attempts == 1) {
                 this.pointsEarned = this.pointsPossible / 2;
             }
         }
@@ -175,12 +178,12 @@ public class Question {
     public void setChosenAnswerIndex(int chosenAnswerIndex) {this.chosenAnswerIndex = chosenAnswerIndex;}
 
 
-    public String getAnswer() {
-        return answer;
+    public String getCorrectWrittenAnswer() {
+        return correctWrittenAnswer;
     }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
+    public void setCorrectWrittenAnswer(String correctWrittenAnswer) {
+        this.correctWrittenAnswer = correctWrittenAnswer;
     }
 
     public String getType() {

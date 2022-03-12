@@ -1,5 +1,8 @@
 package com.example.PocketMaths;
 
+import static com.example.PocketMaths.DatabaseHelper.QUESTIONS_TABLE;
+import static com.example.PocketMaths.DatabaseHelper.QUESTIONS_TABLE_CREATE_SQLs;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -50,6 +53,8 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
+
+
     private void initViews() {
         rvMainMenu = findViewById(R.id.rvMainMenu);
 
@@ -66,19 +71,13 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
         svQuestionSet.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
+            public boolean onQueryTextSubmit(String s) {return false;}
 
             @Override
             public boolean onQueryTextChange(String s) {
                 // Filtering the Question Sets based on the value of s:
                 filterQuestionSets(s);
                 return false;
-
-
-
-
             }
         });
     }
@@ -113,11 +112,12 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                 break;
 
             case (R.id.imgTasks):
-                Toast.makeText(MainMenuActivity.this, "Set Tasks Clicked", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, TaskViewActivity.class));
+
                 break;
 
             case (R.id.imgCreateTask):
-                Utils.getInstance().setTargetClass(CreateTaskActivity.class);
+                Utils.getInstance().setTargetClass(TaskCreateActivity.class);
                 startActivity(new Intent(this, PinVerificationActivity.class));
                 break;
 

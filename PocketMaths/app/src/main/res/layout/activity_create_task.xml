@@ -55,7 +55,10 @@
                 android:id="@+id/spQuestionSets"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/edtTxtTaskName" />
+                android:layout_below="@id/edtTxtTaskName"
+                android:layout_margin="5dp"
+                android:dropDownSelector="@color/Accent"
+                />
 
 
             <TextView
@@ -63,9 +66,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/spQuestionSets"
-                android:layout_margin="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
                 android:text="@string/add_reward"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/swAddReward"

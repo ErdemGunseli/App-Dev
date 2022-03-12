@@ -1,9 +1,19 @@
 package com.example.PocketMaths;
 
+import static com.example.PocketMaths.DatabaseHelper.COLUMN_TASK_COMPLETED;
+import static com.example.PocketMaths.DatabaseHelper.COLUMN_TASK_ID;
+import static com.example.PocketMaths.DatabaseHelper.COLUMN_TASK_NAME;
+import static com.example.PocketMaths.DatabaseHelper.COLUMN_TASK_QUESTION_SET_ID;
+import static com.example.PocketMaths.DatabaseHelper.COLUMN_TASK_REWARD;
+import static com.example.PocketMaths.DatabaseHelper.TASKS_TABLE;
+import static com.example.PocketMaths.DatabaseHelper.TASKS_TABLE_CREATE_SQLs;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.transition.TransitionManager;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -19,7 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class CreateTaskActivity extends AppCompatActivity implements View.OnClickListener {
+public class TaskCreateActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ScrollView svCreateTask;
 
@@ -35,9 +45,13 @@ public class CreateTaskActivity extends AppCompatActivity implements View.OnClic
 
     private RecyclerView rvTasks;
 
-    private DatabaseHelper databaseHelper = new DatabaseHelper(this);
+    private DatabaseHelper databaseHelper = new DatabaseHelper(this,TASKS_TABLE_CREATE_SQLs );
 
     private TaskCreateRecyclerAdapter taskCreateRecyclerAdapter = new TaskCreateRecyclerAdapter(this, databaseHelper);
+
+    private int questionSetId = -1;
+
+    private ArrayList<String> questionSetNames = new ArrayList<>();
 
     //TODO: Task Item Needs Improvement
 
@@ -72,6 +86,7 @@ public class CreateTaskActivity extends AppCompatActivity implements View.OnClic
         btnCreate = findViewById(R.id.btnCreate);
         svCreateTask = findViewById(R.id.svCreateTask);
         rvTasks = findViewById(R.id.rvTasks);
+        spQuestionSets = findViewById(R.id.spQuestionSets);
 
         imgExit.setOnClickListener(this);
         btnCreate.setOnClickListener(this);
@@ -90,6 +105,24 @@ public class CreateTaskActivity extends AppCompatActivity implements View.OnClic
                 }
             }
         });
+        spQuestionSets.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                questionSetId = i;
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                questionSetId = -1;
+            }
+        });
+
+        for (QuestionSet questionSet: Utils.getQuestionSets()){
+            questionSetNames.add(questionSet.getName());
+        }
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, questionSetNames);
+        arrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spQuestionSets.setAdapter(arrayAdapter);
     }
 
     @Override
@@ -121,17 +154,22 @@ public class CreateTaskActivity extends AppCompatActivity implements View.OnClic
         else{
             inputs = new EditText[]{edtTxtTaskName};
         }
-
         if (!Utils.getInstance().inputsFilled(inputs)){
-            Utils.getInstance().showSnackBar(CreateTaskActivity.this, svCreateTask, getString(R.string.empty_inputs), getString(R.string.ok));
+            Utils.getInstance().showSnackBar(TaskCreateActivity.this, svCreateTask, getString(R.string.empty_inputs), getString(R.string.ok));
         }
         else if (!Utils.getInstance().isValid(inputs, 2)){
-            Utils.getInstance().showSnackBar(CreateTaskActivity.this, svCreateTask, getString(R.string.input_lengths), getString(R.string.ok));
+            Utils.getInstance().showSnackBar(TaskCreateActivity.this, svCreateTask, getString(R.string.input_lengths), getString(R.string.ok));
         }
+        else if (questionSetId == -1) {
+            Utils.getInstance().showSnackBar(TaskCreateActivity.this, svCreateTask, getString(R.string.choose_qs), getString(R.string.ok));
+        }
+
         else{
             //TODO: Passing 0 as question set ID for now. Change This.
+            System.out.println();
 
-            Task task = new Task(0, edtTxtTaskName.getText().toString(), edtTxtReward.getText().toString(), 0, false);
+
+            Task task = new Task(questionSetId, edtTxtTaskName.getText().toString(), edtTxtReward.getText().toString(), spQuestionSets.getSelectedItemPosition(), false);
             databaseHelper.addTask(task);
             taskCreateRecyclerAdapter.setTasks(databaseHelper.getTasks());
             TransitionManager.beginDelayedTransition(svCreateTask);

@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class TaskCreateRecyclerAdapter extends RecyclerView.Adapter<TaskCreateRecyclerAdapter.ViewHolder> {
+public class TaskViewRecyclerAdapter extends RecyclerView.Adapter<TaskViewRecyclerAdapter.ViewHolder> {
 
     private ArrayList<Task> tasks = new ArrayList<>();
 
@@ -25,7 +25,7 @@ public class TaskCreateRecyclerAdapter extends RecyclerView.Adapter<TaskCreateRe
     private DatabaseHelper databaseHelper;
 
 
-    public TaskCreateRecyclerAdapter(Context context, DatabaseHelper databaseHelper){
+    public TaskViewRecyclerAdapter(Context context, DatabaseHelper databaseHelper){
         this.context = context;
         this.databaseHelper = databaseHelper;
 
@@ -34,7 +34,7 @@ public class TaskCreateRecyclerAdapter extends RecyclerView.Adapter<TaskCreateRe
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.create_task_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_task_item, parent, false);
         return new ViewHolder(view);
 
     }
@@ -55,7 +55,7 @@ public class TaskCreateRecyclerAdapter extends RecyclerView.Adapter<TaskCreateRe
         }
 
         //TODO: Mention Question Set
-        holder.txtCreateTaskDetails.setText(String.format(context.getString(R.string.create_task_details),
+        holder.txtViewTaskDetail.setText(String.format(context.getString(R.string.create_task_details),
                 task.getName(), questionSetName, reward));
 
     }
@@ -67,8 +67,7 @@ public class TaskCreateRecyclerAdapter extends RecyclerView.Adapter<TaskCreateRe
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView txtCreateTaskDetails;
-        private ImageView imgDelete;
+        private TextView txtViewTaskDetail;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -77,15 +76,7 @@ public class TaskCreateRecyclerAdapter extends RecyclerView.Adapter<TaskCreateRe
         }
 
         private void initViews() {
-            txtCreateTaskDetails = itemView.findViewById(R.id.txtCreateTaskDetails);
-            imgDelete = itemView.findViewById(R.id.imgDelete);
-
-            imgDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    deleteTask(getAdapterPosition());
-                }
-            });
+            txtViewTaskDetail = itemView.findViewById(R.id.txtViewTaskDetail);
         }
     }
 
@@ -93,26 +84,5 @@ public class TaskCreateRecyclerAdapter extends RecyclerView.Adapter<TaskCreateRe
         this.tasks = tasks;
         notifyDataSetChanged();
     }
-
-
-    public void deleteTask(int position){
-        // Deleting specified item:
-
-        //TODO: Remove
-        if (databaseHelper.deleteTask(tasks.get(position))){
-            Toast.makeText(context, "DELETION APPEARS SUCCESSFUL", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            Toast.makeText(context, "DELETION APPEARS UNSUCCESSFUL", Toast.LENGTH_SHORT).show();
-        }
-
-        // Setting updated database:
-        setTasks(databaseHelper.getTasks());
-
-        //Item Changed:
-        notifyItemChanged(position);
-
-    }
-
 
 }

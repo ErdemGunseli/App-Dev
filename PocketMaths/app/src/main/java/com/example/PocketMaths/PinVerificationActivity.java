@@ -1,8 +1,10 @@
 package com.example.PocketMaths;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -19,7 +21,7 @@ public class PinVerificationActivity extends AppCompatActivity implements View.O
 
     private TextView txtPin;
 
-    private Button btnContinue, btnCancel, btnSignUp, btnSignIn;
+    private Button btnContinue, btnCancel, btnSignUp, btnSignIn, btnBack;
 
     private EditText edtTxtPin;
 
@@ -32,7 +34,7 @@ public class PinVerificationActivity extends AppCompatActivity implements View.O
         // Deciding what to display depending on account type:
         Account account = Utils.getInstance().getUserAccount();
 
-        if (account.getAccountType() == Account.Guest){
+        if (account.getAccountType().equals(Account.Guest)){
             cvSign.setVisibility(View.VISIBLE);
             cvPinVerification.setVisibility(View.GONE);
         }
@@ -51,16 +53,20 @@ public class PinVerificationActivity extends AppCompatActivity implements View.O
         btnContinue = findViewById(R.id.btnContinue);
 
         btnCancel = findViewById(R.id.btnCancel);
+        btnBack = findViewById(R.id.btnBack);
         edtTxtPin = findViewById(R.id.edtTxtPin);
 
         cvSign = findViewById(R.id.cvSign);
         btnSignUp = findViewById(R.id.btnSignUp);
         btnSignIn = findViewById(R.id.btnSignIn);
 
+        btnBack.setOnClickListener(this);
         btnContinue.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
         btnSignUp.setOnClickListener(this);
         btnSignIn.setOnClickListener(this);
+
+
 
     }
 
@@ -73,9 +79,13 @@ public class PinVerificationActivity extends AppCompatActivity implements View.O
         switch (view.getId()){
 
             case (R.id.btnContinue):
+                //Hiding Keyboard
+                InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 checkPin();
                 break;
 
+            case (R.id.btnBack):
             case (R.id.btnCancel):
                 onBackPressed();
                 break;

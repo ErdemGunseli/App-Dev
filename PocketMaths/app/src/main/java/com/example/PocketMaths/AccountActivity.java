@@ -41,8 +41,10 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         
         setData();
 
+        DatabaseHelper databaseHelper = new DatabaseHelper(this, DatabaseHelper.QUESTION_SET_RESULT_TABLE_CREATE_SQLs);
+
         AccountHistoryRecyclerAdapter accountHistoryRecyclerAdapter = new AccountHistoryRecyclerAdapter(this);
-        accountHistoryRecyclerAdapter.setQuestionSets(account.getQuestionSetsCompleted());
+        accountHistoryRecyclerAdapter.setQuestionSets(databaseHelper.getQuestionSetResults());
 
         // Setting adapter to recycler view:
         rvAccountHistory.setAdapter(accountHistoryRecyclerAdapter);
@@ -54,7 +56,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         rvAccountHistory.setLayoutManager(linearLayoutManager);
 
         // Scrolling to the bottom of the array, top of the Recycler View:
-        rvAccountHistory.scrollToPosition(account.getQuestionSetsCompleted().size() - 1);
+        rvAccountHistory.scrollToPosition(databaseHelper.getQuestionSetResults().size() - 1);
 
         // If no question sets have been completed yet:
         if (Objects.requireNonNull(rvAccountHistory.getAdapter()).getItemCount() == 0){

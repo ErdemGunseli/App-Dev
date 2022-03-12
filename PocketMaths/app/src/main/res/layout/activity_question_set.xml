@@ -107,7 +107,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/cvQuestion"
         android:layout_centerHorizontal="true"
-        style="@style/cv2"
+        style="@style/cardView2"
         >
 
         <RelativeLayout

@@ -58,6 +58,7 @@
     <string name="x_x_points">%d / %d Points</string>
     <string name="initial_answer">Your Initial Answer: %s</string>
     <string name="correct_answer">Correct Answer: %s</string>
+    <string name="list">\t %d) %s \n</string>
 
     <string name="account">Account:</string>
     <string name="history">History: </string>
@@ -77,12 +78,15 @@
     <string name="create_task">Create Task</string>
     <string name="create">Create</string>
     <string name="remaining_tasks">Remaining Tasks:</string>
+    <string name="choose_qs">Please Select a Question Set</string>
     <string name="task_name">Task Name:</string>
     <string name="add_reward">Reward</string>
     <string name="reward">Reward:</string>
-    <string name="create_task_details"> Task Name: %s\n %s</string>
+    <string name="create_task_details"> Task Name: %s\n Question Set: %s\n %s</string>
     <string name="reward_details">Task Reward: %s</string>
     <string name="completed">Completed</string>
     <string name="not_completed">Not Completed</string>
+
+    <string name="view_tasks">View Tasks:</string>
 
 </resources>

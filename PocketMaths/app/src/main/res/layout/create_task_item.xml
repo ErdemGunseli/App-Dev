@@ -3,7 +3,7 @@
         android:id="@+id/cvDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/cv3"
+        style="@style/cardView3"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         >

@@ -77,7 +77,7 @@ public class ChangeDetailsActivity extends AppCompatActivity implements View.OnC
 
         switch (view.getId()) {
             case (R.id.btnCancel):
-                startActivity(new Intent(this, MainMenuActivity.class));
+                startActivity(new Intent(this, AccountActivity.class));
                 break;
 
             case (R.id.btnSaveChanges):
@@ -126,7 +126,7 @@ public class ChangeDetailsActivity extends AppCompatActivity implements View.OnC
             account.setPassword(edtTxtPassword.getText().toString());
             account.setPin(edtTxtPin.getText().toString());
             account.setAccountType(Member);
-        // Going to the main menu activity:
+        // Going to the account activity:
         startActivity(new Intent(this, AccountActivity.class));
         }
 }

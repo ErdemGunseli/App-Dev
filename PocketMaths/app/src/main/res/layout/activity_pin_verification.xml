@@ -41,6 +41,9 @@
             android:layout_marginBottom="25dp"
             android:textSize="30sp"
             android:hint="@string/parental_pin"
+            android:textAlignment="center"
+            android:cursorVisible="false"
+            android:maxLength="4"
             android:inputType="numberPassword"
             />
 
@@ -107,7 +110,6 @@
                 android:text="@string/sign_up" />
 
 
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSignIn"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
@@ -118,6 +120,18 @@
                 android:text="@string/sign_in"
                 android:textColor="@color/Accent"
                 android:textSize="12sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btnSignIn"
+                android:layout_centerHorizontal="true"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:text="@string/cancel"
+                android:textColor="@color/Accent"
+                android:textSize="12sp"
+                />
 
 
         </RelativeLayout>

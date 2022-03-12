@@ -13,8 +13,6 @@ import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.example.PocketMaths.R;
-
 public class QuestionSetActivity extends AppCompatActivity implements View.OnClickListener {
 
     // Using this to get extra data from the Intent:
@@ -120,10 +118,10 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
             // Removing the check from the previous question:
             rgQuestionAnswerOptions.clearCheck();
 
-            answerA.setText(currentQuestion.getAnswers()[0]);
-            answerB.setText(currentQuestion.getAnswers()[1]);
-            answerC.setText(currentQuestion.getAnswers()[2]);
-            answerD.setText(currentQuestion.getAnswers()[3]);
+            answerA.setText(currentQuestion.getAnswerOptions()[0]);
+            answerB.setText(currentQuestion.getAnswerOptions()[1]);
+            answerC.setText(currentQuestion.getAnswerOptions()[2]);
+            answerD.setText(currentQuestion.getAnswerOptions()[3]);
 
         }
 
@@ -144,18 +142,18 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
 
 
 
-        txtQuestion.setText(currentQuestion.getQuestionText());
+        txtQuestion.setText(currentQuestion.getText());
 
         // Question X of X
         txtCurrentQuestionIndex.setText(String.format(getString(R.string.question_x_of_x),(questionSet.getCurrentQuestionIndex() + 1), questionSet.getQuestions().length));
 
         // Set points accordingly:
         // Needed for if the screen is rotated after a question is done incorrectly.
-        if (currentQuestion.getAttempted() > 1) {
+        if (currentQuestion.getAttempts() > 1) {
             //X Points
             txtPointsPossible.setText(String.format(getString(R.string.points), currentQuestion.getPointsEarned()));
         }
-        else if (currentQuestion.getAttempted() == 1){
+        else if (currentQuestion.getAttempts() == 1){
             // X Points
             txtPointsPossible.setText(String.format(getString(R.string.points), (currentQuestion.getPointsPossible() / 2)));
         }
@@ -166,7 +164,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         }
 
         // Set question set image (id = 0 if no image):
-        imgQuestion.setImageResource(currentQuestion.getImageID());
+        imgQuestion.setImageResource(currentQuestion.getImageId());
 
 
 
@@ -223,7 +221,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
             case (R.id.imgNext):
 
                 // If the current question has been solved, they can go to the next question:
-                if (currentQuestion.getAttempted() > 0){
+                if (currentQuestion.getAttempts() > 0){
 
                     // Increasing the current question index by 1
                     questionSet.setCurrentQuestionIndex(questionSet.getCurrentQuestionIndex() + 1);
@@ -240,9 +238,9 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
                 break;
 
             case (R.id.btnRevealAnswer)    :
-                currentQuestion.setAttempted(2);
+                currentQuestion.setAttempts(2);
                 currentQuestion.setPointsEarned(0);
-                txtMessage.setText(currentQuestion.getAnswer());
+                txtMessage.setText(currentQuestion.getCorrectWrittenAnswer());
                 // No points if they reveal the answer.
                 txtPointsPossible.setText(String.format(getString(R.string.points), 0));
                 break;
@@ -286,7 +284,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
                 txtMessage.setText(getString(R.string.try_again));
                 // Do not penalise if they have answered correctly before
                 if (currentQuestion.getPointsEarned() == 0) {
-                    if (currentQuestion.getAttempted() == 1) {
+                    if (currentQuestion.getAttempts() == 1) {
 
                         // X Points
                         txtPointsPossible.setText(String.format(getString(R.string.points), currentQuestion.getPointsPossible() / 2));

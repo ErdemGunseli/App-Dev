@@ -12,46 +12,43 @@
 
         <item name="android:windowBackground">@drawable/dark_mode_background_bitmap</item>
 
-        <item name="materialCardViewStyle">@style/cv1</item>
+        <item name="materialCardViewStyle">@style/cardView1</item>
 
-        <item name="editTextStyle">@style/edtTxt</item>
+        <item name="editTextStyle">@style/editText</item>
 
-        <item name="materialButtonStyle">@style/btn</item>
+        <item name="materialButtonStyle">@style/button</item>
 
-        <item name="radioButtonStyle">@style/rbtn</item>
+        <item name="radioButtonStyle">@style/radioButton</item>
 
     </style>
 
     <!-- CardView Theme -->
 
-    <style name="cv1" parent="">
+    <style name="cardView1" parent="">
         <item name="cardBackgroundColor">@color/Surface1</item>
         <item name="elevation">100dp</item>
         <item name="cardCornerRadius">5dp</item>
     </style>
 
-    <style name="cv2" parent="">
+    <style name="cardView2" parent="cardView1">
         <item name="cardBackgroundColor">@color/Surface2</item>
-        <item name="elevation">100dp</item>
-        <item name="cardCornerRadius">5dp</item>
     </style>
 
-    <style name="cv3" parent="">
+    <style name="cardView3" parent="cardView1">
         <item name="cardBackgroundColor">@color/Surface3</item>
-        <item name="elevation">100dp</item>
-        <item name="cardCornerRadius">5dp</item>
     </style>
 
     <!-- EditText Theme -->
 
-    <style name="edtTxt" parent="@android:style/Widget.EditText">
-        <item name="android:textColorHint">@color/Secondary</item>
-        <item name="android:textColor">@color/Secondary</item>
+    <style name="editText" parent="@android:style/Widget.EditText">
+        <item name="android:textColorHint">@color/Primary</item>
+        <item name="android:textColor">@color/Primary</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <!-- Button Theme -->
 
-    <style name="btn" parent="@style/Widget.MaterialComponents.Button">
+    <style name="button" parent="@style/Widget.MaterialComponents.Button">
         <item name="backgroundTint">@color/Accent</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">13sp</item>
@@ -59,8 +56,8 @@
 
     <!-- Radio Button Theme -->
 
-    <style name="rbtn" parent="Base.Widget.AppCompat.CompoundButton.RadioButton">
-        <item name="android:textColor">@color/Secondary</item>
+    <style name="radioButton" parent="Base.Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:textColor">@color/Primary</item>
         <item name="android:textSize">13.5sp</item>
         <item name="android:buttonTint">@color/Surface3</item>
     </style>

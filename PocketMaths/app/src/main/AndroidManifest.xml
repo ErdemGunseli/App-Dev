@@ -29,7 +29,8 @@
         <activity android:name=".AccountActivity"/>
         <activity android:name=".PinVerificationActivity"/>
         <activity android:name=".ChangeDetailsActivity"/>
-        <activity android:name=".CreateTaskActivity"/>
+        <activity android:name=".TaskCreateActivity"/>
+        <activity android:name=".TaskViewActivity"/>
     </application>
 
 </manifest>

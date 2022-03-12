@@ -36,6 +36,9 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
 
     private PieChart pieResults;
 
+    private DatabaseHelper databaseHelper = new DatabaseHelper(this, DatabaseHelper.QUESTION_SET_RESULT_TABLE_CREATE_SQLs);
+
+
 
     private ArrayList<String> failedTopics = new ArrayList<>();
     private  ArrayList<String> failedModels = new ArrayList<>();
@@ -50,6 +53,9 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
 
         // Setting data from the intent:
         setDataFromIntent();
+
+        // Saving the Question Set to the account's list of Question Sets Completed:
+        saveQuestionSet();
 
         ResultsRecyclerAdapter resultsRecyclerAdapter = new ResultsRecyclerAdapter(this);
         resultsRecyclerAdapter.setQuestionSet(questionSet);
@@ -82,9 +88,6 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
 
                     // Setting the data from the Question Set to our View item:
                     setData(questionSet);
-
-                    // Saving the Question Set to the account's list of Question Sets Completed:
-                    saveQuestionSet();
                 }
             }
 
@@ -97,17 +100,19 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
 
         Calendar calendar = Calendar.getInstance();
 
-
-        Utils.getInstance().getUserAccount().addQuestionSet(new QuestionSetResult(
-                questionSet.getName(),
+        // We can pass any ID as it will get its actual id when it is retrieved from the database:
+        QuestionSetResult questionSetResult = new QuestionSetResult(
+                0,
+                questionSet.getQuestionSetID(),
                 questionSet.calculatePointsEarned(),
                 questionSet.calculatePointsPossible(),
-                questionSet.calculateResult(),
                 questionSet.calculateNumberOfQuestionsSolved()[0],
                 questionSet.calculateNumberOfQuestionsSolved()[1],
-                questionSet.getQuestions().length,
+                questionSet.calculateNumberOfQuestionsSolved()[2],
                 DateFormat.getDateInstance().format(Calendar.getInstance().getTime())
-        ));
+        );
+
+        databaseHelper.addQuestionSetResult(questionSetResult);
     }
 
 
@@ -173,7 +178,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         int count = 1;
         for (String topic: this.failedTopics) {
             if (topic != null){
-                txtFailed.append("\t" + count + ") " + topic + "\n");
+                txtFailed.append(String.format(getString(R.string.list), count, topic));
                 count += 1;
             }
         }
@@ -185,7 +190,8 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         count = 1;
         for (String model: this.failedModels){
             if (model != null) {
-                txtFailed.append("\t" + count + ") " + model + "\n");
+                txtFailed.append(String.format(getString(R.string.list), count, model));
+
                 count += 1;
             }
         }
@@ -196,7 +202,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         int moreAttempts = questionSet.getQuestions().length - (questionSet.calculateNumberOfQuestionsSolved()[0] + questionSet.calculateNumberOfQuestionsSolved()[1]);
 
         int[] values = {firstAttempt, secondAttempt, moreAttempts};
-        String[] labels = {"1st Attempt", "2nd Attempt", "3rd Attempt"};
+        String[] labels = {getString(R.string.first_attempt), getString(R.string.second_attempt), getString(R.string.other)};
 
         // Creating the Pie Chart
         Utils.getInstance().createPieChart(this, pieResults,

@@ -8,8 +8,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.PocketMaths.R;
-
 
 public class ResultsRecyclerAdapter extends RecyclerView.Adapter<ResultsRecyclerAdapter.ViewHolder> {
 
@@ -40,7 +38,7 @@ public class ResultsRecyclerAdapter extends RecyclerView.Adapter<ResultsRecycler
 
         Question[] questions = questionSet.getQuestions();
         Question currentQuestion = questions[position];
-        String[] answers = currentQuestion.getAnswers();
+        String[] answers = currentQuestion.getAnswerOptions();
         int correctAnswerIndex = currentQuestion.getCorrectAnswerIndex();
         int chosenAnswerIndex = currentQuestion.getChosenAnswerIndex();
 
@@ -52,9 +50,9 @@ public class ResultsRecyclerAdapter extends RecyclerView.Adapter<ResultsRecycler
         // X / X Points
         holder.txtPointsPossible.setText(String.format(context.getString(R.string.x_x_points), currentQuestion.getPointsEarned(), currentQuestion.getPointsPossible()));
 
-        holder.txtQuestion.setText(currentQuestion.getQuestionText());
+        holder.txtQuestion.setText(currentQuestion.getText());
 
-        holder.imgQuestion.setImageResource(currentQuestion.getImageID());
+        holder.imgQuestion.setImageResource(currentQuestion.getImageId());
 
         if (currentQuestion.getType().equals("multipleChoice")) {
 
@@ -79,7 +77,7 @@ public class ResultsRecyclerAdapter extends RecyclerView.Adapter<ResultsRecycler
                 holder.txtChosenAnswer.setText(String.format(context.getString(R.string.initial_answer), chosenAnswer));
 
                 // Correct Answer: X
-                holder.txtCorrectAnswer.setText(String.format(context.getString(R.string.correct_answer), currentQuestion.getAnswer()));
+                holder.txtCorrectAnswer.setText(String.format(context.getString(R.string.correct_answer), currentQuestion.getCorrectWrittenAnswer()));
 
         }
     }

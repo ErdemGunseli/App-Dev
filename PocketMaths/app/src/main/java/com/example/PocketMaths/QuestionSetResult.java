@@ -4,7 +4,8 @@ import java.util.Date;
 
 public class QuestionSetResult {
 
-    private String name;
+    private int questionSetResultId;
+    private int questionSetId;
 
     private int pointsPossible;
     private int pointsEarned;
@@ -14,25 +15,26 @@ public class QuestionSetResult {
     private int secondAttempt;
     private int moreAttempts;
 
-    private int numberOfQuestions;
-
     private String dateCompleted;
 
 
-    public QuestionSetResult(String name, int pointsEarned, int pointsPossible, int result, int firstAttempt, int secondAttempt, int numberOfQuestions, String dateCompleted) {
-        this.name = name;
+    public QuestionSetResult(int questionSetResultId, int questionSetId, int pointsEarned, int pointsPossible, int firstAttempt, int secondAttempt, int moreAttempts, String dateCompleted) {
+        this.questionSetId = questionSetId;
         this.pointsEarned = pointsEarned;
         this.pointsPossible = pointsPossible;
-        this.result = result;
+        this.result = (int) (((float) pointsEarned / (float) pointsPossible) * 100);
         this.firstAttempt = firstAttempt;
         this.secondAttempt = secondAttempt;
-        this.moreAttempts = numberOfQuestions - firstAttempt - secondAttempt;
-        this.numberOfQuestions = numberOfQuestions;
+        this.moreAttempts =moreAttempts;
         this.dateCompleted = dateCompleted;
     }
 
-    public String getName() {
-        return name;
+    public int getQuestionSetResultId() {
+        return questionSetResultId;
+    }
+
+    public int getQuestionSetId() {
+        return questionSetId;
     }
 
     public int getPointsPossible() {
@@ -57,10 +59,6 @@ public class QuestionSetResult {
 
     public int getMoreAttempts() {
         return moreAttempts;
-    }
-
-    public int getNumberOfQuestions() {
-        return numberOfQuestions;
     }
 
     public String getDateCompleted() {

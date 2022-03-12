@@ -43,7 +43,7 @@ public class AccountHistoryRecyclerAdapter extends RecyclerView.Adapter<AccountH
         QuestionSetResult questionSetHistory = questionSets.get(position);
 
         // Question Set Name:
-        holder.txtQuestionSetName.setText(questionSetHistory.getName());
+        holder.txtQuestionSetName.setText(Utils.getInstance().getQuestionSetByID(questionSetHistory.getQuestionSetId()).getName());
 
         // X Points Out Of X
         holder.txtPoints.setText(String.format(context.getString(R.string.x_points_out_of_x), questionSetHistory.getPointsEarned(), questionSetHistory.getPointsPossible()));
@@ -53,7 +53,7 @@ public class AccountHistoryRecyclerAdapter extends RecyclerView.Adapter<AccountH
 
 
         int[] values = {questionSetHistory.getFirstAttempt(), questionSetHistory.getSecondAttempt(), questionSetHistory.getMoreAttempts()};
-        String[] labels = {"1st Attempt", "2nd Attempt", "3rd Attempt"};
+        String[] labels = {context.getString(R.string.first_attempt), context.getString(R.string.second_attempt), context.getString(R.string.other)};
 
         // Creating the Pie Chart
         Utils.getInstance().createPieChart(context,
