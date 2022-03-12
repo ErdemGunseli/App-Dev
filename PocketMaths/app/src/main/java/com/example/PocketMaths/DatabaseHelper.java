@@ -105,28 +105,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database) {
         //// Creating all tables:
+        ///todo: DELETE SPACES
+        //TODO: NOT NULL
 
         // Create Tasks table:
-        database.execSQL("CREATE TABLE IF NOT EXISTS " + TASKS_TABLE +
-                " (" + COLUMN_TASK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_TASK_NAME + " TEXT, " +
-                COLUMN_TASK_REWARD + " TEXT, " +
-                COLUMN_TASK_QUESTION_SET_ID + " INTEGER, " +
-                COLUMN_TASK_COMPLETED + " BOOL)");
+        database.execSQL("CREATE TABLE IF NOT EXISTS TASKS (" +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "NAME TEXT, " +
+                "REWARD TEXT, " +
+                "QUESTION_SET_ID INTEGER, " +
+                "IS_COMPLETED BOOL" +
+                ")");
 
+        //TODO: ADD ACCOUNT ID FOREIGN KEY
         // Creating Question Set Results table:
-        database.execSQL("CREATE TABLE IF NOT EXISTS " + QUESTION_SET_RESULTS_TABLE +
-                " (" + QUESTION_SET_RESULT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_QUESTION_SET_ID + " INTEGER, " +
-                COLUMN_QUESTION_SET_POINTS_EARNED + " INTEGER, " +
-                COLUMN_QUESTION_SET_POINTS_POSSIBLE + " INTEGER, " +
-                COLUMN_FIRST_ATTEMPT + " INTEGER, " +
-                COLUMN_SECOND_ATTEMPT + " INTEGER, " +
-                COLUMN_MORE_ATTEMPTS + " INTEGER, " +
-                COLUMN_DATE_COMPLETED + " INTEGER)");
+        database.execSQL("CREATE TABLE IF NOT EXISTS QUESTION_SET_RESULTS (" +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                "QUESTION_SET_ID INTEGER NOT NULL, " +
+                "ACCOUNT_ID INTEGER NOT NULL, " +
+                "QUESTION_SET_POINTS_EARNED INTEGER NOT NULL, " +
+                "QUESTION_SET_POINTS_POSSIBLE INTEGER NOT NULL, " +
+                "FIRST_ATTEMPT INTEGER, " +
+                "SECOND_ATTEMPT INTEGER, " +
+                "MORE_ATTEMPTS INTEGER, " +
+                "DATE_COMPLETED INTEGER" +
+                ")");
 
-
-
+        database.execSQL("CREATE TABLE IF NOT EXISTS ACCOUNTS (" +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+                "PARENT_NAME TEXT NOT NULL," +
+                "STUDENT_NAME TEXT NOT NULL," +
+                "EMAIL TEXT NOT NULL," +
+                "PASSWORD TEXT NOT NULL," +
+                "PIN TEXT NOT NULL" +
+                ")");
     }
 
 
@@ -150,13 +162,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
 
         // Putting the relevant item in each column of the row:
-        contentValues.put(COLUMN_TASK_NAME, task.getName());
-        contentValues.put(COLUMN_TASK_REWARD, task.getReward());
-        contentValues.put(COLUMN_TASK_QUESTION_SET_ID, task.getQuestionSetId());
-        contentValues.put(COLUMN_TASK_COMPLETED, task.isCompleted());
+        contentValues.put("NAME", task.getName());
+        contentValues.put("REWARD", task.getReward());
+        contentValues.put("QUESTION_SET_ID", task.getQuestionSetId());
+        contentValues.put("IS_COMPLETED", task.isCompleted());
         // No need to put ID as it is an auto-increment value.
 
-        long insert = database.insert(TASKS_TABLE, null, contentValues);
+        long insert = database.insert("TASKS", null, contentValues);
 
         // Cleaning Up:
         database.close();
@@ -170,7 +182,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ArrayList<Task> tasks = new ArrayList<>();
 
         SQLiteDatabase database = this.getReadableDatabase();
-        Cursor cursor = database.rawQuery("SELECT * FROM " + TASKS_TABLE, null);
+        Cursor cursor = database.rawQuery("SELECT * FROM TASKS", null);
 
         if (cursor.moveToFirst()){
             do {
@@ -190,7 +202,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getWritableDatabase();
 
         // Delete from the table an item for which the IDs match:
-        long result = database.delete(TASKS_TABLE, COLUMN_TASK_ID + "=?", new String[] {String.valueOf(task.getId())}  );
+        long result = database.delete("TASKS", "ID =?", new String[] {String.valueOf(task.getId())}  );
 
         // Cleaning Up:
         database.close();
@@ -202,9 +214,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
-
     //// QUESTIONS TABLE
     public boolean addQuestion(Question question){
+        //TODO: WRONG
         SQLiteDatabase database = this.getWritableDatabase();
 
         ContentValues questionValues = new ContentValues();
@@ -268,6 +280,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public boolean addAnswerOptions(String[] answerOptions){
+        //TODO: WRONG
 
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -287,19 +300,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //// QUESTION SET RESULT TABLE
-    public boolean addQuestionSetResult(QuestionSetResult questionSetResult){
+    public boolean addQuestionSetResult(QuestionSetResult questionSetResult, int accountId){
         SQLiteDatabase database = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_QUESTION_SET_ID, questionSetResult.getQuestionSetId());
-        contentValues.put(COLUMN_QUESTION_SET_POINTS_EARNED, questionSetResult.getPointsEarned());
-        contentValues.put(COLUMN_QUESTION_SET_POINTS_POSSIBLE, questionSetResult.getPointsPossible());
-        contentValues.put(COLUMN_FIRST_ATTEMPT, questionSetResult.getFirstAttempt());
-        contentValues.put(COLUMN_SECOND_ATTEMPT, questionSetResult.getSecondAttempt());
-        contentValues.put(COLUMN_MORE_ATTEMPTS, questionSetResult.getMoreAttempts());
-        contentValues.put(COLUMN_DATE_COMPLETED, questionSetResult.getDateCompleted());
+        contentValues.put("QUESTION_SET_ID", questionSetResult.getQuestionSetId());
+        contentValues.put("ACCOUNT_ID", accountId);
+        contentValues.put("QUESTION_SET_POINTS_EARNED", questionSetResult.getPointsEarned());
+        contentValues.put("QUESTION_SET_POINTS_POSSIBLE", questionSetResult.getPointsPossible());
+        contentValues.put("FIRST_ATTEMPT", questionSetResult.getFirstAttempt());
+        contentValues.put("SECOND_ATTEMPT", questionSetResult.getSecondAttempt());
+        contentValues.put("MORE_ATTEMPTS", questionSetResult.getMoreAttempts());
+        contentValues.put("DATE_COMPLETED", questionSetResult.getDateCompleted());
 
-        long insert = database.insert(QUESTION_SET_RESULTS_TABLE, null, contentValues);
+        long insert = database.insert("QUESTION_SET_RESULTS", null, contentValues);
 
         // Cleaning Up:
         database.close();
@@ -313,7 +327,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ArrayList<QuestionSetResult> questionSetResults = new ArrayList<>();
 
         SQLiteDatabase database = this.getReadableDatabase();
-        Cursor cursor = database.rawQuery("SELECT * FROM " + QUESTION_SET_RESULTS_TABLE, null);
+        Cursor cursor = database.rawQuery("SELECT * FROM QUESTION_SET_RESULTS", null);
 
         if (cursor.moveToFirst()){
             do {
@@ -325,7 +339,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         cursor.getInt(4),
                         cursor.getInt(5),
                         cursor.getInt(6),
-                        cursor.getString(7)
+                        cursor.getInt(7),
+                        cursor.getString(8)
                 ));
             } while(cursor.moveToNext());
         }
@@ -335,6 +350,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         database.close();
 
         return questionSetResults;
+    }
+
+    public addAccount(Account account){
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("QUESTION_SET_ID", questionSetResult.getQuestionSetId());
+        contentValues.put("ACCOUNT_ID", accountId);
+        contentValues.put("QUESTION_SET_POINTS_EARNED", questionSetResult.getPointsEarned());
+        contentValues.put("QUESTION_SET_POINTS_POSSIBLE", questionSetResult.getPointsPossible());
+        contentValues.put("FIRST_ATTEMPT", questionSetResult.getFirstAttempt());
+        contentValues.put("SECOND_ATTEMPT", questionSetResult.getSecondAttempt());
+        contentValues.put("MORE_ATTEMPTS", questionSetResult.getMoreAttempts());
+        contentValues.put("DATE_COMPLETED", questionSetResult.getDateCompleted());
+
+        long insert = database.insert("QUESTION_SET_RESULTS", null, contentValues);
+
+        // Cleaning Up:
+        database.close();
+
+        // if insert is negative, it has failed, if it is positive, it was successful:
+        if (insert == -1){return false;}
+        else {return true;}
+
+
     }
 
 }

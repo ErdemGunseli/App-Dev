@@ -6,6 +6,8 @@ import java.util.Locale;
 public class Account {
     // A class to hold the account details.
 
+    private int id;
+
     private String parentName, studentName, email, password, pin;
 
     private String accountType;
@@ -17,7 +19,8 @@ public class Account {
     private ArrayList<QuestionSetResult> questionSetsCompleted = new ArrayList<>();
 
 
-    public Account(String parentName, String studentName, String email, String password, String pin) {
+    public Account(int id, String parentName, String studentName, String email, String password, String pin) {
+        this.id = id;
         this.parentName = parentName.toUpperCase(Locale.ROOT);
         this.studentName = studentName.toUpperCase(Locale.ROOT);
         this.email = email.toLowerCase(Locale.ROOT);
@@ -98,4 +101,11 @@ public class Account {
         return false;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

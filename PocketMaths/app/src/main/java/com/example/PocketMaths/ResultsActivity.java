@@ -104,6 +104,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         QuestionSetResult questionSetResult = new QuestionSetResult(
                 0,
                 questionSet.getQuestionSetID(),
+                Utils.getInstance().getUserAccount().getId(),
                 questionSet.calculatePointsEarned(),
                 questionSet.calculatePointsPossible(),
                 questionSet.calculateNumberOfQuestionsSolved()[0],
@@ -112,7 +113,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
                 DateFormat.getDateInstance().format(Calendar.getInstance().getTime())
         );
 
-        databaseHelper.addQuestionSetResult(questionSetResult);
+        databaseHelper.addQuestionSetResult(questionSetResult, Utils.getInstance().getUserAccount().getId());
     }
 
 

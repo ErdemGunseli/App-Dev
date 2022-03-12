@@ -6,6 +6,7 @@ public class QuestionSetResult {
 
     private int questionSetResultId;
     private int questionSetId;
+    private int accountId;
 
     private int pointsPossible;
     private int pointsEarned;
@@ -18,7 +19,8 @@ public class QuestionSetResult {
     private String dateCompleted;
 
 
-    public QuestionSetResult(int questionSetResultId, int questionSetId, int pointsEarned, int pointsPossible, int firstAttempt, int secondAttempt, int moreAttempts, String dateCompleted) {
+    public QuestionSetResult(int questionSetResultId, int questionSetId,int accountId , int pointsEarned, int pointsPossible, int firstAttempt, int secondAttempt, int moreAttempts, String dateCompleted) {
+        this.accountId = accountId;
         this.questionSetId = questionSetId;
         this.pointsEarned = pointsEarned;
         this.pointsPossible = pointsPossible;
@@ -63,5 +65,13 @@ public class QuestionSetResult {
 
     public String getDateCompleted() {
         return dateCompleted;
+    }
+
+    public int getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
     }
 }

@@ -117,7 +117,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         // If they do not have a guest account:
         if (account == null) {
-            Account userAccount = new Account(edtTxtParentName.getText().toString(),
+            Account userAccount = new Account(0, edtTxtParentName.getText().toString(),
                     edtTxtStudentName.getText().toString(), edtTxtEmail.getText().toString(),
                     edtTxtPassword.getText().toString(),
                     edtTxtPin.getText().toString());
