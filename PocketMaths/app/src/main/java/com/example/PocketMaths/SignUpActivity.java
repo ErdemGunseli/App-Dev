@@ -22,8 +22,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     private Button btnBack, btnConfirm;
 
-    private EditText[] inputs;
+    private String[] inputs;
 
+    private DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         btnBack.setOnClickListener(this);
         btnConfirm.setOnClickListener(this);
 
-        inputs = new EditText[]{edtTxtParentName, edtTxtStudentName, edtTxtEmail, edtTxtPassword, edtTxtConfirmPassword, edtTxtPin, edtTxtConfirmPin};
     }
 
     @Override
@@ -69,7 +69,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 break;
 
             case (R.id.btnConfirm):
-                confirmClicked();
+                signUpClicked();
                 break;
 
 
@@ -83,15 +83,24 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     /**
      * Does the necessary validations when the Confirm Button is clicked:
      */
-    private void confirmClicked(){
+    private void signUpClicked(){
+
+        inputs = new String[]{edtTxtParentName.getText().toString(),
+                edtTxtStudentName.getText().toString(),
+                edtTxtEmail.getText().toString(),
+                edtTxtPassword.getText().toString(),
+                edtTxtConfirmPassword.getText().toString(),
+                edtTxtPin.getText().toString(),
+                edtTxtConfirmPin.getText().toString()};
+
         // Displays appropriate Snack Bar if inputs are invalid:
         if (!Utils.getInstance().inputsFilled(inputs)){
             Utils.getInstance().showSnackBar(this,relSignUp, getString(R.string.empty_inputs), getString(R.string.ok));
         }
-        else if (!Utils.getInstance().isValid(new EditText[]{edtTxtParentName, edtTxtStudentName}, 2)) {
+        else if (!Utils.getInstance().isValid(new String[]{edtTxtParentName.getText().toString(), edtTxtStudentName.getText().toString()}, 2)) {
             Utils.getInstance().showSnackBar(this,relSignUp, getString(R.string.input_lengths), getString(R.string.ok));
         }
-        else if (!Utils.getInstance().isValid(new EditText[]{edtTxtPassword}, 6)){
+        else if (!Utils.getInstance().isValid(new String[]{edtTxtPassword.getText().toString()}, 6)){
             Utils.getInstance().showSnackBar(this,relSignUp,getString(R.string.check_password_length), getString(R.string.ok));
         }
         else if (!Utils.getInstance().isValidEmail(edtTxtEmail.getText().toString())){
@@ -100,11 +109,14 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         else if (!edtTxtPassword.getText().toString().equals(edtTxtConfirmPassword.getText().toString())){
             Utils.getInstance().showSnackBar(this,relSignUp, getString(R.string.passwords_do_not_match), getString(R.string.ok));
         }
-        else if (!Utils.getInstance().isValid(new EditText[]{edtTxtPin}, 4)){
+        else if (!Utils.getInstance().isValid(new String[]{edtTxtPin.getText().toString()}, 4)){
             Utils.getInstance().showSnackBar(this,relSignUp, getString(R.string.pin_length), getString(R.string.ok));
         }
         else if (!edtTxtPin.getText().toString().equals(edtTxtConfirmPin.getText().toString())){
             Utils.getInstance().showSnackBar(this,relSignUp, getString(R.string.pins_do_not_match), getString(R.string.ok));
+        }
+        else if (databaseHelper.getAccountByEmail(edtTxtEmail.getText().toString()) != null){
+            Utils.getInstance().showSnackBar(this,relSignUp, getString(R.string.email_registered), getString(R.string.ok));
         }
         else{
             updateAccount();
@@ -117,13 +129,21 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         // If they do not have a guest account:
         if (account == null) {
-            Account userAccount = new Account(0, edtTxtParentName.getText().toString(),
+            account = new Account(0, edtTxtParentName.getText().toString(),
                     edtTxtStudentName.getText().toString(), edtTxtEmail.getText().toString(),
                     edtTxtPassword.getText().toString(),
                     edtTxtPin.getText().toString());
 
-            // Setting the account:
-            Utils.getInstance().setUserAccount(userAccount);
+            // Adding the account into the database:
+            databaseHelper.addAccount(account);
+
+            // Finding the account from the database and setting it so that it has the correct ID:
+            account = databaseHelper.getAccountByEmail(account.getEmail());
+
+            Utils.getInstance().setUserAccount(account);
+            databaseHelper.useAccount(account.getId());
+
+
 
         }
         // If they have a quest account:
@@ -134,7 +154,19 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             account.setPassword(edtTxtPassword.getText().toString());
             account.setPin(edtTxtPin.getText().toString());
             account.setAccountType(Member);
+
+            databaseHelper.addAccount(account);
+
+            // Finding the account from the database and setting it so that it has the correct ID:
+            account = databaseHelper.getAccountByEmail(edtTxtEmail.getText().toString());
+
+
+            Utils.getInstance().setUserAccount(account);
+            databaseHelper.useAccount(account.getId());
+
         }
+
+
 
         // Going to the main menu activity:
         startActivity(new Intent(this, MainMenuActivity.class));

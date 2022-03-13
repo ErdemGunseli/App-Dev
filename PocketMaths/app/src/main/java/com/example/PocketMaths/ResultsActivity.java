@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import static com.example.PocketMaths.QuestionSetActivity.QUESTION_SET_ID;
 
@@ -98,8 +99,6 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
     private void saveQuestionSet(){
         // Adding the question set to the account's list of completed question sets:
 
-        Calendar calendar = Calendar.getInstance();
-
         // We can pass any ID as it will get its actual id when it is retrieved from the database:
         QuestionSetResult questionSetResult = new QuestionSetResult(
                 0,
@@ -139,6 +138,19 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void setData(QuestionSet questionSet) {
+
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
+
+        ArrayList<Task> tasks = databaseHelper.getTasks();
+
+        for (Task task: tasks){
+            if (Utils.getInstance().getQuestionSetByID(task.getQuestionSetId()).getName().equals(questionSet.getName()) &&
+            questionSet.calculateResult() >= task.getPassMark()){
+                Toast.makeText(this, task.getName() + " Completed", Toast.LENGTH_SHORT).show();
+
+                //TODO: Actually change completed
+            }
+        }
 
         txtQuestionSetName.setText(questionSet.getName());
 

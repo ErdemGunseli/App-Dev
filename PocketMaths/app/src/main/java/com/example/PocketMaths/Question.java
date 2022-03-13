@@ -218,6 +218,3 @@ public class Question {
         this.topic = topic;
     }
 }
-
-
-

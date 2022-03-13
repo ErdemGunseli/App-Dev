@@ -138,7 +138,7 @@
                     android:layout_below="@id/edtTxtConfirmPin"
                     android:layout_marginTop="20dp"
                     android:layout_toEndOf="@id/btnBack"
-                    android:text="@string/confirm" />
+                    android:text="@string/sign_up" />
 
 
             </RelativeLayout>

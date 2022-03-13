@@ -8,15 +8,19 @@ public class Task {
 
     private int id;
     private String name;
+    private int accountId;
+    private int passMark;
     private String reward;
     private int questionSetId;
     private boolean isCompleted;
 
     //TODO: Add date due??
 
-    public Task(int id, String name, String reward, int questionSetId, boolean isCompleted) {
+    public Task(int id, int accountId, String name, int passMark, String reward, int questionSetId, boolean isCompleted) {
         this.id = id;
         this.name = name.toUpperCase(Locale.ROOT);
+        this.accountId = accountId;
+        this.passMark = passMark;
         this.reward = reward.toUpperCase(Locale.ROOT);
         this.questionSetId = questionSetId;
         this.isCompleted = isCompleted;
@@ -56,5 +60,21 @@ public class Task {
 
     public void setCompleted(boolean completed) {
         this.isCompleted = completed;
+    }
+
+    public int getPassMark() {
+        return passMark;
+    }
+
+    public void setPassMark(int passMark) {
+        this.passMark = passMark;
+    }
+
+    public int getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
     }
 }

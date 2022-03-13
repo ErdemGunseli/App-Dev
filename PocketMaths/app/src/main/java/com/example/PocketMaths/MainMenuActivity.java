@@ -1,8 +1,4 @@
 package com.example.PocketMaths;
-
-import static com.example.PocketMaths.DatabaseHelper.QUESTIONS_TABLE;
-import static com.example.PocketMaths.DatabaseHelper.QUESTIONS_TABLE_CREATE_SQLs;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;

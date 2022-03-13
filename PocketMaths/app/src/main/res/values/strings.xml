@@ -8,6 +8,7 @@
     <string name="email">Email:\t</string>
     <string name="password">Password:</string>
     <string name="forgot_password">Forgot Password?</string>
+    <string name="email_not_registered">This Email Address Is Not Registered, Sign Up Instead</string>
     <string name="confirm">Confirm</string>
     <string name="back">Back</string>
 
@@ -16,6 +17,7 @@
     <string name="confirm_password">Confirm Password: </string>
     <string name="pin">Parental Pin: </string>
     <string name="confirm_pin">Confirm Parental Pin: </string>
+    <string name="email_registered">This Email Address Is Already Registered, Sign In Instead</string>
 
     <string name="email_sent">Email Sent</string>
     <string name="check_email">Check The Email</string>
@@ -75,6 +77,7 @@
 
     <string name="save_changes">Save Changes</string>
 
+    <string name="pass_Mark">Pass Mark: %d%%</string>
     <string name="create_task">Create Task</string>
     <string name="create">Create</string>
     <string name="remaining_tasks">Remaining Tasks:</string>
@@ -82,7 +85,9 @@
     <string name="task_name">Task Name:</string>
     <string name="add_reward">Reward</string>
     <string name="reward">Reward:</string>
-    <string name="create_task_details"> Task Name: %s\n Question Set: %s\n %s</string>
+    <string name="view_task_question_set_name">Question Set: %s</string>
+    <string name="view_task_pass_mark">Pass Mark: %d%%</string>
+    <string name="view_task_reward">Reward: %s</string>
     <string name="reward_details">Task Reward: %s</string>
     <string name="completed">Completed</string>
     <string name="not_completed">Not Completed</string>

@@ -43,20 +43,23 @@ public class TaskCreateRecyclerAdapter extends RecyclerView.Adapter<TaskCreateRe
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Task task = tasks.get(position);
 
-        String reward;
+        // Showing Details:
 
-        String questionSetName = Utils.getInstance().getQuestionSetByID(task.getQuestionSetId()).getName();
+        holder.txtTaskName.setText(task.getName());
 
+        holder.txtQuestionSetName.setText(String.format(context.getString(R.string.view_task_question_set_name),
+                Utils.getInstance().getQuestionSetByID(task.getQuestionSetId()).getName()));
+
+        holder.txtPassMark.setText(String.format(context.getString(R.string.view_task_pass_mark), task.getPassMark()));
+
+
+        // Only show the reward if there is one:
         if (task.getReward().isEmpty()){
-            reward = "";
+            holder.txtReward.setVisibility(View.GONE);
         }
         else{
-            reward = (String) String.format(context.getString(R.string.reward_details), task.getReward());
+            holder.txtReward.setText(String.format(context.getString(R.string.view_task_reward), task.getReward()));
         }
-
-        //TODO: Mention Question Set
-        holder.txtCreateTaskDetails.setText(String.format(context.getString(R.string.create_task_details),
-                task.getName(), questionSetName, reward));
 
     }
 
@@ -67,7 +70,7 @@ public class TaskCreateRecyclerAdapter extends RecyclerView.Adapter<TaskCreateRe
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView txtCreateTaskDetails;
+        private TextView txtTaskName, txtQuestionSetName, txtPassMark, txtReward;
         private ImageView imgDelete;
 
         public ViewHolder(View itemView) {
@@ -77,7 +80,10 @@ public class TaskCreateRecyclerAdapter extends RecyclerView.Adapter<TaskCreateRe
         }
 
         private void initViews() {
-            txtCreateTaskDetails = itemView.findViewById(R.id.txtCreateTaskDetails);
+            txtTaskName = itemView.findViewById(R.id.txtTaskName);
+            txtQuestionSetName = itemView.findViewById(R.id.txtQuestionSetName);
+            txtPassMark = itemView.findViewById(R.id.txtPassMark);
+            txtReward = itemView.findViewById(R.id.txtReward);
             imgDelete = itemView.findViewById(R.id.imgDelete);
 
             imgDelete.setOnClickListener(new View.OnClickListener() {
@@ -97,14 +103,7 @@ public class TaskCreateRecyclerAdapter extends RecyclerView.Adapter<TaskCreateRe
 
     public void deleteTask(int position){
         // Deleting specified item:
-
-        //TODO: Remove
-        if (databaseHelper.deleteTask(tasks.get(position))){
-            Toast.makeText(context, "DELETION APPEARS SUCCESSFUL", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            Toast.makeText(context, "DELETION APPEARS UNSUCCESSFUL", Toast.LENGTH_SHORT).show();
-        }
+        databaseHelper.deleteTask(tasks.get(position));
 
         // Setting updated database:
         setTasks(databaseHelper.getTasks());

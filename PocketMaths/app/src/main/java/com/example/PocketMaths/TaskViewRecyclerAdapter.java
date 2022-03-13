@@ -34,7 +34,7 @@ public class TaskViewRecyclerAdapter extends RecyclerView.Adapter<TaskViewRecycl
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_task_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.create_task_item, parent, false);
         return new ViewHolder(view);
 
     }
@@ -43,20 +43,26 @@ public class TaskViewRecyclerAdapter extends RecyclerView.Adapter<TaskViewRecycl
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Task task = tasks.get(position);
 
-        String reward;
+        // Showing Details:
 
-        String questionSetName = Utils.getInstance().getQuestionSetByID(task.getQuestionSetId()).getName();
+        holder.txtTaskName.setText(task.getName());
 
+        holder.txtQuestionSetName.setText(String.format(context.getString(R.string.view_task_question_set_name),
+                Utils.getInstance().getQuestionSetByID(task.getQuestionSetId()).getName()));
+
+        holder.txtPassMark.setText(String.format(context.getString(R.string.view_task_pass_mark), task.getPassMark()));
+
+
+        // Only show the reward if there is one:
         if (task.getReward().isEmpty()){
-            reward = "";
+            holder.txtReward.setVisibility(View.GONE);
         }
         else{
-            reward = (String) String.format(context.getString(R.string.reward_details), task.getReward());
+            holder.txtReward.setText(String.format(context.getString(R.string.view_task_reward), task.getReward()));
         }
 
-        //TODO: Mention Question Set
-        holder.txtViewTaskDetail.setText(String.format(context.getString(R.string.create_task_details),
-                task.getName(), questionSetName, reward));
+        // The delete button should not be visible:
+        holder.imgDelete.setVisibility(View.GONE);
 
     }
 
@@ -67,7 +73,9 @@ public class TaskViewRecyclerAdapter extends RecyclerView.Adapter<TaskViewRecycl
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView txtViewTaskDetail;
+        private TextView txtTaskName, txtQuestionSetName, txtPassMark, txtReward;
+
+        private ImageView imgDelete;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -76,7 +84,12 @@ public class TaskViewRecyclerAdapter extends RecyclerView.Adapter<TaskViewRecycl
         }
 
         private void initViews() {
-            txtViewTaskDetail = itemView.findViewById(R.id.txtViewTaskDetail);
+            txtTaskName = itemView.findViewById(R.id.txtTaskName);
+            txtQuestionSetName = itemView.findViewById(R.id.txtQuestionSetName);
+            txtPassMark = itemView.findViewById(R.id.txtPassMark);
+            txtReward = itemView.findViewById(R.id.txtReward);
+
+            imgDelete = itemView.findViewById(R.id.imgDelete);
         }
     }
 

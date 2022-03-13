@@ -5,8 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvCreateTask"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="25dp"
@@ -40,22 +46,65 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:layout_margin="15dp"
                 android:id="@+id/edtTxtTaskName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txtCreateTask"
-
+                android:inputType="textCapSentences"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
                 android:hint="@string/task_name"
-                android:inputType="text"
                 android:maxLength="20"
                 android:textSize="16sp" />
+
+
+            <EditText
+                android:id="@+id/edtTxtReward"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_below="@id/txtAddReward"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:textSize="16sp"
+                android:inputType="textCapSentences"
+                android:layout_marginBottom="15dp"
+                android:maxLength="20" />
+
+            <TextView
+                android:id="@+id/txtPassMark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edtTxtTaskName"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:text="@string/pass_Mark"
+                android:textSize="16sp" />
+
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/sliderPassMark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtPassMark"
+                android:layout_marginEnd="10dp"
+                android:stepSize="5.0"
+                android:valueFrom="0.0"
+                android:valueTo="100.0"
+                app:haloColor="@color/Accent"
+                app:thumbColor="@color/Accent"
+                app:tickColor="@color/Secondary"
+                app:trackColor="@color/Surface3" />
+
 
             <Spinner
                 android:id="@+id/spQuestionSets"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/edtTxtTaskName"
+                android:layout_below="@id/sliderPassMark"
                 android:layout_margin="5dp"
                 android:dropDownSelector="@color/Accent"
                 />
@@ -71,8 +120,7 @@
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="15dp"
                 android:text="@string/add_reward"
-                android:textSize="16sp"
-                />
+                android:textSize="16sp" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/swAddReward"
@@ -81,19 +129,6 @@
                 android:layout_alignBaseline="@id/txtAddReward"
                 android:layout_marginStart="25dp"
                 android:layout_toEndOf="@id/txtAddReward" />
-
-            <EditText
-                android:id="@+id/edtTxtReward"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_below="@id/txtAddReward"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:textSize="16sp"
-                android:layout_marginBottom="15dp"
-                android:inputType="text"
-                android:maxLength="20" />
 
 
             <com.google.android.material.button.MaterialButton
@@ -109,20 +144,21 @@
                 android:text="@string/create" />
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvTasks"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/btnCreate"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginBottom="15dp"
-                app:reverseLayout="true" />
+
 
 
         </RelativeLayout>
 
     </com.google.android.material.card.MaterialCardView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTasks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cvCreateTask"
+            android:layout_margin="25dp"
+            app:reverseLayout="true" />
+    </RelativeLayout>
+
 
 </ScrollView>

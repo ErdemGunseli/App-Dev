@@ -168,9 +168,9 @@ public class Utils extends AppCompatActivity {
      * @param inputs Array of EditTexts
      * @return Whether or not all of the inputs have been filled in
      */
-    public boolean inputsFilled(EditText[] inputs) {
-        for (EditText input: inputs){
-            if (input.getText().toString().isEmpty()){
+    public boolean inputsFilled(String[] inputs) {
+        for (String input: inputs){
+            if (input.isEmpty()){
                 return false;
             }
         }
@@ -184,9 +184,9 @@ public class Utils extends AppCompatActivity {
      * @param minLength Minimum length that each input can take
      * @return Whether all the inputs in the array are valid
      */
-    public boolean isValid(EditText[] inputs, int minLength) {
-        for (EditText input: inputs){
-            if (input.getText().toString().length() < minLength){
+    public boolean isValid(String[] inputs, int minLength) {
+        for (String input: inputs){
+            if (input.length() < minLength){
                 return false;
             }
         }

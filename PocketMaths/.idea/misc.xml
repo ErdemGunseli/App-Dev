@@ -27,9 +27,11 @@
         <entry key="..\:/Users/eguns/GitHub/App-Dev/PocketMaths/app/src/main/res/layout-land/activity_sign_in.xml" value="0.32760141093474426" />
         <entry key="..\:/Users/eguns/GitHub/App-Dev/PocketMaths/app/src/main/res/layout-land/activity_sign_up.xml" value="0.20950704225352113" />
         <entry key="..\:/Users/eguns/GitHub/App-Dev/PocketMaths/app/src/main/res/layout-land/activity_welcome.xml" value="0.32760141093474426" />
+        <entry key="..\:/Users/eguns/GitHub/App-Dev/PocketMaths/app/src/main/res/layout/account_history_item.xml" value="0.15477293790546803" />
         <entry key="..\:/Users/eguns/GitHub/App-Dev/PocketMaths/app/src/main/res/layout/activity_account.xml" value="0.3500905797101449" />
         <entry key="..\:/Users/eguns/GitHub/App-Dev/PocketMaths/app/src/main/res/layout/activity_change_details.xml" value="0.25" />
         <entry key="..\:/Users/eguns/GitHub/App-Dev/PocketMaths/app/src/main/res/layout/activity_create_task.xml" value="0.33" />
+        <entry key="..\:/Users/eguns/GitHub/App-Dev/PocketMaths/app/src/main/res/layout/activity_main_menu.xml" value="0.15477293790546803" />
         <entry key="..\:/Users/eguns/GitHub/App-Dev/PocketMaths/app/src/main/res/layout/activity_parental_verification.xml" value="0.33" />
         <entry key="..\:/Users/eguns/GitHub/App-Dev/PocketMaths/app/src/main/res/layout/activity_pin_verification.xml" value="0.33" />
         <entry key="..\:/Users/eguns/GitHub/App-Dev/PocketMaths/app/src/main/res/layout/activity_question_set.xml" value="0.33" />
@@ -39,11 +41,12 @@
         <entry key="..\:/Users/eguns/GitHub/App-Dev/PocketMaths/app/src/main/res/layout/activity_sign_up.xml" value="0.3500905797101449" />
         <entry key="..\:/Users/eguns/GitHub/App-Dev/PocketMaths/app/src/main/res/layout/activity_view_task.xml" value="0.33" />
         <entry key="..\:/Users/eguns/GitHub/App-Dev/PocketMaths/app/src/main/res/layout/activity_welcome.xml" value="0.3500905797101449" />
-        <entry key="..\:/Users/eguns/GitHub/App-Dev/PocketMaths/app/src/main/res/layout/create_task_item.xml" value="0.26766304347826086" />
+        <entry key="..\:/Users/eguns/GitHub/App-Dev/PocketMaths/app/src/main/res/layout/create_task_item.xml" value="0.33" />
         <entry key="..\:/Users/eguns/GitHub/App-Dev/PocketMaths/app/src/main/res/layout/main_menu_item.xml" value="0.18819655521783182" />
         <entry key="..\:/Users/eguns/GitHub/App-Dev/PocketMaths/app/src/main/res/layout/question_result_item.xml" value="0.1658828559213339" />
         <entry key="..\:/Users/eguns/GitHub/App-Dev/PocketMaths/app/src/main/res/layout/spinner_dropdown_item.xml" value="0.1552444630171333" />
         <entry key="..\:/Users/eguns/GitHub/App-Dev/PocketMaths/app/src/main/res/layout/spinner_item.xml" value="0.1552444630171333" />
+        <entry key="..\:/Users/eguns/GitHub/App-Dev/PocketMaths/app/src/main/res/layout/view_task_item.xml" value="0.15477293790546803" />
         <entry key="..\:/Users/eguns/GitHub/App-Dev/XmasDraft/app/src/main/res/drawable-anydpi/ic_back.xml" value="0.403125" />
         <entry key="..\:/Users/eguns/GitHub/App-Dev/XmasDraft/app/src/main/res/drawable/account_history_item.xml" value="0.403125" />
         <entry key="..\:/Users/eguns/GitHub/App-Dev/XmasDraft/app/src/main/res/layout-land/activity_account.xml" value="0.32451499118165783" />

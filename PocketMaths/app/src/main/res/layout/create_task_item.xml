@@ -3,7 +3,7 @@
         android:id="@+id/cvDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/cardView3"
+        style="@style/cardView1"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         >
@@ -11,29 +11,59 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
+            android:padding="10dp"
             >
 
             <TextView
-                android:id="@+id/txtCreateTaskDetails"
-                android:layout_width="match_parent"
+                android:id="@+id/txtTaskName"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/Accent"
+                android:layout_marginBottom="15dp"
+                android:textSize="19sp"
                 android:textStyle="bold"
-                android:textSize="16sp"
-                android:layout_margin="15dp"
-                android:textColor="@color/black"
                 />
+
+            <TextView
+                android:id="@+id/txtQuestionSetName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtTaskName"
+                android:textSize="16sp"
+                android:layout_marginBottom="15dp"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/txtPassMark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtQuestionSetName"
+                android:layout_marginBottom="15dp"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtReward"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtPassMark"
+                android:layout_marginBottom="15dp"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
 
             <ImageView
                 android:id="@+id/imgDelete"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_margin="10dp"
                 android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:src="@mipmap/ic_delete"
-
-                />
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:src="@mipmap/ic_delete" />
         </RelativeLayout>
 
     </com.google.android.material.card.MaterialCardView>

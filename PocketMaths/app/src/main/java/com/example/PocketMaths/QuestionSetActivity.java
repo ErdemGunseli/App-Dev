@@ -329,6 +329,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onBackPressed(){
-        // The back button should not do anything here, so overriding into empty procedure.
+        // The back button should go to the main menu here:
+        startActivity(new Intent(this, MainMenuActivity.class));
     }
 }

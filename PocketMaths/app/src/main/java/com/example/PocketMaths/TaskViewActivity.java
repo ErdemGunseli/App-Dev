@@ -1,7 +1,5 @@
 package com.example.PocketMaths;
 
-import static com.example.PocketMaths.DatabaseHelper.TASKS_TABLE_CREATE_SQLs;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;

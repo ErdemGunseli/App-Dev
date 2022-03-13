@@ -22,7 +22,7 @@ public class ChangeDetailsActivity extends AppCompatActivity implements View.OnC
 
     private Button btnCancel, btnSaveChanges;
 
-    private EditText[] inputs;
+    private String[] inputs;
 
 
     @Override
@@ -51,9 +51,6 @@ public class ChangeDetailsActivity extends AppCompatActivity implements View.OnC
 
         btnCancel.setOnClickListener(this);
         btnSaveChanges.setOnClickListener(this);
-
-        inputs = new EditText[]{edtTxtParentName, edtTxtStudentName, edtTxtEmail, edtTxtPassword, edtTxtConfirmPassword, edtTxtPin, edtTxtConfirmPin};
-
 
     }
 
@@ -89,14 +86,22 @@ public class ChangeDetailsActivity extends AppCompatActivity implements View.OnC
     }
 
     private void saveChangesClicked() {
+        inputs = new String[]{edtTxtParentName.getText().toString(),
+                edtTxtStudentName.getText().toString(),
+                edtTxtEmail.getText().toString(),
+                edtTxtPassword.getText().toString(),
+                edtTxtConfirmPassword.getText().toString(),
+                edtTxtPin.getText().toString(),
+                edtTxtConfirmPin.getText().toString()};
+
         // Displays appropriate Snack Bar if inputs are invalid:
         if (!Utils.getInstance().inputsFilled(inputs)){
             Utils.getInstance().showSnackBar(this,relChangeDetails, getString(R.string.empty_inputs), getString(R.string.ok));
         }
-        else if (!Utils.getInstance().isValid(new EditText[]{edtTxtParentName, edtTxtStudentName}, 2)) {
+        else if (!Utils.getInstance().isValid(new String[]{edtTxtParentName.getText().toString(), edtTxtStudentName.getText().toString()}, 2)) {
             Utils.getInstance().showSnackBar(this,relChangeDetails, getString(R.string.input_lengths), getString(R.string.ok));
         }
-        else if (!Utils.getInstance().isValid(new EditText[]{edtTxtPassword}, 6)){
+        else if (!Utils.getInstance().isValid(new String[]{edtTxtPassword.getText().toString()}, 6)){
             Utils.getInstance().showSnackBar(this,relChangeDetails,getString(R.string.check_password), getString(R.string.ok));
         }
         else if (!Utils.getInstance().isValidEmail(edtTxtEmail.getText().toString())){
@@ -105,7 +110,7 @@ public class ChangeDetailsActivity extends AppCompatActivity implements View.OnC
         else if (!edtTxtPassword.getText().toString().equals(edtTxtConfirmPassword.getText().toString())){
             Utils.getInstance().showSnackBar(this,relChangeDetails, getString(R.string.passwords_do_not_match), getString(R.string.ok));
         }
-        else if (!Utils.getInstance().isValid(new EditText[]{edtTxtPin}, 4)){
+        else if (!Utils.getInstance().isValid(new String[]{edtTxtPin.getText().toString()}, 4)){
             Utils.getInstance().showSnackBar(this,relChangeDetails, getString(R.string.pin_length), getString(R.string.ok));
         }
         else if (!edtTxtPin.getText().toString().equals(edtTxtConfirmPin.getText().toString())){

@@ -162,8 +162,11 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
                 break;
 
             case (R.id.btnSignOut):
-                //TODO: Save account here::
+                DatabaseHelper databaseHelper = new DatabaseHelper(this);
                 Utils.getInstance().setUserAccount(new Account());
+                boolean success = databaseHelper.removeCurrentAccount();
+                //TODO: Remove all toast messages:::
+                Toast.makeText(this, String.valueOf(success), Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(this, WelcomeActivity.class));
 
 

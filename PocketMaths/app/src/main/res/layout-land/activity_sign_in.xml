@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/btnForgotPassword"
                 android:layout_toEndOf="@id/btnBack"
-                android:text="@string/confirm" />
+                android:text="@string/sign_in" />
 
 
         </RelativeLayout>

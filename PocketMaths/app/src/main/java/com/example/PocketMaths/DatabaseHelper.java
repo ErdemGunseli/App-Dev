@@ -16,87 +16,6 @@ import java.util.ArrayList;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    // Columns for Tasks Table:
-    public static final String TASKS_TABLE = "TASKS_TABLE";
-    public static final String COLUMN_TASK_ID = "COLUMN_TASK_ID";
-    public static final String COLUMN_TASK_NAME = "CONTACT_TASK_NAME";
-    public static final String COLUMN_TASK_REWARD = "COLUMN_TASK_REWARD";
-    public static final String COLUMN_TASK_QUESTION_SET_ID = "COLUMN_TASK_QUESTION_SET_ID";
-    public static final String COLUMN_TASK_COMPLETED = "COLUMN_TASK_COMPLETED";
-
-    public static final String TASKS_TABLE_CREATE_SQLs = "CREATE TABLE IF NOT EXISTS " + TASKS_TABLE +
-            " (" + COLUMN_TASK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            COLUMN_TASK_NAME + " TEXT, " +
-            COLUMN_TASK_REWARD + " TEXT, " +
-            COLUMN_TASK_QUESTION_SET_ID + " INTEGER, " +
-            COLUMN_TASK_COMPLETED + " BOOL)";
-
-
-    // Columns for Question Answer Options Table:
-    public static final String QUESTION_ANSWER_OPTIONS_TABLE = "QUESTION_ANSWER_OPTIONS_TABLE";
-    public static final String COLUMN_QUESTION_ANSWER_OPTION_ID = "COLUMN_QUESTION_ANSWER_OPTION_ID";
-    public static final String COLUMN_QUESTION_ANSWER_OPTION_QUESTION_ID = "COLUMN_QUESTION_ANSWER_OPTION_QUESTION_ID";
-    public static final String COLUMN_QUESTION_ANSWER_OPTION = "COLUMN_QUESTION_ANSWER_OPTION";
-
-    public static final String QUESTION_ANSWER_OPTIONS_TABLE_CREATE_SQLs = "CREATE TABLE IF NOT EXISTS " + QUESTION_ANSWER_OPTIONS_TABLE +
-            " (" + COLUMN_QUESTION_ANSWER_OPTION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            COLUMN_QUESTION_ANSWER_OPTION_QUESTION_ID + " INTEGER, " +
-            COLUMN_QUESTION_ANSWER_OPTION + " TEXT)";
-
-
-    // Columns for Questions Table:
-    public static final String QUESTIONS_TABLE = "QUESTIONS_TABLE";
-    public static final String COLUMN_QUESTION_ID = "COLUMN_QUESTION_ID";
-    public static final String COLUMN_QUESTION_TEXT = "COLUMN_QUESTION_TEXT";
-    public static final String COLUMN_QUESTION_IMAGE_ID = "COLUMN_QUESTION_IMAGE_ID";
-    public static final String COLUMN_QUESTION_TYPE = "COLUMN_QUESTION_TYPE";
-    public static final String COLUMN_QUESTION_CHOSEN_ANSWER_INDEX = "COLUMN_CHOSEN_ANSWER_INDEX";
-    public static final String COLUMN_QUESTION_CORRECT_WRITTEN_ANSWER = "COLUMN_QUESTION_CORRECT_WRITTEN_ANSWER";
-    public static final String COLUMN_QUESTION_WRITTEN_ANSWER = "COLUMN_QUESTION_WRITTEN_ANSWER";
-    public static final String COLUMN_QUESTION_TOPIC = "COLUMN_QUESTION_TOPIC";
-    public static final String COLUMN_QUESTION_MODEL = "COLUMN_QUESTION_MODEL";
-    public static final String COLUMN_QUESTION_ATTEMPTS = "COLUMN_QUESTION_ATTEMPTS";
-    public static final String COLUMN_QUESTION_POINTS_POSSIBLE = "COLUMN_QUESTION_POINTS_POSSIBLE";
-    public static final String COLUMN_QUESTION_POINTS_EARNED = "COLUMN_QUESTION_POINTS_EARNED";
-
-    public static final String QUESTIONS_TABLE_CREATE_SQLs = "CREATE TABLE IF NOT EXISTS " + QUESTIONS_TABLE +
-            " (" + COLUMN_QUESTION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            COLUMN_QUESTION_TEXT + " TEXT, " +
-            COLUMN_QUESTION_IMAGE_ID + " INTEGER, " +
-            COLUMN_QUESTION_TYPE + " TEXT, " +
-            COLUMN_QUESTION_CHOSEN_ANSWER_INDEX + " INTEGER, " +
-            COLUMN_QUESTION_CORRECT_WRITTEN_ANSWER + " TEXT, " +
-            COLUMN_QUESTION_WRITTEN_ANSWER + " TEXT, " +
-            COLUMN_QUESTION_TOPIC + " TEXT, " +
-            COLUMN_QUESTION_MODEL + " TEXT, " +
-            COLUMN_QUESTION_ATTEMPTS + " INTEGER, " +
-            COLUMN_QUESTION_POINTS_POSSIBLE + " INTEGER, " +
-            COLUMN_QUESTION_POINTS_EARNED + " INTEGER)";
-
-
-
-    //TODO: IF THE QUESTION SET TABLE IS FULLY IMPLEMENTED, THIS WOULD NEED TO CHANGE FOR NORMALISATION
-    public static final String QUESTION_SET_RESULTS_TABLE = "QUESTION_SET_RESULTS_TABLE";
-    public static final String QUESTION_SET_RESULT_ID = "QUESTION_SET_RESULT_ID";
-    public static final String COLUMN_QUESTION_SET_ID = "COLUMN_QUESTION_SET_ID";
-    public static final String COLUMN_QUESTION_SET_POINTS_EARNED = "COLUMN_QUESTION_SET_POINTS_EARNED";
-    public static final String COLUMN_QUESTION_SET_POINTS_POSSIBLE = "COLUMN_QUESTION_SET_POINTS_POSSIBLE";
-    public static final String COLUMN_FIRST_ATTEMPT = "COLUMN_FIRST_ATTEMPT";
-    public static final String COLUMN_SECOND_ATTEMPT = "COLUMN_SECOND_ATTEMPT";
-    public static final String COLUMN_MORE_ATTEMPTS = "COLUMN_MORE_ATTEMPTS";
-    public static final String COLUMN_DATE_COMPLETED = "COLUMN_DATE_COMPLETED";
-
-    public static final String QUESTION_SET_RESULT_TABLE_CREATE_SQLs = "CREATE TABLE IF NOT EXISTS " + QUESTION_SET_RESULTS_TABLE +
-            " (" + QUESTION_SET_RESULT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            COLUMN_QUESTION_SET_ID + " INTEGER, " +
-            COLUMN_QUESTION_SET_POINTS_EARNED + " INTEGER, " +
-            COLUMN_QUESTION_SET_POINTS_POSSIBLE + " INTEGER, " +
-            COLUMN_FIRST_ATTEMPT + " INTEGER, " +
-            COLUMN_SECOND_ATTEMPT + " INTEGER, " +
-            COLUMN_MORE_ATTEMPTS + " INTEGER, " +
-            COLUMN_DATE_COMPLETED + " INTEGER)";
-
-
     public DatabaseHelper(@Nullable Context context) {
         //TODO: Pass Create and Delete statements:
         super(context, "database", null, 1);
@@ -104,21 +23,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase database) {
-        //// Creating all tables:
-        ///todo: DELETE SPACES
-        //TODO: NOT NULL
 
         // Create Tasks table:
         database.execSQL("CREATE TABLE IF NOT EXISTS TASKS (" +
-                "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "NAME TEXT, " +
-                "REWARD TEXT, " +
-                "QUESTION_SET_ID INTEGER, " +
-                "IS_COMPLETED BOOL" +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                "ACCOUNT_ID INTEGER NOT NULL, " +
+                "NAME TEXT NOT NULL, " +
+                "PASS_MARK INTEGER NOT NULL, " +
+                "REWARD TEXT NOT NULL, " +
+                "QUESTION_SET_ID INTEGER NOT NULL, " +
+                "IS_COMPLETED BOOL NOT NULL" +
                 ")");
 
-        //TODO: ADD ACCOUNT ID FOREIGN KEY
-        // Creating Question Set Results table:
         database.execSQL("CREATE TABLE IF NOT EXISTS QUESTION_SET_RESULTS (" +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                 "QUESTION_SET_ID INTEGER NOT NULL, " +
@@ -138,6 +54,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "EMAIL TEXT NOT NULL," +
                 "PASSWORD TEXT NOT NULL," +
                 "PIN TEXT NOT NULL" +
+                ")");
+
+        database.execSQL("CREATE TABLE IF NOT EXISTS CURRENT_ACCOUNT (" +
+                "ACCOUNT_ID INTEGER PRIMARY KEY NOT NULL" +
                 ")");
     }
 
@@ -162,8 +82,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
 
         // Putting the relevant item in each column of the row:
+        contentValues.put("ACCOUNT_ID", task.getAccountId());
         contentValues.put("NAME", task.getName());
         contentValues.put("REWARD", task.getReward());
+        contentValues.put("PASS_MARK", task.getPassMark());
         contentValues.put("QUESTION_SET_ID", task.getQuestionSetId());
         contentValues.put("IS_COMPLETED", task.isCompleted());
         // No need to put ID as it is an auto-increment value.
@@ -182,12 +104,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ArrayList<Task> tasks = new ArrayList<>();
 
         SQLiteDatabase database = this.getReadableDatabase();
-        Cursor cursor = database.rawQuery("SELECT * FROM TASKS", null);
+        Cursor cursor = database.rawQuery("SELECT * FROM TASKS WHERE ACCOUNT_ID=?", new String[] {String.valueOf(Utils.getInstance().getUserAccount().getId())});
 
         if (cursor.moveToFirst()){
             do {
-                tasks.add(new Task(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
-                        cursor.getInt(3), cursor.getInt(4) == 1));
+                tasks.add(new Task(cursor.getInt(0),
+                        cursor.getInt(1),
+                        cursor.getString(2),
+                        cursor.getInt(3),
+                        cursor.getString(4),
+                        cursor.getInt(5),
+                        cursor.getInt(6) == 1));
             } while(cursor.moveToNext());
         }
 
@@ -202,7 +129,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getWritableDatabase();
 
         // Delete from the table an item for which the IDs match:
-        long result = database.delete("TASKS", "ID =?", new String[] {String.valueOf(task.getId())}  );
+        long result = database.delete("TASKS", "ID =?", new String[] {String.valueOf(task.getId())});
 
         // Cleaning Up:
         database.close();
@@ -212,91 +139,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         return true;
-    }
-
-    //// QUESTIONS TABLE
-    public boolean addQuestion(Question question){
-        //TODO: WRONG
-        SQLiteDatabase database = this.getWritableDatabase();
-
-        ContentValues questionValues = new ContentValues();
-
-        questionValues.put(COLUMN_QUESTION_TEXT, question.getText());
-        questionValues.put(COLUMN_QUESTION_IMAGE_ID, question.getImageId());
-
-        String questionType = question.getType();
-        questionValues.put(COLUMN_QUESTION_TYPE, questionType);
-
-        if (questionType.equals(MULTIPLE_CHOICE)){
-            questionValues.put(COLUMN_QUESTION_CHOSEN_ANSWER_INDEX, question.getChosenAnswerIndex());
-        }
-        else if (questionType.equals(WRITTEN)){
-            questionValues.put(COLUMN_QUESTION_CORRECT_WRITTEN_ANSWER, question.getCorrectWrittenAnswer());
-            questionValues.put(COLUMN_QUESTION_WRITTEN_ANSWER, question.getWrittenAnswer());
-        }
-
-        questionValues.put(COLUMN_QUESTION_TOPIC, question.getTopic());
-        questionValues.put(COLUMN_QUESTION_MODEL, question.getModel());
-        questionValues.put(COLUMN_QUESTION_ATTEMPTS, question.getAttempts());
-        questionValues.put(COLUMN_QUESTION_POINTS_POSSIBLE, question.getPointsPossible());
-        questionValues.put(COLUMN_QUESTION_POINTS_EARNED, question.getPointsEarned());
-
-        long insertQuestions = database.insert(QUESTIONS_TABLE, null, questionValues);
-
-
-
-        if (questionType.equals(MULTIPLE_CHOICE)) {
-            //addAnswerOptions(question.getAnswerOptions());
-
-            //long questionId = this.getTableLength(QUESTIONS_TABLE);
-            int questionId = 0;
-
-            ContentValues contentValues = new ContentValues();
-            // Creating answer options table:
-            database.execSQL(QUESTION_ANSWER_OPTIONS_TABLE_CREATE_SQLs);
-
-            // Putting answer options in answer options table:
-            for (String answerOption: question.getAnswerOptions()){
-                contentValues.put(COLUMN_QUESTION_ANSWER_OPTION_QUESTION_ID, questionId);
-                contentValues.put(COLUMN_QUESTION_ANSWER_OPTION, answerOption);
-            }
-            long insertOptions = database.insert(QUESTION_ANSWER_OPTIONS_TABLE, null, contentValues);
-
-            if (insertOptions == -1){
-                System.out.println("Inserting Answers unsuccessful");
-                return false;
-            }
-        }
-
-        database.close();
-
-            // if insert is negative, it has failed, if it is positive, it was successful:
-        if (insertQuestions == -1){
-            System.out.println("Inserting Questions unsuccessful");
-
-            return false;}
-        else {return true;}
-
-    }
-
-    public boolean addAnswerOptions(String[] answerOptions){
-        //TODO: WRONG
-
-        SQLiteDatabase database = this.getWritableDatabase();
-
-        long questionId = this.getTableLength(QUESTIONS_TABLE);
-
-        ContentValues contentValues = new ContentValues();
-        // Putting answer options in answer options table:
-        for (String answerOption: answerOptions){
-            contentValues.put(COLUMN_QUESTION_ANSWER_OPTION_QUESTION_ID, questionId);
-            contentValues.put(COLUMN_QUESTION_ANSWER_OPTION, answerOption);
-        }
-        long insert = database.insert(QUESTION_ANSWER_OPTIONS_TABLE, null, contentValues);
-
-        if (insert == -1){return false;}
-        else {return true;}
-
     }
 
     //// QUESTION SET RESULT TABLE
@@ -327,7 +169,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ArrayList<QuestionSetResult> questionSetResults = new ArrayList<>();
 
         SQLiteDatabase database = this.getReadableDatabase();
-        Cursor cursor = database.rawQuery("SELECT * FROM QUESTION_SET_RESULTS", null);
+        Cursor cursor = database.rawQuery("SELECT * FROM QUESTION_SET_RESULTS WHERE ACCOUNT_ID=?", new String[] {String.valueOf(Utils.getInstance().getUserAccount().getId())});
 
         if (cursor.moveToFirst()){
             do {
@@ -352,28 +194,147 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return questionSetResults;
     }
 
-    public addAccount(Account account){
+    public boolean addAccount(Account account){
         SQLiteDatabase database = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put("QUESTION_SET_ID", questionSetResult.getQuestionSetId());
-        contentValues.put("ACCOUNT_ID", accountId);
-        contentValues.put("QUESTION_SET_POINTS_EARNED", questionSetResult.getPointsEarned());
-        contentValues.put("QUESTION_SET_POINTS_POSSIBLE", questionSetResult.getPointsPossible());
-        contentValues.put("FIRST_ATTEMPT", questionSetResult.getFirstAttempt());
-        contentValues.put("SECOND_ATTEMPT", questionSetResult.getSecondAttempt());
-        contentValues.put("MORE_ATTEMPTS", questionSetResult.getMoreAttempts());
-        contentValues.put("DATE_COMPLETED", questionSetResult.getDateCompleted());
+        contentValues.put("PARENT_NAME", account.getParentName());
+        contentValues.put("STUDENT_NAME", account.getStudentName());
+        contentValues.put("EMAIL", account.getEmail());
+        contentValues.put("PASSWORD", account.getPassword());
+        contentValues.put("PIN", account.getPin());
 
-        long insert = database.insert("QUESTION_SET_RESULTS", null, contentValues);
+        long insert = database.insert("ACCOUNTS", null, contentValues);
 
         // Cleaning Up:
         database.close();
 
+        //TODO: CHANGE PIN TO INT
+        //todo: Return account id
+
         // if insert is negative, it has failed, if it is positive, it was successful:
         if (insert == -1){return false;}
         else {return true;}
+    }
 
+    public Account getAccountById(int id){
+
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM ACCOUNTS WHERE ID = ?", new String[] {String.valueOf(id)});
+
+        Account account = new Account();
+        if (cursor.moveToFirst()){
+                account = new Account(
+                        cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getString(5)
+                );
+        }
+
+        // Cleaning Up:
+        cursor.close();
+        database.close();
+
+         if (account.getAccountType().equals(Account.Guest)){
+             return null;
+         }
+        return account;
+    }
+
+    public Account getAccountByEmail(String email){
+
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM ACCOUNTS WHERE EMAIL = ?", new String[] {email});
+
+        Account account = new Account();
+        if (cursor.moveToFirst()){
+            account = new Account(
+                    cursor.getInt(0),
+                    cursor.getString(1),
+                    cursor.getString(2),
+                    cursor.getString(3),
+                    cursor.getString(4),
+                    cursor.getString(5)
+            );
+        }
+
+        // Cleaning Up:
+        cursor.close();
+        database.close();
+
+        if (account.getAccountType().equals(Account.Guest)){
+            return null;
+        }
+        return account;
+    }
+
+    public boolean useAccount(int id){
+        Account account = getAccountById(id);
+        if (account == null){
+            return false;
+        }
+        else{
+
+            SQLiteDatabase database = this.getWritableDatabase();
+
+
+
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("ACCOUNT_ID", account.getId());
+
+            long insert = database.insert("CURRENT_ACCOUNT", null, contentValues);
+
+
+
+            // if insert is negative, it has failed, if it is positive, it was successful:
+            if (insert == -1){
+                // Cleaning Up:
+                database.close();
+                return false;}
+            else {
+                // If the new account has successfully been set, delete any pre-existing current account:
+                database.execSQL("DELETE FROM CURRENT_ACCOUNT WHERE NOT ACCOUNT_ID =?", new String[]{String.valueOf(id)});
+
+                // Cleaning Up:
+                database.close();
+                return true;
+            }
+        }
+
+    }
+
+    public boolean removeCurrentAccount(){
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        database.execSQL("DELETE FROM CURRENT_ACCOUNT");
+
+
+        // Cleaning Up:
+        database.close();
+
+        return (getTableLength("CURRENT_ACCOUNT") == 0);
+    }
+
+    public Account getCurrentAccount(){
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM CURRENT_ACCOUNT", null);
+
+        Account account = new Account();
+        if (cursor.moveToFirst()){
+            account = getAccountById(cursor.getInt(0));
+        }
+
+        // Cleaning Up:
+        cursor.close();
+        database.close();
+
+        if (account.getAccountType().equals(Account.Guest)){
+            return null;
+        }
+        return account;
 
     }
 

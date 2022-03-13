@@ -1,10 +1,12 @@
 package com.example.PocketMaths;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,7 +17,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
     private Button btnForgotPassword, btnBack, btnConfirm;
 
-    private EditText[] inputs;
+    private String[] inputs;
+
+    private DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +45,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         btnForgotPassword.setOnClickListener(this);
         btnBack.setOnClickListener(this);
         btnConfirm.setOnClickListener(this);
-
-        // Placing Edit Texts in array:
-        inputs = new EditText[]{edtTxtEmail, edtTxtPassword};
 
     }
 
@@ -71,7 +72,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 break;
 
             case (R.id.btnConfirm):
-               confirmClicked();
+               signInClicked();
                 break;
 
             default:
@@ -83,25 +84,45 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     /**
      * Does the necessary validations when the Confirm Button is clicked:
      */
-    private void confirmClicked() {
+    private void signInClicked() {
+        // Placing Edit Texts in array:
+        inputs = new String[]{edtTxtEmail.getText().toString(),
+                edtTxtPassword.getText().toString()};
+
         // Displays appropriate Snack Bar if inputs are invalid:
         if (!Utils.getInstance().inputsFilled(inputs)){
             // If all of the inputs are not filled, they need to check:
             Utils.getInstance().showSnackBar(this, relSignIn, getString(R.string.empty_inputs), getString(R.string.ok));
         }
-
         else if (!Utils.getInstance().isValidEmail(edtTxtEmail.getText().toString())){
             // If Email invalid, they need to check:
             Utils.getInstance().showSnackBar(this, relSignIn,getString(R.string.check_email), getString(R.string.ok));
         }
-        else if (!Utils.getInstance().isValid(new EditText[]{(EditText) edtTxtPassword.getText()}, 6)) {
+        else if (!Utils.getInstance().isValid(new String[]{edtTxtPassword.getText().toString()}, 6)) {
             // If Password invalid, they need to check:
             Utils.getInstance().showSnackBar(this, relSignIn, getString(R.string.check_password), getString(R.string.ok));
         }
-        else{
-            // User not found:
+        else if (databaseHelper.getAccountByEmail(edtTxtEmail.getText().toString()) == null){
+            // If the account of the email address entered does not exist, the user cannot be found:
             Utils.getInstance().showSnackBar(this, relSignIn, getString(R.string.user_not_found), getString(R.string.ok));
-            // TODO: Here, I would access a server to check for the details but I do not have it. Will I code one?
+        }
+        else{
+            String email = edtTxtEmail.getText().toString();
+            String password = edtTxtPassword.getText().toString();
+
+            // Looking for an account of the same email in the database:
+            Account account = databaseHelper.getAccountByEmail(email);
+
+            if (!password.equals(account.getPassword())){
+                // If the account with the email address does exist, but the password is not correct, the user should check the password:
+                Utils.getInstance().showSnackBar(this, relSignIn, getString(R.string.check_password), getString(R.string.ok));
+            }
+            else{
+                Utils.getInstance().setUserAccount(account);
+                databaseHelper.useAccount(account.getId());
+                startActivity(new Intent(this, MainMenuActivity.class));
+            }
+
         }
     }
 
