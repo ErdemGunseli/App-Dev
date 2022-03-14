@@ -84,7 +84,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         targetText = targetText.toUpperCase(Locale.ROOT);
 
         // Iterating through the Question Set:
-        for (QuestionSet questionSet: Utils.getInstance().getQuestionSets()){
+        for (QuestionSet questionSet: Utils.getQuestionSets()){
             // If the Question Set Name or Description contains the target text, include it:
             if (questionSet.getName().toUpperCase(Locale.ROOT).contains(targetText) ||
                     questionSet.getDescription().toUpperCase(Locale.ROOT).contains(targetText)) {
@@ -94,6 +94,12 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
         // Setting the filtered array list of question sets:
 
+        if (questionSetsToShow.size() == 0){
+            //TODO: SHOW NONE FOUND MESSAGE
+        }
+        else{
+            //TODO: HIDE NONE FOUND MESSAGE
+        }
         mainMenuRecyclerAdapter.setQuestionSets(questionSetsToShow);
     }
 

@@ -174,18 +174,18 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
-                android:background="@color/Primary"
+                android:background="@color/Surface3"
                 android:hint="@string/answer"
                 android:inputType="numberDecimal"
                 android:maxLength="10"
                 android:padding="10dp"
-                android:textColor="@color/Secondary"
-                android:textColorHint="@color/Secondary"
+                android:textColor="@color/Primary"
+                android:textColorHint="@color/Primary"
                 android:textSize="16sp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnRevealAnswer"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
+                style="@style/textButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txtMessage"
@@ -193,11 +193,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_toEndOf="@id/edtTxtAnswer"
                 android:text="@string/reveal_answer"
-                android:textColor="@color/Accent"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                android:textAlignment="center"
-                />
+                android:textAlignment="center" />
 
             <TextView
                 android:id="@+id/txtMessage"

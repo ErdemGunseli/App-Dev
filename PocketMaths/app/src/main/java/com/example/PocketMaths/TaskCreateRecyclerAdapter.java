@@ -102,11 +102,16 @@ public class TaskCreateRecyclerAdapter extends RecyclerView.Adapter<TaskCreateRe
 
 
     public void deleteTask(int position){
-        // Deleting specified item:
-        databaseHelper.deleteTask(tasks.get(position));
+        // Deleting specified item from the database:
+       if(databaseHelper.deleteTask(tasks.get(position))){
+           Toast.makeText(context, context.getString(R.string.task_deleted), Toast.LENGTH_SHORT).show();
+       }
 
-        // Setting updated database:
-        setTasks(databaseHelper.getTasks());
+        // Deleting specified item from array list:
+        tasks.remove(position);
+
+       // Re-setting tasks:
+        setTasks(tasks);
 
         //Item Changed:
         notifyItemChanged(position);

@@ -56,6 +56,8 @@ public class TaskCreateActivity extends AppCompatActivity implements View.OnClic
 
     private ArrayList<String> questionSetNames = new ArrayList<>();
 
+    private ArrayList<Task> tasks = new ArrayList<>();
+
     private int passMark;
 
     //TODO: Task Item Needs Improvement
@@ -66,20 +68,18 @@ public class TaskCreateActivity extends AppCompatActivity implements View.OnClic
 
         initViews();
 
-        ArrayList<Task> tasks = new ArrayList<>();
 
-        // Finding the incomplete tasks to show
-        for (Task task: databaseHelper.getTasks()){
-            if (!task.isCompleted()){
-                tasks.add(task);
-            }
-        }
+        showIncompleteTasks();
 
-        taskCreateRecyclerAdapter.setTasks(tasks);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        // Reverse order since latest task should appear first:
+        linearLayoutManager.setReverseLayout(true);
 
-        rvTasks.setLayoutManager(new LinearLayoutManager(this));
+        rvTasks.setLayoutManager(linearLayoutManager);
         rvTasks.setAdapter(taskCreateRecyclerAdapter);
     }
+
+
 
 
     private void initViews() {
@@ -196,9 +196,21 @@ public class TaskCreateActivity extends AppCompatActivity implements View.OnClic
             // Saving Task:
             Task task = new Task(questionSetId, Utils.getInstance().getUserAccount().getId(), edtTxtTaskName.getText().toString(), passMark, edtTxtReward.getText().toString(), spQuestionSets.getSelectedItemPosition(), false);
             databaseHelper.addTask(task);
-            taskCreateRecyclerAdapter.setTasks(databaseHelper.getTasks());
+            showIncompleteTasks();
             TransitionManager.beginDelayedTransition(svCreateTask);
         }
+    }
+
+    private void showIncompleteTasks() {
+        // Finding the incomplete tasks to show
+        this.tasks = new ArrayList<>();
+        for (Task task: databaseHelper.getTasks()){
+            if (!task.isCompleted()){
+                this.tasks.add(task);
+            }
+        }
+
+        taskCreateRecyclerAdapter.setTasks(tasks);
     }
 
     @Override

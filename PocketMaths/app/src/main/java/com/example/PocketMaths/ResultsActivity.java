@@ -148,7 +148,8 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
             questionSet.calculateResult() >= task.getPassMark()){
                 Toast.makeText(this, task.getName() + " Completed", Toast.LENGTH_SHORT).show();
 
-                //TODO: Actually change completed
+                //Completing the task:
+                databaseHelper.completeTask(task);
             }
         }
 

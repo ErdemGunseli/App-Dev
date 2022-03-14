@@ -58,15 +58,13 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnCancel"
+                style="@style/textButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/btnContinue"
                 android:layout_centerHorizontal="true"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:text="@string/cancel"
-                android:textColor="@color/Accent"
-                android:textSize="12sp"
-                />
+                android:textSize="12sp" />
 
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -112,13 +110,12 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSignIn"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
+                style="@style/textButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/btnSignUp"
                 android:layout_centerHorizontal="true"
                 android:text="@string/sign_in"
-                android:textColor="@color/Accent"
                 android:textSize="12sp" />
 
             <com.google.android.material.button.MaterialButton
@@ -127,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/btnSignIn"
                 android:layout_centerHorizontal="true"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
+                style="@style/textButton"
                 android:text="@string/cancel"
                 android:textColor="@color/Accent"
                 android:textSize="12sp"

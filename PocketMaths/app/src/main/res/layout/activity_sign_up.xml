@@ -120,16 +120,14 @@
 
                 <Button
                     android:id="@+id/btnBack"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="@style/textButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/edtTxtConfirmPin"
                     android:layout_alignParentStart="true"
                     android:layout_marginTop="20dp"
                     android:text="@string/back"
-                    android:textColor="@color/Accent"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
+                    android:textSize="12sp"/>
 
                 <Button
                     android:id="@+id/btnConfirm"

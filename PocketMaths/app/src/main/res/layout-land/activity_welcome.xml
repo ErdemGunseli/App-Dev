@@ -61,34 +61,27 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="30dp"
-                    android:text="@string/sign_up"
-                    android:textSize="13sp" />
+                    android:text="@string/sign_up"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSignIn"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="@style/textButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/btnSignUp"
                     android:layout_centerHorizontal="true"
                     android:text="@string/sign_in"
-                    android:textColor="@color/Accent"
                     android:textSize="13sp"
-                    android:textStyle="bold"
-
                     />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnContinueAsGuest"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="@style/textButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/btnSignIn"
                     android:layout_centerInParent="true"
-                    android:text="@string/continue_as_guest"
-                    android:textColor="@color/Accent"
-                    android:textSize="11sp"
-                    android:textStyle="bold" />
+                    android:text="@string/continue_as_guest"/>
 
             </RelativeLayout>
 

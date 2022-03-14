@@ -57,24 +57,22 @@
 
             <Button
                 android:id="@+id/btnForgotPassword"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
+                style="@style/textButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/edtTxtPassword"
                 android:layout_marginTop="15dp"
                 android:text="@string/forgot_password"
-                android:textColor="@color/Accent"
-                android:textSize="12sp"/>
+                android:textSize="12sp" />
 
             <Button
                 android:id="@+id/btnBack"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
+                style="@style/textButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/btnForgotPassword"
                 android:layout_alignParentStart="true"
                 android:text="@string/back"
-                android:textColor="@color/Accent"
                 android:textSize="12sp" />
 
             <Button

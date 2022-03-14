@@ -89,9 +89,12 @@
     <string name="view_task_pass_mark">Pass Mark: %d%%</string>
     <string name="view_task_reward">Reward: %s</string>
     <string name="reward_details">Task Reward: %s</string>
-    <string name="completed">Completed</string>
     <string name="not_completed">Not Completed</string>
+    <string name="task_deleted">Task Deleted</string>
 
     <string name="view_tasks">View Tasks:</string>
+    <string name="tasked">Tasked</string>
+    <string name="completed">Completed</string>
+    <string name="nothing_here">Nothing To Show Here</string>
 
 </resources>

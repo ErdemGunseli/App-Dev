@@ -27,7 +27,7 @@
     <style name="cardView1" parent="">
         <item name="cardBackgroundColor">@color/Surface1</item>
         <item name="elevation">100dp</item>
-        <item name="cardCornerRadius">5dp</item>
+        <item name="cardCornerRadius">3dp</item>
     </style>
 
     <style name="cardView2" parent="cardView1">
@@ -52,14 +52,30 @@
         <item name="backgroundTint">@color/Accent</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">13sp</item>
+        <item name="haloColor">@color/Accent</item>
+
+    </style>
+
+    <style name="textButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">@color/Accent</item>
     </style>
 
     <!-- Radio Button Theme -->
 
     <style name="radioButton" parent="Base.Widget.AppCompat.CompoundButton.RadioButton">
-        <item name="android:textColor">@color/Primary</item>
+        <item name="android:textColor">@color/Secondary</item>
         <item name="android:textSize">13.5sp</item>
         <item name="android:buttonTint">@color/Surface3</item>
+    </style>
+
+    <!-- Tab Layout Theme -->
+
+    <style name="tabLayout" parent="android:Widget">
+        <item name="tabIndicatorColor">@color/Accent</item>
+        <item name="tabSelectedTextColor">@color/Accent</item>
+        <item name="android:colorAccent">@color/Accent</item>
     </style>
 
 </resources>

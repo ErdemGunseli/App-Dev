@@ -141,6 +141,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    public void completeTask(Task task){
+        SQLiteDatabase database = this.getWritableDatabase();
+
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put("IS_COMPLETED", true);
+
+        database.update("TASKS", contentValues, "id=?", new String[]{String.valueOf(task.getId())});
+
+        // Cleaning Up:
+        database.close();
+    }
+
     //// QUESTION SET RESULT TABLE
     public boolean addQuestionSetResult(QuestionSetResult questionSetResult, int accountId){
         SQLiteDatabase database = this.getWritableDatabase();

@@ -138,16 +138,14 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSignIn"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="@style/textButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/btnSignUp"
-                    android:layout_marginBottom="30dp"
                     android:layout_centerHorizontal="true"
-                    android:textColor="@color/Accent"
+                    android:layout_marginBottom="30dp"
                     android:text="@string/sign_in"
-                    android:textSize="13sp"
-                    />
+                    android:textSize="13sp" />
 
             </RelativeLayout>
         </ScrollView>

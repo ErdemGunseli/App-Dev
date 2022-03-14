@@ -11,25 +11,29 @@
     <!-- Extra Colours -->
 
     <!-- Light Grey -->
-    <color name="Primary">#D3D3D3</color>
+    <color name="Primary">#404040</color>
+    <!-- Was: D3D3D3 -->
 
     <!-- Dark Grey -->
-    <color name="Secondary">#333333</color>
+    <color name="Secondary">#CFCFCF</color>
 
     <!-- Oxford Blue-->
     <color name="Menu">#02223C</color>
 
     <!-- Yellow Orange -->
     <color name="Accent">#FFBB5C</color>
+    <!-- Was: #FFBB5C -->
 
     <!-- Deep Champagne -->
-    <color name="NonInteractive">#FFD599</color>
+    <color name="NonInteractive">#FFCC85</color>
 
     <!-- Cadet Blue -->
-    <color name="Surface1">#6298A7</color>
+    <color name="Surface1">#71A1C1</color>
+    <!-- Was: #6298A7 -->
 
     <!-- Light Coral -->
-    <color name="Surface2">#EF6F6C</color>
+    <color name="Surface2">#6596CD</color>
+    <!-- Was #EF6F6C -->
 
     <!-- Silver -->
     <color name="Surface3">#C0C0C0</color>

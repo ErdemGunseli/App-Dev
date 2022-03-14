@@ -48,24 +48,24 @@ public class Utils extends AppCompatActivity {
         questionSets = new ArrayList<>();
         Question[] sampleQuestionSetQuestions = new Question[] {
                 new Question("Topic 1", "Model 1", "The answer to this question is not (B). What is the answer?",0, new String[]{"(A)\tThe Answer Is D", "(B)\tThe Answer Is A", "(C)\tThe Answer Is C", "(D)\tThere Is Not Enough Information"}, 2, 200),
-                new Question("Topic 2", "Model 2","Question 2. The answer is B.", R.drawable.ic_launcher_background, new String[]{"(A)\tSample", "(B)\tSample", "(C)\tSample", "(D)\tSample"}, 1, 150),
-                new Question("Topic 3", "Model 3","Question 3. The answer is D.", R.drawable.ic_launcher_background,  new String[]{"(A)\tSample", "(B)\tSample", "(C)\tSample", "(D)\tSample"}, 3, 100),
-                new Question("Topic 4", "Model 4","The answer is 123", R.drawable.ic_launcher_background, "123", 300)
+                new Question("Topic 2", "Model 2","Question 2. The answer is B.", R.color.Surface3, new String[]{"(A)\tSample", "(B)\tSample", "(C)\tSample", "(D)\tSample"}, 1, 150),
+                new Question("Topic 3", "Model 3","Question 3. The answer is D.", R.color.Surface3,  new String[]{"(A)\tSample", "(B)\tSample", "(C)\tSample", "(D)\tSample"}, 3, 100),
+                new Question("Topic 4", "Model 4","The answer is 123", R.color.Surface3, "123", 300)
         };
 
-        questionSets.add(new QuestionSet(0, "Question Set 1", "The First Question Set", R.drawable.ic_launcher_background,
+        questionSets.add(new QuestionSet(0, "Question Set 1", "The First Question Set", R.color.Surface3,
                 sampleQuestionSetQuestions));
 
-        questionSets.add(new QuestionSet(1, "Question Set 2", "The Second Question Set", R.drawable.ic_launcher_background,
+        questionSets.add(new QuestionSet(1, "Question Set 2", "The Second Question Set", R.color.Surface3,
                 sampleQuestionSetQuestions));
 
-        questionSets.add(new QuestionSet(2, "Question Set 3", "The Third Question Set", R.drawable.ic_launcher_background,
+        questionSets.add(new QuestionSet(2, "Question Set 3", "The Third Question Set", R.color.Surface3,
                 sampleQuestionSetQuestions));
 
-        questionSets.add(new QuestionSet(3, "Question Set 4", "The Fourth Question Set", R.drawable.ic_launcher_background,
+        questionSets.add(new QuestionSet(3, "Question Set 4", "The Fourth Question Set", R.color.Surface3,
                 sampleQuestionSetQuestions));
 
-        questionSets.add(new QuestionSet(4, "Question Set 5", "The Fifth Question Set", R.drawable.ic_launcher_background,
+        questionSets.add(new QuestionSet(4, "Question Set 5", "The Fifth Question Set", R.color.Surface3,
                 sampleQuestionSetQuestions));
 
 
