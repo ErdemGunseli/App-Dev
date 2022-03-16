@@ -8,6 +8,10 @@
         <!-- Customize your theme here. -->
         <item name="android:textColor">@color/Secondary</item>
 
+        <item name="android:textColorHighlight">@color/Highlight</item>
+
+        <item name="colorAccent">@color/Accent</item>
+
         <item name="fontFamily">@font/metropolis_light</item>
 
         <item name="android:windowBackground">@drawable/dark_mode_background_bitmap</item>

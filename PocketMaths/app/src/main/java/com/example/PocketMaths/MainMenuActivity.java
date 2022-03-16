@@ -7,6 +7,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,14 +39,17 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         mainMenuRecyclerAdapter = new MainMenuRecyclerAdapter(this);
 
         // Setting our Question Sets Array List from the Utils to the Adapter
-        mainMenuRecyclerAdapter.setQuestionSets(Utils.getInstance().getQuestionSets());
+        mainMenuRecyclerAdapter.setQuestionSets(Utils.getQuestionSets());
 
         // Setting the adapter to the recycler view
         rvMainMenu.setAdapter(mainMenuRecyclerAdapter);
 
         // We also need to set a layout manager for our Recycler View:
-        //Changing to Linear Layout Manager for the implementation of Expandable Card View:
+        // Changing to Linear Layout Manager for the implementation of Expandable Card View:
         rvMainMenu.setLayoutManager((new LinearLayoutManager(this)));
+
+        // Collapsing all Card Views to ensure that none is expanded when the activity is started:
+        mainMenuRecyclerAdapter.collapseAll();
 
     }
 

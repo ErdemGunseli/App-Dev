@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Maths</string>
+    <string name="app_name">Pocket Maths</string>
     <string name="welcome">Welcome To\nPocket Maths</string>
     <string name="sign_up">Sign Up</string>
     <string name="sign_in">Sign In</string>
@@ -12,8 +12,8 @@
     <string name="confirm">Confirm</string>
     <string name="back">Back</string>
 
-    <string name="your_name">Your Name:\t</string>
-    <string name="student_name">Student\'s Name:\t</string>
+    <string name="parent_name">Parent Name:\t</string>
+    <string name="student_name">Student Name:\t</string>
     <string name="confirm_password">Confirm Password: </string>
     <string name="pin">Parental Pin: </string>
     <string name="confirm_pin">Confirm Parental Pin: </string>
@@ -31,7 +31,7 @@
     <string name="pins_do_not_match">The Pins Do Not Match</string>
     <string name="ok">OK</string>
 
-    <string name="start_question_set">Start</string>
+    <string name="start">Start</string>
     <string name="continue_">Continue</string>
     <string name="number_of_questions">%d Questions</string>
     <string name="on_question">On Question %d</string>
@@ -66,6 +66,7 @@
     <string name="history">History: </string>
     <string name="try_question_sets">Try Questions</string>
     <string name="account_details">Account Details:</string>
+    <string name="view_account_details"> Parent Name: %s\nStudent Name: %s\nEmail: %s</string>
     <string name="change_details">Change Details</string>
     <string name="sign_out">Sign Out</string>
 
@@ -91,10 +92,14 @@
     <string name="reward_details">Task Reward: %s</string>
     <string name="not_completed">Not Completed</string>
     <string name="task_deleted">Task Deleted</string>
+    <string name="task_completed">%s Completed</string>
 
     <string name="view_tasks">View Tasks:</string>
     <string name="tasked">Tasked</string>
     <string name="completed">Completed</string>
     <string name="nothing_here">Nothing To Show Here</string>
+
+    <string name="settings">Settings</string>
+
 
 </resources>

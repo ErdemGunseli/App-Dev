@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import static com.example.PocketMaths.QuestionSetActivity.QUESTION_SET_ID;
 
@@ -24,6 +24,7 @@ import java.util.Calendar;
 
 public class ResultsActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private ScrollView svResults;
 
     private ImageView imgExit;
 
@@ -117,6 +118,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
 
 
     private void initViews() {
+        svResults = findViewById(R.id.svResults);
         rvQuestions = findViewById(R.id.rvQuestions);
         imgExit = findViewById(R.id.imgExit);
         txtQuestionSetName = findViewById(R.id.txtQuestionSetName);
@@ -145,8 +147,9 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
 
         for (Task task: tasks){
             if (Utils.getInstance().getQuestionSetByID(task.getQuestionSetId()).getName().equals(questionSet.getName()) &&
-            questionSet.calculateResult() >= task.getPassMark()){
-                Toast.makeText(this, task.getName() + " Completed", Toast.LENGTH_SHORT).show();
+            questionSet.calculateResult() >= task.getPassMark() && !task.isCompleted()){
+
+                Utils.getInstance().showSnackBar(this, svResults, String.format(getString(R.string.task_completed), task.getName()), getString(R.string.ok));
 
                 //Completing the task:
                 databaseHelper.completeTask(task);

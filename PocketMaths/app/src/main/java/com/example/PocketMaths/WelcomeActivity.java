@@ -4,11 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.PocketMaths.R;
 
 public class WelcomeActivity extends AppCompatActivity implements View.OnClickListener {
     private Button btnSignUp, btnSignIn, btnContinueAsGuest;
@@ -24,11 +21,9 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
 
         Account account = databaseHelper.getCurrentAccount();
         if (account != null) {
-            Toast.makeText(this, "Automatically Logged Into Account with Parent Name: " + account.getParentName(), Toast.LENGTH_SHORT).show();
             Utils.getInstance().setUserAccount(account);
             startActivity(new Intent(this, MainMenuActivity.class));
         } else {
-            Toast.makeText(this, "There is no current account found", Toast.LENGTH_SHORT).show();
             setContentView(R.layout.activity_welcome);
 
             initViews();

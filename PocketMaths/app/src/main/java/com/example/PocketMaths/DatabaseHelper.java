@@ -17,7 +17,6 @@ import java.util.ArrayList;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(@Nullable Context context) {
-        //TODO: Pass Create and Delete statements:
         super(context, "database", null, 1);
     }
 

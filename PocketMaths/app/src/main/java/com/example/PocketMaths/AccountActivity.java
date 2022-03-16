@@ -101,12 +101,11 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
 
 
             // Set data to the details textview:
-
-            txtDetails.append(
-                    getString(R.string.your_name) + "\t" + account.getParentName() + "\n" +
-                    getString(R.string.student_name) + "\t" +account.getStudentName() + "\n" +
-                    getString(R.string.email) + "\t" +account.getEmail() + "\n"
-            );
+            txtDetails.setText(String.format(getString(R.string.view_account_details),
+                    account.getParentName(),
+                    account.getStudentName(),
+                    account.getEmail()
+                    ));
 
         }
 
@@ -164,11 +163,9 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
             case (R.id.btnSignOut):
                 DatabaseHelper databaseHelper = new DatabaseHelper(this);
                 Utils.getInstance().setUserAccount(new Account());
-                boolean success = databaseHelper.removeCurrentAccount();
-                //TODO: Remove all toast messages:::
-                Toast.makeText(this, String.valueOf(success), Toast.LENGTH_SHORT).show();
+                databaseHelper.removeCurrentAccount();
                 startActivity(new Intent(this, WelcomeActivity.class));
-
+                break;
 
             default:
                 break;

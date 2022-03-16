@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
 
-    <!-- Extra Colours -->
+    <!-- Onyx -->
+    <color name="Primary">#404040</color>
 
     <!-- Light Grey -->
-    <color name="Primary">#404040</color>
-    <!-- Was: D3D3D3 -->
-
-    <!-- Dark Grey -->
     <color name="Secondary">#CFCFCF</color>
 
     <!-- Oxford Blue-->
@@ -22,18 +12,15 @@
 
     <!-- Yellow Orange -->
     <color name="Accent">#FFBB5C</color>
-    <!-- Was: #FFBB5C -->
 
-    <!-- Deep Champagne -->
-    <color name="NonInteractive">#FFCC85</color>
+    <!-- Mellow Apricot -->
+    <color name="Highlight">#FFCC85</color>
 
-    <!-- Cadet Blue -->
+    <!-- Air Superiority Blue -->
     <color name="Surface1">#71A1C1</color>
-    <!-- Was: #6298A7 -->
 
-    <!-- Light Coral -->
+    <!-- Blue Gray -->
     <color name="Surface2">#6596CD</color>
-    <!-- Was #EF6F6C -->
 
     <!-- Silver -->
     <color name="Surface3">#C0C0C0</color>
@@ -43,4 +30,5 @@
 
     <!-- Shark -->
     <color name="DarkBackground">#25272C</color>
+
 </resources>

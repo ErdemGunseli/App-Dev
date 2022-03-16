@@ -1,20 +1,23 @@
 package com.example.PocketMaths;
 
+import static com.example.PocketMaths.QuestionSetActivity.QUESTION_SET_ID;
+
 import android.content.Context;
-import android.transition.TransitionManager;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class TaskViewRecyclerAdapter extends RecyclerView.Adapter<TaskViewRecyclerAdapter.ViewHolder> {
 
@@ -34,7 +37,7 @@ public class TaskViewRecyclerAdapter extends RecyclerView.Adapter<TaskViewRecycl
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.create_task_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_item, parent, false);
         return new ViewHolder(view);
 
     }
@@ -44,7 +47,6 @@ public class TaskViewRecyclerAdapter extends RecyclerView.Adapter<TaskViewRecycl
         Task task = tasks.get(position);
 
         // Showing Details:
-
         holder.txtTaskName.setText(task.getName());
 
         holder.txtQuestionSetName.setText(String.format(context.getString(R.string.view_task_question_set_name),
@@ -73,6 +75,8 @@ public class TaskViewRecyclerAdapter extends RecyclerView.Adapter<TaskViewRecycl
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        private CardView cvDetails;
+
         private TextView txtTaskName, txtQuestionSetName, txtPassMark, txtReward;
 
         private ImageView imgDelete;
@@ -83,15 +87,28 @@ public class TaskViewRecyclerAdapter extends RecyclerView.Adapter<TaskViewRecycl
 
         }
 
+
+
         private void initViews() {
+            cvDetails = itemView.findViewById(R.id.cvDetails);
             txtTaskName = itemView.findViewById(R.id.txtTaskName);
             txtQuestionSetName = itemView.findViewById(R.id.txtQuestionSetName);
             txtPassMark = itemView.findViewById(R.id.txtPassMark);
             txtReward = itemView.findViewById(R.id.txtReward);
-
             imgDelete = itemView.findViewById(R.id.imgDelete);
+
+            cvDetails.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    context.startActivity(new Intent(context, QuestionSetActivity.class)
+                    .putExtra(QUESTION_SET_ID, tasks.get(getAdapterPosition()).getQuestionSetId()));
+                }
+            });
         }
     }
+
+
+
 
     public void setTasks(ArrayList<Task> tasks){
         this.tasks = tasks;

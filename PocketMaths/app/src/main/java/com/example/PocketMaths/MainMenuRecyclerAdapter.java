@@ -65,7 +65,7 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
         holder.txtNumberOfQuestions.setText(String.format(context.getString(R.string.number_of_questions), questionSet.getQuestions().length));
 
         // If the question set has been started:
-        if (questionSet.getCurrentQuestionIndex() != 0) {
+        if (questionSet.getQuestions()[0].getAttempts() != 0) {
             // On Question X
             holder.txtCurrentQuestionIndex.setText(String.format(context.getString(R.string.on_question), (questionSet.getCurrentQuestionIndex() + 1)));
             // Continue

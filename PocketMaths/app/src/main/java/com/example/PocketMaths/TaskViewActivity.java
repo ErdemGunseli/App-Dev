@@ -70,17 +70,9 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
 
         rvTasks.setLayoutManager(linearLayoutManager);
 
-
-
-
         rvTasks.setAdapter(taskViewRecyclerAdapter);
 
-
-
     }
-
-
-
 
     private void initViews() {
         svViewTask = findViewById(R.id.svViewTask);
@@ -135,7 +127,7 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
 
 
             case (R.id.imgExit):
-                startActivity(new Intent(this, MainMenuActivity.class));
+                onBackPressed();
                 break;
 
             default:

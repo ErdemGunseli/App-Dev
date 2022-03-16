@@ -16,14 +16,16 @@ import java.util.ArrayList;
 
 public class AccountHistoryRecyclerAdapter extends RecyclerView.Adapter<AccountHistoryRecyclerAdapter.ViewHolder> {
 
-    // We need an array list to pass the list of different contacts to the adapter class.
-    // If we do not initialise this array list, we will get a null pointer exception.
-    private ArrayList<QuestionSetResult> questionSets = Utils.getInstance().getUserAccount().getQuestionSetsCompleted();
-
     private Context context;
+
+    private DatabaseHelper databaseHelper;
+    private ArrayList<QuestionSetResult> questionSets;
+
 
     public AccountHistoryRecyclerAdapter(Context context) {
         this.context = context;
+        this.databaseHelper = new DatabaseHelper(context);
+        this.questionSets = databaseHelper.getQuestionSetResults();
     }
 
     @NonNull

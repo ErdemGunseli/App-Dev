@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/txtChangeDetails"
                     android:layout_marginTop="15dp"
-                    android:hint="@string/your_name"
+                    android:hint="@string/parent_name"
                     android:inputType="textCapSentences"
                     android:maxLength="20"
                     android:textColor="@color/Primary"

@@ -2,8 +2,13 @@ package com.example.PocketMaths;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.transition.TransitionManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -240,6 +245,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
             case (R.id.btnRevealAnswer)    :
                 currentQuestion.setAttempts(2);
                 currentQuestion.setPointsEarned(0);
+                TransitionManager.beginDelayedTransition(svQuestionSet);
                 txtMessage.setText(currentQuestion.getCorrectWrittenAnswer());
                 // No points if they reveal the answer.
                 txtPointsPossible.setText(String.format(getString(R.string.points), 0));
@@ -281,7 +287,11 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
                 }
             } else {
                 // If they have answered incorrectly:
+
+                TransitionManager.beginDelayedTransition(svQuestionSet);
                 txtMessage.setText(getString(R.string.try_again));
+
+
                 // Do not penalise if they have answered correctly before
                 if (currentQuestion.getPointsEarned() == 0) {
                     if (currentQuestion.getAttempts() == 1) {
@@ -291,6 +301,15 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
                     } else {
                         txtPointsPossible.setText(String.format(getString(R.string.points), 0));
                     }
+                }
+
+                // Haptic Feedback if answer is wrong
+                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    vibrator.vibrate(VibrationEffect.createOneShot(75, VibrationEffect.DEFAULT_AMPLITUDE));
+                } else {
+                    // Old API:
+                    vibrator.vibrate(75);
                 }
 
             }

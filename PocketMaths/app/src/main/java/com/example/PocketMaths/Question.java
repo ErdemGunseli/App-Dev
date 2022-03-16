@@ -77,8 +77,6 @@ public class Question {
     }
 
 
-
-
     // Correct Answer Index
     public int getCorrectAnswerIndex() {
         return correctAnswerIndex;
@@ -101,7 +99,7 @@ public class Question {
     // Marking the Question
     public boolean checkAnswer(int chosenAnswerIndex, String answer) {
 
-        if (this.type.equals("multipleChoice")) {
+        if (this.type.equals(MULTIPLE_CHOICE)) {
 
             // Their initial answer
             if (this.attempts == 0) {
@@ -115,7 +113,7 @@ public class Question {
             }
         }
 
-        else if (this.type.equals("written")){
+        else if (this.type.equals(WRITTEN)){
 
             if (this.attempts == 0) {
                 this.writtenAnswer = answer;

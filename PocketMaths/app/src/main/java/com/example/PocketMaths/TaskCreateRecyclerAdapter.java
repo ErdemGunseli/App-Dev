@@ -1,7 +1,6 @@
 package com.example.PocketMaths;
 
 import android.content.Context;
-import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +9,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class TaskCreateRecyclerAdapter extends RecyclerView.Adapter<TaskCreateRecyclerAdapter.ViewHolder> {
 
@@ -34,7 +31,7 @@ public class TaskCreateRecyclerAdapter extends RecyclerView.Adapter<TaskCreateRe
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.create_task_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_item, parent, false);
         return new ViewHolder(view);
 
     }
