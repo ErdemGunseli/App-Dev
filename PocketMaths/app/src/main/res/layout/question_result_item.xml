@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_margin="15dp"
-                android:textColor="@color/Accent"
+                android:textColor="@color/YellowOrange"
                 android:textSize="13sp"
                 android:textStyle="bold" />
 
@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
                 android:layout_toEndOf="@id/txtCurrentQuestionIndex"
-                android:textColor="@color/Accent"
+                android:textColor="@color/YellowOrange"
                 android:textSize="13sp"
                 android:textStyle="bold" />
 
@@ -60,13 +60,12 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.card.MaterialCardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/cvQuestionAnswerOptions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/cvQuestion"
         android:layout_centerHorizontal="true"
-        style="@style/cardView2"
         android:layout_marginBottom="25dp"
         >
 
@@ -79,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:textColor="@color/Accent"
+                android:textColor="@color/YellowOrange"
                 android:textSize="13sp"
                 android:textStyle="bold" />
 
@@ -89,13 +88,13 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txtCorrectAnswer"
                 android:layout_margin="15dp"
-                android:textColor="@color/Accent"
+                android:textColor="@color/YellowOrange"
                 android:textSize="13sp"
                 android:textStyle="bold" />
 
         </RelativeLayout>
 
 
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

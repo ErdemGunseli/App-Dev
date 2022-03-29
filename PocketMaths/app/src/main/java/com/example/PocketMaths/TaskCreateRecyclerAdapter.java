@@ -45,7 +45,7 @@ public class TaskCreateRecyclerAdapter extends RecyclerView.Adapter<TaskCreateRe
         holder.txtTaskName.setText(task.getName());
 
         holder.txtQuestionSetName.setText(String.format(context.getString(R.string.view_task_question_set_name),
-                Utils.getInstance().getQuestionSetByID(task.getQuestionSetId()).getName()));
+                Utils.getInstance().getQuestionSetById(task.getQuestionSetId()).getName()));
 
         holder.txtPassMark.setText(String.format(context.getString(R.string.view_task_pass_mark), task.getPassMark()));
 

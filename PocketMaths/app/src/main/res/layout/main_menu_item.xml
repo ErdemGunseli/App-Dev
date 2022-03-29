@@ -49,7 +49,7 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.card.MaterialCardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/cvExpandedMainMenuItem"
         android:layout_width="225dp"
         android:layout_height="wrap_content"
@@ -58,7 +58,6 @@
         android:layout_marginTop="15dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
-        style="@style/cardView2"
         android:padding="15dp"
         >
 
@@ -73,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
-                android:textColor="@color/Accent"
+                android:textColor="@color/YellowOrange"
                 android:textSize="13sp"
                 android:textStyle="bold" />
 
@@ -87,7 +86,7 @@
                 android:layout_alignParentEnd="true"
                 android:textSize="13sp"
                 android:textStyle="bold"
-                android:textColor="@color/Accent"
+                android:textColor="@color/YellowOrange"
                 />
 
 
@@ -99,14 +98,13 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
-                android:textColor="@color/Surface3"
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="15dp"
                 android:textSize="16sp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnStartQuestionSet"
-                style="@style/textButton"
+                style="@style/defaultTextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txtQuestionSetDescription"
@@ -117,7 +115,7 @@
         </RelativeLayout>
 
 
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.cardview.widget.CardView>
 
 
 </RelativeLayout>

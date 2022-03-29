@@ -18,8 +18,6 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.TransitionManager;
 
-import com.example.PocketMaths.R;
-
 import java.util.ArrayList;
 
 public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecyclerAdapter.ViewHolder> {
@@ -162,7 +160,7 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
 
                             context.startActivity(new Intent(context, QuestionSetActivity.class)
                                     // Importing QUESTION_SET_ID from Utils
-                                    .putExtra(QUESTION_SET_ID, questionSets.get(getAdapterPosition()).getQuestionSetID()));
+                                    .putExtra(QUESTION_SET_ID, questionSets.get(getAdapterPosition()).getId()));
 
                     }
                 }

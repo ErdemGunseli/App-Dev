@@ -42,6 +42,7 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(Utils.getInstance().getThemeID());
         setContentView(R.layout.activity_view_task);
 
         initViews();

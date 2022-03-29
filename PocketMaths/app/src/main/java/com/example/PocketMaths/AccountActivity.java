@@ -35,6 +35,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(Utils.getInstance().getThemeID());
         setContentView(R.layout.activity_account);
 
         initViews();

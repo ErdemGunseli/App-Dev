@@ -41,7 +41,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
                 android:text="@string/create_task"
-                android:textColor="@color/Accent"
+                android:textColor="@color/YellowOrange"
                 android:textSize="21sp"
                 android:textStyle="bold" />
 
@@ -94,10 +94,12 @@
                 android:stepSize="5.0"
                 android:valueFrom="0.0"
                 android:valueTo="100.0"
-                app:haloColor="@color/Accent"
-                app:thumbColor="@color/Accent"
+                app:haloColor="@color/YellowOrange"
+                app:thumbColor="@color/YellowOrange"
                 app:tickColor="@color/Secondary"
-                app:trackColor="@color/Surface3" />
+                app:trackColor="@color/Silver"
+                app:labelStyle="@style/sliderLabel"
+                />
 
 
             <Spinner
@@ -106,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/sliderPassMark"
                 android:layout_margin="5dp"
-                android:dropDownSelector="@color/Accent"
+                android:dropDownSelector="@color/YellowOrange"
                 />
 
 
@@ -117,7 +119,7 @@
                 android:layout_below="@id/spQuestionSets"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
-                android:layout_marginEnd="15dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="15dp"
                 android:text="@string/add_reward"
                 android:textSize="16sp" />
@@ -127,8 +129,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@id/txtAddReward"
-                android:layout_marginStart="25dp"
-                android:layout_toEndOf="@id/txtAddReward" />
+                android:layout_toEndOf="@id/txtAddReward"/>
 
 
             <com.google.android.material.button.MaterialButton

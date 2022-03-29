@@ -21,6 +21,7 @@ import com.github.mikephil.charting.charts.PieChart;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Objects;
 
 public class ResultsActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -48,6 +49,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(Utils.getInstance().getThemeID());
         setContentView(R.layout.activity_results);
 
         // Initialising View Objects:
@@ -84,7 +86,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
 
             if (questionSetID != -1) {
                 // Finding our Question Set by ID:
-                questionSet = Utils.getInstance().getQuestionSetByID(questionSetID);
+                questionSet = Utils.getInstance().getQuestionSetById(questionSetID);
 
                 if (questionSet != null) {
 
@@ -103,7 +105,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         // We can pass any ID as it will get its actual id when it is retrieved from the database:
         QuestionSetResult questionSetResult = new QuestionSetResult(
                 0,
-                questionSet.getQuestionSetID(),
+                questionSet.getId(),
                 Utils.getInstance().getUserAccount().getId(),
                 questionSet.calculatePointsEarned(),
                 questionSet.calculatePointsPossible(),
@@ -146,7 +148,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         ArrayList<Task> tasks = databaseHelper.getTasks();
 
         for (Task task: tasks){
-            if (Utils.getInstance().getQuestionSetByID(task.getQuestionSetId()).getName().equals(questionSet.getName()) &&
+            if (Objects.requireNonNull(Utils.getInstance().getQuestionSetById(task.getQuestionSetId())).getName().equals(questionSet.getName()) &&
             questionSet.calculateResult() >= task.getPassMark() && !task.isCompleted()){
 
                 Utils.getInstance().showSnackBar(this, svResults, String.format(getString(R.string.task_completed), task.getName()), getString(R.string.ok));
@@ -233,7 +235,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
                 getString(R.string.results),
                 16,
                 R.color.Primary,
-                R.color.Surface1);
+                R.color.Silver);
 
 
     }
@@ -250,7 +252,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    private void calculateFailed() {
+    public void calculateFailed() {
 
         for (Question question : questionSet.getQuestions()) {
             String topic = question.getTopic();
@@ -267,5 +269,10 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
            }
         }
 
+    }
+
+    @Override
+    public void onBackPressed(){
+        // Do nothing if the back button is pressed
     }
 }

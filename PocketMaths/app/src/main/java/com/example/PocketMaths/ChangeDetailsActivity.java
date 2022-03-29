@@ -28,6 +28,7 @@ public class ChangeDetailsActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(Utils.getInstance().getThemeID());
         setContentView(R.layout.activity_change_details);
 
         initViews();

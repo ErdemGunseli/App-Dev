@@ -2,6 +2,8 @@ package com.example.PocketMaths;
 
 import static com.example.PocketMaths.Question.MULTIPLE_CHOICE;
 import static com.example.PocketMaths.Question.WRITTEN;
+import static com.example.PocketMaths.Utils.SHOW_REFRESHERS;
+import static com.example.PocketMaths.Utils.THEME_ID;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -57,6 +59,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         database.execSQL("CREATE TABLE IF NOT EXISTS CURRENT_ACCOUNT (" +
                 "ACCOUNT_ID INTEGER PRIMARY KEY NOT NULL" +
+                ")");
+
+        database.execSQL("CREATE TABLE IF NOT EXISTS APP_PREFERENCES (" +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+                "DESCRIPTION TEXT NOT NULL," +
+                "VALUE INTEGER NOT NULL" +
                 ")");
     }
 
@@ -207,6 +215,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return questionSetResults;
     }
 
+    //// ACCOUNT TABLE
     public boolean addAccount(Account account){
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -284,6 +293,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return account;
     }
 
+    //// CURRENT ACCOUNT TABLE
     public boolean useAccount(int id){
         Account account = getAccountById(id);
         if (account == null){
@@ -293,14 +303,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             SQLiteDatabase database = this.getWritableDatabase();
 
-
-
             ContentValues contentValues = new ContentValues();
             contentValues.put("ACCOUNT_ID", account.getId());
 
             long insert = database.insert("CURRENT_ACCOUNT", null, contentValues);
-
-
 
             // if insert is negative, it has failed, if it is positive, it was successful:
             if (insert == -1){
@@ -351,4 +357,106 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    //// CURRENT THEME TABLE
+    public boolean setTheme(int themeId){
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        // Checking if the exact setting-value pair already exists in the table:
+        Cursor cursor = database.rawQuery("SELECT * FROM APP_PREFERENCES WHERE DESCRIPTION =? AND VALUE =?", new String[]{THEME_ID, String.valueOf(themeId)});
+        // If the exact setting is already set, return
+        if (cursor.moveToFirst()){return true;}
+
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put("DESCRIPTION", THEME_ID);
+        contentValues.put("VALUE", themeId);
+
+        long insert = database.insert("APP_PREFERENCES", null, contentValues);
+
+        // if insert is negative, it has failed, if it is positive, it was successful:
+        if (insert == -1){
+            // Cleaning Up:
+            database.close();
+            cursor.close();
+            return false;}
+        else {
+
+            // If the new current theme has successfully been set, delete any pre-existing records of the current theme:
+            database.execSQL("DELETE FROM APP_PREFERENCES WHERE DESCRIPTION =? AND NOT VALUE =?", new String[]{THEME_ID, String.valueOf(themeId)});
+
+            // Cleaning Up:
+            database.close();
+            cursor.close();
+            return true;
+        }
+    }
+
+    public int getTheme(){
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM APP_PREFERENCES WHERE DESCRIPTION =?", new String[]{THEME_ID});
+
+        int themeId = 0;
+        if (cursor.moveToFirst()){
+            themeId = cursor.getInt(2);
+        }
+
+        // Cleaning Up:
+        cursor.close();
+        database.close();
+
+        return themeId;
+    }
+
+    public boolean setShowRefreshers(boolean bool){
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        // Checking if the exact setting-value pair already exists in the table:
+        Cursor cursor = database.rawQuery("SELECT * FROM APP_PREFERENCES WHERE DESCRIPTION =? AND VALUE =?", new String[]{SHOW_REFRESHERS, String.valueOf(bool ? 1 : 0)});
+        // If the exact setting is already set, return
+        if (cursor.moveToFirst()){return true;}
+
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put("DESCRIPTION", SHOW_REFRESHERS);
+        contentValues.put("VALUE", (bool ? 1 : 0));
+
+        long insert = database.insert("APP_PREFERENCES", null, contentValues);
+
+        // if insert is negative, it has failed, if it is positive, it was successful:
+        if (insert == -1){
+            // Cleaning Up:
+            database.close();
+            cursor.close();
+            return false;}
+        else {
+
+            // If the new current theme has successfully been set, delete any pre-existing records of the current theme:
+            database.execSQL("DELETE FROM APP_PREFERENCES WHERE DESCRIPTION =? AND NOT VALUE =?", new String[]{SHOW_REFRESHERS, String.valueOf(bool ? 1 : 0)});
+
+            // Cleaning Up:
+            database.close();
+            cursor.close();
+            return true;
+        }
+
+    }
+
+    public boolean showRefreshers(){
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM APP_PREFERENCES WHERE DESCRIPTION =?", new String[]{SHOW_REFRESHERS});
+
+        boolean bool = false;
+        if (cursor.moveToFirst()){
+            bool = cursor.getInt(2) == 1;
+        }
+
+        // Cleaning Up:
+        cursor.close();
+        database.close();
+
+        return bool;
+
+    }
 }

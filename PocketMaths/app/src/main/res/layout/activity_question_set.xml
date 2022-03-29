@@ -7,8 +7,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     >
 
-
-
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -44,7 +42,7 @@
                     android:layout_toEndOf="@id/imgExit"
                     android:layout_margin="15dp"
                     android:textSize="11sp"
-                    android:textColor="@color/Accent"
+                    android:textColor="@color/YellowOrange"
                     android:textStyle="bold"
                     />
 
@@ -54,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="15dp"
                     android:textSize="11sp"
-                    android:textColor="@color/Accent"
+                    android:textColor="@color/YellowOrange"
                     android:textStyle="bold"
                     android:layout_toEndOf="@id/txtQuestionSetName"
                     />
@@ -65,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="15dp"
                     android:textSize="13sp"
-                    android:textColor="@color/Accent"
+                    android:textColor="@color/YellowOrange"
                     android:textStyle="bold"
                     android:layout_below="@id/imgQuestion"
                     android:layout_alignParentEnd="true"
@@ -93,6 +91,13 @@
                     android:layout_marginRight="25dp"
                     android:layout_marginBottom="25dp" />
 
+                <ImageView
+                    android:id="@+id/imgHelp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_help" />
+
             </RelativeLayout>
 
 
@@ -100,14 +105,13 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.card.MaterialCardView
+
+    <androidx.cardview.widget.CardView
         android:id="@+id/cvQuestionAnswerOptions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/cvQuestion"
-        android:layout_centerHorizontal="true"
-        style="@style/cardView2"
-        >
+        android:layout_centerHorizontal="true">
 
         <RelativeLayout
             android:id="@+id/relQuestionAnswerOptions"
@@ -125,7 +129,7 @@
                     android:id="@+id/answerA"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"/>
+                    android:layout_marginTop="15dp" />
 
                 <RadioButton
                     android:id="@+id/answerB"
@@ -143,7 +147,7 @@
                     android:id="@+id/answerD"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"/>
+                    android:layout_marginTop="15dp" />
 
 
             </RadioGroup>
@@ -159,7 +163,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
-                android:background="@color/Surface3"
+                android:background="@color/Silver"
                 android:hint="@string/answer"
                 android:inputType="numberDecimal"
                 android:maxLength="10"
@@ -170,7 +174,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnRevealAnswer"
-                style="@style/textButton"
+                style="@style/defaultTextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txtMessage"
@@ -188,7 +192,7 @@
                 android:layout_below="@id/rgQuestionAnswerOptions"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
-                android:textColor="@color/Accent"
+                android:textColor="@color/YellowOrange"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -198,7 +202,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/edtTxtAnswer"
                 android:layout_centerHorizontal="true"
-                android:backgroundTint="@color/Accent"
+                android:backgroundTint="@color/YellowOrange"
                 android:text="@string/confirm" />
 
             <ImageView
@@ -222,7 +226,7 @@
 
         </RelativeLayout>
 
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.cardview.widget.CardView>
 
 </RelativeLayout>
 

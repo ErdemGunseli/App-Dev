@@ -23,6 +23,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(Utils.getInstance().getThemeID());
         setContentView(R.layout.activity_sign_in);
 
         initViews();

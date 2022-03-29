@@ -33,6 +33,8 @@
         <activity android:name=".ChangeDetailsActivity"/>
         <activity android:name=".TaskCreateActivity"/>
         <activity android:name=".TaskViewActivity"/>
+        <activity android:name=".SettingsActivity"/>
+        <activity android:name=".RefresherActivity"/>
     </application>
 
 </manifest>

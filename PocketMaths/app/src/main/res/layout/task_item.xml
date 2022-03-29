@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/cvDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/cardView2"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         >
@@ -18,7 +17,7 @@
                 android:id="@+id/txtTaskName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/Accent"
+                android:textColor="@color/YellowOrange"
                 android:layout_marginBottom="15dp"
                 android:textSize="19sp"
                 android:textStyle="bold"
@@ -61,4 +60,4 @@
                 android:src="@drawable/ic_delete" />
         </RelativeLayout>
 
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.cardview.widget.CardView>

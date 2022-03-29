@@ -27,6 +27,7 @@ public class PinVerificationActivity extends AppCompatActivity implements View.O
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(Utils.getInstance().getThemeID());
         setContentView(R.layout.activity_pin_verification);
 
         initViews();

@@ -28,7 +28,7 @@
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="15dp"
                 android:text="@string/enter_pin"
-                android:textColor="@color/Accent"
+                android:textColor="@color/YellowOrange"
                 android:textStyle="bold"
                 android:textSize="21sp" />
 
@@ -58,7 +58,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnCancel"
-                style="@style/textButton"
+                style="@style/defaultTextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/btnContinue"
@@ -95,7 +95,7 @@
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="15dp"
                 android:text="@string/account_needed"
-                android:textColor="@color/Accent"
+                android:textColor="@color/YellowOrange"
                 android:textSize="21sp"
                 android:textStyle="bold" />
 
@@ -110,7 +110,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSignIn"
-                style="@style/textButton"
+                style="@style/defaultTextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/btnSignUp"
@@ -124,9 +124,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/btnSignIn"
                 android:layout_centerHorizontal="true"
-                style="@style/textButton"
+                style="@style/defaultTextButton"
                 android:text="@string/cancel"
-                android:textColor="@color/Accent"
+                android:textColor="@color/YellowOrange"
                 android:textSize="12sp"
                 />
 

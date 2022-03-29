@@ -33,14 +33,13 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.card.MaterialCardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/cvSignIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/cvWelcome"
             android:layout_centerInParent="true"
-            android:layout_marginTop="30dp"
-            style="@style/cardView2">
+            android:layout_marginTop="30dp">
 
             <RelativeLayout
                 android:id="@+id/btnRel"
@@ -55,22 +54,21 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="30dp"
-                    android:text="@string/sign_up"/>
+                    android:text="@string/sign_up" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSignIn"
-                    style="@style/textButton"
+                    style="@style/defaultTextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/btnSignUp"
                     android:layout_centerHorizontal="true"
                     android:text="@string/sign_in"
-                    android:textSize="13sp"
-                    />
+                    android:textSize="13sp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnContinueAsGuest"
-                    style="@style/textButton"
+                    style="@style/defaultTextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/btnSignIn"
@@ -80,7 +78,7 @@
             </RelativeLayout>
 
 
-        </com.google.android.material.card.MaterialCardView>
+        </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
 

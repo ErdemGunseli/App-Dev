@@ -10,7 +10,7 @@ public class QuestionSet {
     * (in the main menu).
     */
 
-    private int questionSetID;
+    private int questionSetId;
     private String name, description;
     private int imageId;
     private Question[] questions;
@@ -22,14 +22,17 @@ public class QuestionSet {
 
     private String dateCompleted;
 
+    private Refresher[] refreshers;
 
 
-    public QuestionSet(int questionSetID, String name, String description, int imageID, Question[] questions) {
-        this.questionSetID = questionSetID;
+
+    public QuestionSet(int questionSetId, String name, String description, int imageID, Question[] questions, Refresher[] refreshers) {
+        this.questionSetId = questionSetId;
         this.name = name;
         this.description = description;
         this.imageId = imageID;
         this.questions = questions;
+        this.refreshers = refreshers;
         this.currentQuestionIndex = 0;
         arrangeTopics_Models();
 
@@ -102,12 +105,12 @@ public class QuestionSet {
 
 
     // Question Set ID
-    public int getQuestionSetID() {
-        return questionSetID;
+    public int getId() {
+        return questionSetId;
     }
 
-    public void setQuestionSetID(int questionSetID) {
-        this.questionSetID = questionSetID;
+    public void setQuestionSetId(int questionSetId) {
+        this.questionSetId = questionSetId;
     }
 
 
@@ -195,5 +198,13 @@ public class QuestionSet {
 
     public void setModels(ArrayList<String> models) {
         this.models = models;
+    }
+
+    public Refresher[] getRefreshers() {
+        return refreshers;
+    }
+
+    public void setRefreshers(Refresher[] refreshers) {
+        this.refreshers = refreshers;
     }
 }

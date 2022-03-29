@@ -1,5 +1,9 @@
 package com.example.PocketMaths;
 
+import static com.example.PocketMaths.Question.MULTIPLE_CHOICE;
+import static com.example.PocketMaths.Question.WRITTEN;
+import static com.example.PocketMaths.RefresherActivity.REFRESHER_ID;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -28,17 +32,20 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
     private RadioGroup rgQuestionAnswerOptions;
     private RadioButton answerA, answerB, answerC, answerD;
     private Button btnConfirm, btnRevealAnswer;
-    private ImageView imgExit, imgQuestion, imgPrevious, imgNext;
+    private ImageView imgExit, imgQuestion, imgPrevious, imgNext, imgHelp;
     private EditText edtTxtAnswer;
+
 
     private QuestionSet questionSet;
     private Question currentQuestion;
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(Utils.getInstance().getThemeID());
         setContentView(R.layout.activity_question_set);
 
         // Initialising View Objects:
@@ -46,6 +53,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
 
         // Setting data from the intent:
         setDataFromIntent();
+
 
     }
 
@@ -62,7 +70,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
 
             if (questionSetID != -1) {
                 // Finding our Question Set by ID:
-                questionSet = Utils.getInstance().getQuestionSetByID(questionSetID);
+                questionSet = Utils.getInstance().getQuestionSetById(questionSetID);
 
                 if (questionSet != null) {
 
@@ -90,6 +98,8 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         imgPrevious = findViewById(R.id.imgPrevious);
         imgNext = findViewById(R.id.imgNext);
 
+        imgHelp = findViewById(R.id.imgHelp);
+
         rgQuestionAnswerOptions = findViewById(R.id.rgQuestionAnswerOptions);
         answerA = findViewById(R.id.answerA);
         answerB = findViewById(R.id.answerB);
@@ -105,6 +115,8 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         imgNext.setOnClickListener(this);
         btnConfirm.setOnClickListener(this);
         btnRevealAnswer.setOnClickListener(this);
+        imgHelp.setOnClickListener(this);
+
     }
 
 
@@ -116,7 +128,9 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         // We are getting the current question index to set the correct values:
         currentQuestion = questionSet.getQuestions()[questionSet.getCurrentQuestionIndex()];
 
-        if (currentQuestion.getType().equals("multipleChoice")) {
+        showRefresher(questionSet.getCurrentQuestionIndex());
+
+        if (currentQuestion.getType().equals(MULTIPLE_CHOICE)) {
             rgQuestionAnswerOptions.setVisibility(View.VISIBLE);
             edtTxtAnswer.setVisibility(View.GONE);
             btnRevealAnswer.setVisibility(View.GONE);
@@ -130,22 +144,17 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
 
         }
 
-        else if (currentQuestion.getType().equals("written")){
+        else if (currentQuestion.getType().equals(WRITTEN)){
 
             rgQuestionAnswerOptions.setVisibility(View.GONE);
             edtTxtAnswer.setVisibility(View.VISIBLE);
             btnRevealAnswer.setVisibility(View.VISIBLE);
         }
 
-
-
-
         // Removing the 'Try Again' message:
         txtMessage.setText("");
 
         txtQuestionSetName.setText(questionSet.getName());
-
-
 
         txtQuestion.setText(currentQuestion.getText());
 
@@ -158,7 +167,8 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
             //X Points
             txtPointsPossible.setText(String.format(getString(R.string.points), currentQuestion.getPointsEarned()));
         }
-        else if (currentQuestion.getAttempts() == 1){
+        else if (currentQuestion.getAttempts() == 1 &&
+        currentQuestion.getPointsEarned() != currentQuestion.getPointsPossible()){
             // X Points
             txtPointsPossible.setText(String.format(getString(R.string.points), (currentQuestion.getPointsPossible() / 2)));
         }
@@ -195,6 +205,39 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
 
     }
 
+    private void showRefresher(int currentQuestionIndex) {
+        // If refreshers are not enabled, return.
+        if (!Utils.getInstance().refreshersEnabled()){return;}
+        for (Refresher refresher: questionSet.getRefreshers()) {
+            // If a refresher is supposed to be shown before this question,
+            // and it has not been shown this time, show it:
+            if (refresher.getQuestionIndex() == currentQuestionIndex && !refresher.isShown()) {
+                startActivity(new Intent(this, RefresherActivity.class)
+                        .putExtra(REFRESHER_ID, refresher.getId()));
+                refresher.setShown(true);
+            }
+        }
+    }
+
+    // Shows the refresher with the greatest question index that has been viewed before in
+    // this session:
+    private void viewLastRefresher(int currentQuestionIndex) {
+
+        Refresher[] refreshers = questionSet.getRefreshers();
+
+        int lastRefresherIndex = -1;
+        for (int index = 0; index < currentQuestionIndex; index++){
+            if (refreshers[index].getQuestionIndex() >= lastRefresherIndex)
+            lastRefresherIndex = index;
+        }
+
+        if (lastRefresherIndex != -1){
+            startActivity(new Intent(this, RefresherActivity.class)
+                    .putExtra(REFRESHER_ID, refreshers[lastRefresherIndex].getId()));
+        }
+
+    }
+
     private boolean firstQuestion() {
         // If the current question index is 1 less than length:
         return questionSet.getCurrentQuestionIndex() == 0;
@@ -218,6 +261,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
                 break;
 
             case (R.id.imgPrevious):
+                TransitionManager.beginDelayedTransition(svQuestionSet);
                 // Decreasing the current question index by 1
                 questionSet.setCurrentQuestionIndex(questionSet.getCurrentQuestionIndex() - 1);
                 setData(questionSet);
@@ -227,7 +271,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
 
                 // If the current question has been solved, they can go to the next question:
                 if (currentQuestion.getAttempts() > 0){
-
+                    TransitionManager.beginDelayedTransition(svQuestionSet);
                     // Increasing the current question index by 1
                     questionSet.setCurrentQuestionIndex(questionSet.getCurrentQuestionIndex() + 1);
                     setData(questionSet);
@@ -239,16 +283,21 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
                 break;
 
             case (R.id.btnConfirm):
+                TransitionManager.beginDelayedTransition(svQuestionSet);
                 confirmClicked();
                 break;
 
-            case (R.id.btnRevealAnswer)    :
+            case (R.id.btnRevealAnswer):
                 currentQuestion.setAttempts(2);
                 currentQuestion.setPointsEarned(0);
                 TransitionManager.beginDelayedTransition(svQuestionSet);
                 txtMessage.setText(currentQuestion.getCorrectWrittenAnswer());
                 // No points if they reveal the answer.
                 txtPointsPossible.setText(String.format(getString(R.string.points), 0));
+                break;
+
+            case (R.id.imgHelp):
+                viewLastRefresher(questionSet.getCurrentQuestionIndex());
                 break;
 
             default:
@@ -278,7 +327,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
 
                     // Starting the Results Activity:
                     startActivity(new Intent(this, ResultsActivity.class)
-                            .putExtra(QUESTION_SET_ID, questionSet.getQuestionSetID()));
+                            .putExtra(QUESTION_SET_ID, questionSet.getId()));
                 } else {
                     // Increasing the current question index by 1
                     questionSet.setCurrentQuestionIndex(questionSet.getCurrentQuestionIndex() + 1);

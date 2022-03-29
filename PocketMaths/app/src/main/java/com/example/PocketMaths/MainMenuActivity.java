@@ -1,7 +1,9 @@
 package com.example.PocketMaths;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -25,12 +27,21 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
     private SearchView svQuestionSet;
 
+    private DatabaseHelper databaseHelper = new DatabaseHelper(this);
+
     // Declaring Adapter
     // Done here so it has the scope of the whole class:
     private MainMenuRecyclerAdapter mainMenuRecyclerAdapter;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Setting Current Theme
+        Utils.getInstance().setThemeId(databaseHelper.getTheme());
+
+        // Setting Preferences:
+        Utils.getInstance().setShowRefreshers(databaseHelper.showRefreshers());
+
+        setTheme(Utils.getInstance().getThemeID());
         setContentView(R.layout.activity_main_menu);
 
         initViews();
@@ -50,6 +61,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
         // Collapsing all Card Views to ensure that none is expanded when the activity is started:
         mainMenuRecyclerAdapter.collapseAll();
+
 
     }
 
@@ -128,7 +140,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                 break;
 
             case (R.id.imgSettings):
-                Toast.makeText(MainMenuActivity.this, "Settings Clicked", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, SettingsActivity.class));
                 break;
 
             default:

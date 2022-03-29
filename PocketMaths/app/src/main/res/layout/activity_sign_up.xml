@@ -26,7 +26,7 @@
                     android:id="@+id/txtSignUp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/Accent"
+                    android:textColor="@color/YellowOrange"
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
@@ -120,7 +120,7 @@
 
                 <Button
                     android:id="@+id/btnBack"
-                    style="@style/textButton"
+                    style="@style/defaultTextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/edtTxtConfirmPin"

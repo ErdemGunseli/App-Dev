@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.github.mikephil.charting.charts.PieChart;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class AccountHistoryRecyclerAdapter extends RecyclerView.Adapter<AccountHistoryRecyclerAdapter.ViewHolder> {
 
@@ -45,7 +46,7 @@ public class AccountHistoryRecyclerAdapter extends RecyclerView.Adapter<AccountH
         QuestionSetResult questionSetHistory = questionSets.get(position);
 
         // Question Set Name:
-        holder.txtQuestionSetName.setText(Utils.getInstance().getQuestionSetByID(questionSetHistory.getQuestionSetId()).getName());
+        holder.txtQuestionSetName.setText(Objects.requireNonNull(Utils.getInstance().getQuestionSetById(questionSetHistory.getQuestionSetId())).getName());
 
         // X Points Out Of X
         holder.txtPoints.setText(String.format(context.getString(R.string.x_points_out_of_x), questionSetHistory.getPointsEarned(), questionSetHistory.getPointsPossible()));
@@ -70,7 +71,7 @@ public class AccountHistoryRecyclerAdapter extends RecyclerView.Adapter<AccountH
                 context.getString(R.string.results),
                 13,
                 R.color.Primary,
-                R.color.Surface1);
+                R.color.Silver);
 
     }
 

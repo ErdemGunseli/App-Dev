@@ -41,37 +41,29 @@
                     android:layout_centerHorizontal="true"
                     android:layout_margin="15dp"
                     android:text="@string/view_tasks"
-                    android:textColor="@color/Accent"
+                    android:textColor="@color/YellowOrange"
                     android:textSize="21sp"
                     android:textStyle="bold" />
 
-                    <com.google.android.material.tabs.TabLayout
-                        android:id="@+id/tlStatus"
-                        android:layout_below="@id/txtViewTasks"
-                        android:layout_width="match_parent"
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tlStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtViewTasks"
+                    >
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/tabLayout"
-                        android:backgroundTint="@color/Surface1"
-                        >
+                        android:text="@string/tasked" />
 
-                        <com.google.android.material.tabs.TabItem
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/tasked"
-                            />
-
-                        <com.google.android.material.tabs.TabItem
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/completed"
-                            />
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/completed" />
 
 
-
-
-
-
-                    </com.google.android.material.tabs.TabLayout>
+                </com.google.android.material.tabs.TabLayout>
 
 
 
@@ -87,7 +79,7 @@
             android:layout_margin="25dp"
             android:text="@string/nothing_here"
             android:textSize="16sp"
-            android:textColor="@color/Accent"
+            android:textColor="@color/YellowOrange"
             android:textStyle="bold"
             android:layout_below="@id/cvViewTasks"
             android:visibility="gone"

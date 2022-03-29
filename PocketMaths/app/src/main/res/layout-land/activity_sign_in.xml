@@ -28,7 +28,7 @@
                 android:id="@+id/txtSignIn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/Accent"
+                android:textColor="@color/YellowOrange"
                 android:layout_centerHorizontal="true"
                 android:text="@string/sign_in"
                 android:textSize="21sp"
@@ -57,7 +57,7 @@
 
             <Button
                 android:id="@+id/btnForgotPassword"
-                style="@style/textButton"
+                style="@style/defaultTextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/edtTxtPassword"
@@ -67,7 +67,7 @@
 
             <Button
                 android:id="@+id/btnBack"
-                style="@style/textButton"
+                style="@style/defaultTextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/btnForgotPassword"

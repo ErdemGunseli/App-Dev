@@ -9,12 +9,17 @@
     >
 
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvDashboard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        app:cardCornerRadius="0dp"
+        >
     <LinearLayout
         android:id="@+id/linDashboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/Surface2"
-        android:layout_marginBottom="10dp"
         >
 
         <SearchView
@@ -40,24 +45,32 @@
             android:src="@drawable/ic_account" />
 
     </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMainMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/linDashboard"
+        android:layout_below="@id/cvDashboard"
         android:layout_centerHorizontal="true"
-        android:textAlignment="center"
         android:layout_marginBottom="60dp"
-        />
+        android:textAlignment="center" />
 
-    <LinearLayout
-        android:id="@+id/linMenu"
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/Surface2"
         android:layout_alignParentBottom="true"
+        app:cardCornerRadius="0dp"
+        >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         >
 
         <ImageView
@@ -69,7 +82,7 @@
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_taks" />
+            android:src="@drawable/ic_tasks" />
 
             <ImageView
                 android:id="@+id/imgCreateTask"
@@ -89,10 +102,8 @@
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:src="@drawable/ic_settings" />
-
-
-
     </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 
 

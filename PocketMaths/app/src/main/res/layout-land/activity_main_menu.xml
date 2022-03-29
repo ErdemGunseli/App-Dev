@@ -9,11 +9,15 @@
     >
 
 
-    <LinearLayout
-        android:id="@+id/linDashboard"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvDashboard"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="@color/Surface2"
+        app:cardCornerRadius="0dp"
+        >
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <SearchView
@@ -39,22 +43,27 @@
             android:src="@drawable/ic_account" />
 
     </LinearLayout>
-
+    </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMainMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:textAlignment="center"
+
         />
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        app:cardCornerRadius="0dp"
+        >
     <LinearLayout
         android:id="@+id/linMenu"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_alignParentEnd="true"
-        android:background="@color/Surface2"
         android:orientation="vertical">
 
         <ImageView
@@ -66,7 +75,7 @@
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_taks" />
+            android:src="@drawable/ic_tasks" />
 
         <ImageView
             android:id="@+id/imgCreateTask"
@@ -87,8 +96,8 @@
             android:layout_weight="1"
             android:src="@drawable/ic_settings" />
 
-
     </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 
 

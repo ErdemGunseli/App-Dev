@@ -14,7 +14,6 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         // Determining if the user has used an account on this device before,
         // and continuing with that account if they have.
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
@@ -24,6 +23,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
             Utils.getInstance().setUserAccount(account);
             startActivity(new Intent(this, MainMenuActivity.class));
         } else {
+            setTheme(Utils.getInstance().getThemeID());
             setContentView(R.layout.activity_welcome);
 
             initViews();

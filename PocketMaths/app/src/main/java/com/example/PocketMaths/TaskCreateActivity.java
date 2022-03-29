@@ -63,6 +63,7 @@ public class TaskCreateActivity extends AppCompatActivity implements View.OnClic
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(Utils.getInstance().getThemeID());
         setContentView(R.layout.activity_create_task);
 
         initViews();

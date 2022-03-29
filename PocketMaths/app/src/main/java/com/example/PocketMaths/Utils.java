@@ -12,8 +12,12 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Utils extends AppCompatActivity {
+
+    public static final String THEME_ID = "themeId";
+    public static final String SHOW_REFRESHERS = "showRefreshers";
 
     // Target Class used for Pin Checking, initialised to the main menu:
     private Class<?> targetClass = MainMenuActivity.class;
@@ -23,46 +27,65 @@ public class Utils extends AppCompatActivity {
 
     private Account userAccount;
 
+    private int themeId = 0;
+
     private static ArrayList<QuestionSet> questionSets;
+
+    private static ArrayList<Refresher> refreshers;
+
+    private boolean showRefreshers = true;
+
+
+
 
     // We are using Static variables so that they can be accessed anywhere in the application
     // The class needs to be Singleton:
     private Utils(){
-
         // If the Question Sets have not been initialised yet, initialise them.
         if (questionSets == null){
             initData();
-
         }
-
     }
 
     /**
      * Initialising Question Sets
      */
     private void initData() {
+        // TODO: These will all be stored in the database, so the IDs etc. will not be problematic.
+
         questionSets = new ArrayList<>();
         Question[] sampleQuestionSetQuestions = new Question[] {
                 new Question("Topic 1", "Model 1", "The answer to this question is not (B). What is the answer?",0, new String[]{"(A)\tThe Answer Is D", "(B)\tThe Answer Is A", "(C)\tThe Answer Is C", "(D)\tThere Is Not Enough Information"}, 2, 200),
-                new Question("Topic 2", "Model 2","Question 2. The answer is B.", R.color.Surface3, new String[]{"(A)\tSample", "(B)\tSample", "(C)\tSample", "(D)\tSample"}, 1, 150),
-                new Question("Topic 3", "Model 3","Question 3. The answer is D.", R.color.Surface3,  new String[]{"(A)\tSample", "(B)\tSample", "(C)\tSample", "(D)\tSample"}, 3, 100),
-                new Question("Topic 4", "Model 4","The answer is 123", R.color.Surface3, "123", 300)
+                new Question("Topic 2", "Model 2","Question 2. The answer is B.", R.color.Silver, new String[]{"(A)\tSample", "(B)\tSample", "(C)\tSample", "(D)\tSample"}, 1, 150),
+                new Question("Topic 3", "Model 3","Question 3. The answer is D.", R.color.Silver,  new String[]{"(A)\tSample", "(B)\tSample", "(C)\tSample", "(D)\tSample"}, 3, 100),
+                new Question("Topic 4", "Model 4","The answer is 123", R.color.Silver, "123", 300)
         };
 
-        questionSets.add(new QuestionSet(0, "Question Set 1", "The First Question Set", R.color.Surface3,
-                sampleQuestionSetQuestions));
+        Refresher[] sampleRefreshers = new Refresher[]{
+                new Refresher(0, "Topic 2", R.drawable.sample, 1),
+                new Refresher(1, "Topic 3", R.drawable.sample, 2),
+                new Refresher(2, "Topic 4", R.drawable.sample, 3),
+        };
 
-        questionSets.add(new QuestionSet(1, "Question Set 2", "The Second Question Set", R.color.Surface3,
-                sampleQuestionSetQuestions));
+        refreshers = new ArrayList<>();
+        Collections.addAll(refreshers, sampleRefreshers);
 
-        questionSets.add(new QuestionSet(2, "Question Set 3", "The Third Question Set", R.color.Surface3,
-                sampleQuestionSetQuestions));
 
-        questionSets.add(new QuestionSet(3, "Question Set 4", "The Fourth Question Set", R.color.Surface3,
-                sampleQuestionSetQuestions));
 
-        questionSets.add(new QuestionSet(4, "Question Set 5", "The Fifth Question Set", R.color.Surface3,
-                sampleQuestionSetQuestions));
+        questionSets.add(new QuestionSet(0, "Question Set 1", "The First Question Set", R.color.Silver,
+                sampleQuestionSetQuestions, sampleRefreshers));
+
+        questionSets.add(new QuestionSet(1, "Question Set 2", "The Second Question Set", R.color.Silver,
+                sampleQuestionSetQuestions, sampleRefreshers));
+
+        questionSets.add(new QuestionSet(2, "Question Set 3", "The Third Question Set", R.color.Silver,
+                sampleQuestionSetQuestions, sampleRefreshers));
+
+        questionSets.add(new QuestionSet(3, "Question Set 4", "The Fourth Question Set", R.color.Silver,
+                sampleQuestionSetQuestions, sampleRefreshers));
+
+        questionSets.add(new QuestionSet(4, "Question Set 5", "The Fifth Question Set", R.color.Silver,
+                sampleQuestionSetQuestions, sampleRefreshers));
 
 
     }
@@ -89,16 +112,28 @@ public class Utils extends AppCompatActivity {
      * @param questionSetID The ID of the Question Set
      * @return The Question Set found by the function
      */
-    public QuestionSet getQuestionSetByID(int questionSetID) {
+    public QuestionSet getQuestionSetById(int questionSetID) {
         // For Each loop to go through each Question Set:
         for (QuestionSet questionSet: questionSets) {
 
             // If the current Question Set has the same ID as the target, return it:
-            if (questionSet.getQuestionSetID() == questionSetID){
+            if (questionSet.getId() == questionSetID){
                 return questionSet;
             }
         }
         // If we have not found the Question Set, we are returning null:
+        return null;
+    }
+
+    public Refresher getRefresherById(int refresherId){
+        for (Refresher refresher: refreshers) {
+
+            // If the current refresher has the same ID as the target, return it:
+            if (refresher.getId() == refresherId){
+                return refresher;
+            }
+        }
+        // If we have not found the refresher, we are returning null:
         return null;
     }
 
@@ -109,6 +144,10 @@ public class Utils extends AppCompatActivity {
     public void setUserAccount(Account userAccount) {
         this.userAccount = userAccount;
     }
+
+    public void setThemeId(int id){this.themeId = id;}
+
+    public int getThemeID(){return this.themeId;}
 
     public void createPieChart(Context context, PieChart pieChart, int[] values, int valueTextSize, String description, int descriptionTextSize, String[] labels, int labelTextSize, int labelColour, String centerText, int centerTextSize, int textColour, int backgroundColour){
 
@@ -215,9 +254,9 @@ public class Utils extends AppCompatActivity {
                     public void onClick(View v) {
                     }
                 })
-                .setActionTextColor(context.getResources().getColor(R.color.Accent))
-                .setTextColor(context.getResources().getColor(R.color.Accent))
-                .setBackgroundTint(context.getResources().getColor(R.color.Menu))
+                .setActionTextColor(context.getResources().getColor(R.color.YellowOrange))
+                .setTextColor(context.getResources().getColor(R.color.YellowOrange))
+                .setBackgroundTint(context.getResources().getColor(R.color.OxfordBlue))
                 .show();
     }
 
@@ -230,5 +269,13 @@ public class Utils extends AppCompatActivity {
             this.targetClass = targetClass;
 
         }
+    }
+
+    public boolean refreshersEnabled() {
+        return showRefreshers;
+    }
+
+    public void setShowRefreshers(boolean showRefreshers) {
+        this.showRefreshers = showRefreshers;
     }
 }
