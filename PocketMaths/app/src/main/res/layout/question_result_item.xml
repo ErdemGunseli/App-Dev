@@ -54,6 +54,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txtQuestion"
                 android:layout_centerHorizontal="true"
+                android:maxHeight="300dp"
+                android:adjustViewBounds="true"
                 android:layout_margin="15dp"/>
 
         </RelativeLayout>

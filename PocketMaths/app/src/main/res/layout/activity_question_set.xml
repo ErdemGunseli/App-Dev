@@ -40,7 +40,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@id/imgExit"
-                    android:layout_margin="15dp"
+                    android:layout_margin="5dp"
+                    android:layout_marginTop="10dp"
                     android:textSize="11sp"
                     android:textColor="@color/YellowOrange"
                     android:textStyle="bold"
@@ -50,7 +51,8 @@
                     android:id="@+id/txtCurrentQuestionIndex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
+                    android:layout_margin="5dp"
+                    android:layout_marginTop="10dp"
                     android:textSize="11sp"
                     android:textColor="@color/YellowOrange"
                     android:textStyle="bold"
@@ -75,21 +77,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="15dp"
-                    android:textSize="15sp"
+                    android:textSize="17sp"
                     android:layout_below="@id/txtQuestionSetName"
                     />
 
                 <ImageView
                     android:id="@+id/imgQuestion"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxHeight="300dp"
+                    android:adjustViewBounds="true"
                     android:layout_below="@id/txtQuestion"
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="25dp"
-                    android:layout_marginBottom="25dp" />
+                    android:layout_marginBottom="25dp"
+                    />
 
                 <ImageView
                     android:id="@+id/imgHelp"
@@ -111,7 +117,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/cvQuestion"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="45dp">
 
         <RelativeLayout
             android:id="@+id/relQuestionAnswerOptions"
@@ -119,6 +126,15 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="15dp">
+
+            <ImageView
+                android:id="@+id/imgResult"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentEnd="true"
+                />
+
+
 
             <RadioGroup
                 android:id="@+id/rgQuestionAnswerOptions"
@@ -203,7 +219,7 @@
                 android:layout_below="@id/edtTxtAnswer"
                 android:layout_centerHorizontal="true"
                 android:backgroundTint="@color/YellowOrange"
-                android:text="@string/confirm" />
+                android:text="@string/check" />
 
             <ImageView
                 android:id="@+id/imgPrevious"

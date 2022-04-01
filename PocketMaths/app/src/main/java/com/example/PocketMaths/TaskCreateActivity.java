@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.transition.TransitionManager;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -59,11 +58,9 @@ public class TaskCreateActivity extends AppCompatActivity implements View.OnClic
 
     private int passMark;
 
-    //TODO: Task Item Needs Improvement
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(Utils.getInstance().getThemeID());
+        setTheme(Utils.getInstance().getThemeId());
         setContentView(R.layout.activity_create_task);
 
         initViews();
@@ -136,6 +133,7 @@ public class TaskCreateActivity extends AppCompatActivity implements View.OnClic
         sliderPassMark.setValue(0.0F);
 
         sliderPassMark.addOnChangeListener(new Slider.OnChangeListener() {
+
             @SuppressLint("RestrictedApi")
             @Override
             public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {
@@ -168,7 +166,6 @@ public class TaskCreateActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void createClicked() {
-        // TODO: Add Question Set ID:::::
         String[] inputs;
 
         if (swAddReward.isChecked()) {

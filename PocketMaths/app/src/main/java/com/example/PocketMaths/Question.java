@@ -1,5 +1,7 @@
 package com.example.PocketMaths;
 
+import java.util.ArrayList;
+
 public class Question {
 
     // Each question will have some text, an array of answer options, a correct answer and possibly an image.
@@ -13,20 +15,20 @@ public class Question {
     public static final String MULTIPLE_CHOICE = "multipleChoice";
 
 
+    //TODO: Change system to first attempt, final attempt
 
     // For Multiple Choice
     private String[] answerOptions;
     private int correctAnswerIndex;
-    private int chosenAnswerIndex;
+    private ArrayList<Integer> userAnswerIndexes = new ArrayList<>();
 
     // For Written
     private String correctWrittenAnswer;
-    private String writtenAnswer;
+    private ArrayList<String> userWrittenAnswers = new ArrayList<>();
+
+
 
     private String topic;
-    // The type/model of the question
-    private String model;
-
     private int attempts = 0;
 
     private int pointsPossible;
@@ -34,20 +36,17 @@ public class Question {
 
     //TODO: Get id from questions table:
 
-    public Question(String topic, String model, String text, int imageId, String[] answerOptions, int correctAnswerIndex, int pointsPossible) {
-        this.model = model;
+    public Question(String topic, String text, int imageId, String[] answerOptions, int correctAnswerIndex, int pointsPossible) {
         this.topic = topic;
         this.text = text;
         this.imageId = imageId;
         this.answerOptions = answerOptions;
         this.correctAnswerIndex = correctAnswerIndex;
         this.pointsPossible = pointsPossible;
-
         this.type = MULTIPLE_CHOICE;
     }
 
-    public Question(String topic, String model, String text, int imageId, String answer, int pointsPossible){
-        this.model = model;
+    public Question(String topic,String text, int imageId, String answer, int pointsPossible){
         this.topic = topic;
         this.text = text;
         this.imageId = imageId;
@@ -101,10 +100,7 @@ public class Question {
 
         if (this.type.equals(MULTIPLE_CHOICE)) {
 
-            // Their initial answer
-            if (this.attempts == 0) {
-                this.chosenAnswerIndex = chosenAnswerIndex;
-            }
+            this.userAnswerIndexes.add(chosenAnswerIndex);
 
             if (correctAnswerIndex == chosenAnswerIndex) {
                 this.calculatePointsEarned();
@@ -115,20 +111,14 @@ public class Question {
 
         else if (this.type.equals(WRITTEN)){
 
-            if (this.attempts == 0) {
-                this.writtenAnswer = answer;
-            }
-
+            this.userWrittenAnswers.add(answer);
             if (answer.equals(this.correctWrittenAnswer)){
                 this.calculatePointsEarned();
                 this.attempts += 1;
                 return true;
             }
-
-
-
-
         }
+
         this.attempts += 1;
         return false;
 
@@ -171,11 +161,6 @@ public class Question {
         }
     }
 
-    public int getChosenAnswerIndex() {return chosenAnswerIndex;}
-
-    public void setChosenAnswerIndex(int chosenAnswerIndex) {this.chosenAnswerIndex = chosenAnswerIndex;}
-
-
     public String getCorrectWrittenAnswer() {
         return correctWrittenAnswer;
     }
@@ -192,27 +177,27 @@ public class Question {
         this.type = type;
     }
 
-    public String getWrittenAnswer() {
-        return writtenAnswer;
-    }
-
-    public void setWrittenAnswer(String writtenAnswer) {
-        this.writtenAnswer = writtenAnswer;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
     public String getTopic() {
         return topic;
     }
 
     public void setTopic(String topic) {
         this.topic = topic;
+    }
+
+    public ArrayList<Integer> getUserAnswerIndexes() {
+        return userAnswerIndexes;
+    }
+
+    public void setUserAnswerIndexes(ArrayList<Integer> userAnswerIndexes) {
+        this.userAnswerIndexes = userAnswerIndexes;
+    }
+
+    public ArrayList<String> getUserWrittenAnswers() {
+        return userWrittenAnswers;
+    }
+
+    public void setUserWrittenAnswers(ArrayList<String> userWrittenAnswers) {
+        this.userWrittenAnswers = userWrittenAnswers;
     }
 }

@@ -20,6 +20,17 @@ import androidx.transition.TransitionManager;
 
 import java.util.ArrayList;
 
+/**
+ * This class is required to efficiently display View objects containing data from instances of QuestionSet in the form of a
+ * scrollable list.
+ * It is used to display the question sets in the menu, along with some additional details, images.
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecyclerAdapter.ViewHolder>
+ * to have access to RecyclerView methods.
+ * MainMenuRecyclerAdapter has inner class ViewHolder to store content to be displayed on each
+ * RecyclerView container.
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
 public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecyclerAdapter.ViewHolder> {
 
     // We need an array list to pass the list of different contacts to the adapter class.
@@ -28,189 +39,184 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
 
     private Context context;
 
-    @Override
-    public void onViewRecycled(@NonNull ViewHolder holder) {
-        super.onViewRecycled(holder);
-    }
-
+    /**
+     * Constructor
+     *
+     * @param context Required to get strings from resources.
+     */
     public MainMenuRecyclerAdapter(Context context) {
         this.context = context;
-
-
     }
 
+    /**
+     * Runs when an instance of ViewHolder is created.
+     * Attaches the XML layout file 'account_history_item' to the ViewHolder.
+     *
+     * @param parent   Required to inflate XML layout file into a View object.
+     * @param viewType Required for background processing.
+     * @return ViewHolder object.
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // The return type of this method is a ViewHolder, indicating that this is the place to instantiate our View Holder.
-
-        // We are creating a View object:
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.main_menu_item, parent, false);
-
         return new ViewHolder(view);
     }
 
+    /**
+     * Runs when an instance of ViewHolder object attaches to a container.
+     *
+     * @param holder   The instance of ViewHolder object, required for accessing data.
+     * @param position The index of the ArrayList, required for accessing ArrayList items.
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
         QuestionSet questionSet = questionSets.get(position);
-
-        // We can access these private attributes directly since they are from a subclass:
         holder.txtQuestionSetName.setText(questionSet.getName());
-
-
         // X Questions
         holder.txtNumberOfQuestions.setText(String.format(context.getString(R.string.number_of_questions), questionSet.getQuestions().length));
 
-        // If the question set has been started:
+        // If the question set has been started, showing where the user left off and changing the
+        // text of the 'Continue' Button to 'Start'.
         if (questionSet.getQuestions()[0].getAttempts() != 0) {
             // On Question X
             holder.txtCurrentQuestionIndex.setText(String.format(context.getString(R.string.on_question), (questionSet.getCurrentQuestionIndex() + 1)));
             // Continue
             holder.btnStartQuestionSet.setText(context.getString(R.string.continue_));
+        } else {
+            // Otherwise, reversing this process.
+            // On Question X
+            holder.txtCurrentQuestionIndex.setText("");
+            // Continue
+            holder.btnStartQuestionSet.setText(context.getString(R.string.start));
         }
 
         holder.txtQuestionSetDescription.setText(questionSet.getDescription());
-
         holder.imgQuestionSet.setImageResource(questionSet.getImageId());
 
-        // We are expanding / collapsing the Card View:
+        setCardViewState(holder);
+    }
 
-        // If it is expanded, we need to expand the Card View:
+    /**
+     * Expands or Collapses the CardView object by hiding or displaying an additional CardView object
+     * with an animation.
+     *
+     * @param holder The ViewHolder object the state of which needs to be updated.
+     */
+    private void setCardViewState(ViewHolder holder) {
+        // If the QuestionSet is expanded, show the expansion CardView:
         if (questionSets.get(holder.getAdapterPosition()).isExpanded()) {
-            // We want an animation while changing the visibility:
             TransitionManager.beginDelayedTransition(holder.relMainMenuItem);
-
-            // We are using the .setVisibility() function to change the visibility
             holder.cvExpandedMainMenuItem.setVisibility(View.VISIBLE);
-
-
         } else {
+            // Otherwise, hide the expansion CardView:
             TransitionManager.beginDelayedTransition(holder.relMainMenuItem);
             holder.cvExpandedMainMenuItem.setVisibility(View.GONE);
 
         }
     }
 
-
     @Override
     public int getItemCount() {
-        // This method returns the number of items.
-
         // Avoid null pointer exception
-        if (questionSets != null){
+        if (questionSets != null) {
             return questionSets.size();
         }
         return 0;
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    public void setQuestionSets(ArrayList<QuestionSet> questionSets) {
+        this.questionSets = questionSets;
+        notifyDataSetChanged();
+    }
 
-    // We are using an inner-class:
-    // The view holder class will hold the view for every item in the Recycler View.
-    // It is responsible for generating the View objects.
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    /**
+     * Collapses all QuestionSet objects.
+     */
+    public void collapseAll() {
+        for (QuestionSet qs : questionSets) {
+            qs.setExpanded(false);
+        }
+    }
+
+    /**
+     * This class is required to hold View objects for every item in the RecyclerView.
+     * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     * ViewHolder extends RecyclerView.ViewHolder to have access to its constructor.
+     * ViewHolder implements View.OnCLickListener interface to detect touch input.
+     * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     */
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private RelativeLayout relMainMenuItem;
         private TextView txtQuestionSetName, txtQuestionSetDescription, txtNumberOfQuestions, txtCurrentQuestionIndex;
         private ImageView imgQuestionSet;
         private CardView cvCollapsedMainMenuItem, cvExpandedMainMenuItem;
         private Button btnStartQuestionSet;
 
-
+        /**
+         * Constructor
+         * @param itemView Required for super constructor
+         */
         public ViewHolder(@NonNull View itemView) {
-            // We can add all the elements in our layout one by one:
             super(itemView);
 
-            // Initialising View Objects
             initViews();
-
-
-            // We cannot implement View.OnClickListener as we would need to be in this method.
-            View.OnClickListener onClickListener = new View.OnClickListener() {
-                @SuppressLint("NotifyDataSetChanged")
-                @Override
-                public void onClick(View v) {
-
-                    // We are using this to get the current question set:
-                    QuestionSet questionSet = questionSets.get(getAdapterPosition());
-
-                    switch (v.getId()) {
-
-                        case (R.id.cvCollapsedMainMenuItem):
-
-                            // Record the state of the target item so that it can be reversed:
-                            boolean state = questionSets.get(getAdapterPosition()).isExpanded();
-
-                            // Then, collapse all question sets:
-                            collapseAll();
-
-                            // Lastly, reverse the state of the target item:
-                            // This way, 0 or 1 item can be expanded at a time.
-                            questionSet.setExpanded(!state);
-
-                            // using notifyDataSetChanged here causes the animations to not occur,
-                            // so changing items one by one
-                            for (int i = 0; i < getItemCount(); i++){
-                                notifyItemChanged(i);
-                            }
-                            break;
-
-                        case (R.id.btnStartQuestionSet):
-                            // We are launching the Question Set from which we will retrieve which
-                            // question set was clicked and change the questions accordingly.
-
-                            context.startActivity(new Intent(context, QuestionSetActivity.class)
-                                    // Importing QUESTION_SET_ID from Utils
-                                    .putExtra(QUESTION_SET_ID, questionSets.get(getAdapterPosition()).getId()));
-
-                    }
-                }
-            };
-
-            cvCollapsedMainMenuItem.setOnClickListener(onClickListener);
-            btnStartQuestionSet.setOnClickListener(onClickListener);
-
-
         }
 
+        /**
+         * Initialises View objects.
+         * Sets the activity's click listener to the appropriate View objects.
+         */
         private void initViews() {
-
-            // Outside an activity, we cannot simply use the fb function and need the following syntax:
+            // Outside an activity, we need the following syntax:
             relMainMenuItem = itemView.findViewById(R.id.relMainMenuItem);
             txtQuestionSetName = itemView.findViewById(R.id.txtQuestionSetName);
             imgQuestionSet = itemView.findViewById(R.id.imgQuestionSet);
-            txtNumberOfQuestions= itemView.findViewById(R.id.txtNumberOfQuestions);
+            txtNumberOfQuestions = itemView.findViewById(R.id.txtNumberOfQuestions);
             txtCurrentQuestionIndex = itemView.findViewById(R.id.txtCurrentQuestionIndex);
             txtQuestionSetDescription = itemView.findViewById(R.id.txtQuestionSetDescription);
-
             cvCollapsedMainMenuItem = itemView.findViewById(R.id.cvCollapsedMainMenuItem);
             cvExpandedMainMenuItem = itemView.findViewById(R.id.cvExpandedMainMenuItem);
-
             btnStartQuestionSet = itemView.findViewById(R.id.btnStartQuestionSet);
+
+            cvCollapsedMainMenuItem.setOnClickListener(this);
+            btnStartQuestionSet.setOnClickListener(this);
         }
 
+
+        /**
+         * Determines which View object has been clicked and performs the appropriate action.
+         * @param view Used to determine the View object clicked.
+         */
+        @Override
+        public void onClick(View view) {
+            QuestionSet currentQuestionSet = questionSets.get(getAdapterPosition());
+
+            switch (view.getId()) {
+
+                case (R.id.cvCollapsedMainMenuItem):
+
+                    // Recording the expansion state of the QuestionSet object, so that it
+                    // can be reversed:
+                    boolean state = questionSets.get(getAdapterPosition()).isExpanded();
+
+                    collapseAll();
+
+                    currentQuestionSet.setExpanded(!state);
+
+                    // Using notifyDataSetChanged() here causes the animations to not occur,
+                    // so changing items one by one:
+                    for (int i = 0; i < getItemCount(); i++) {
+                        notifyItemChanged(i);
+                    }
+                    break;
+
+                case (R.id.btnStartQuestionSet):
+                    context.startActivity(new Intent(context, QuestionSetActivity.class)
+                            .putExtra(QUESTION_SET_ID, currentQuestionSet.getId()));
+            }
     }
 
-
-    @SuppressLint("NotifyDataSetChanged")
-    public void setQuestionSets(ArrayList<QuestionSet> questionSets) {
-        // We will later use this method to pass the data into the contacts array list.
-        this.questionSets = questionSets;
-
-        // When we change the contacts ArrayList, we need to refresh the data inside the Recycler View:
-        notifyDataSetChanged();
-    }
-
-
-    public void collapseAll(){
-        for (QuestionSet qs: questionSets){
-            qs.setExpanded(false);
-        }
-    }
-
-    public void expandAll(){
-        for (QuestionSet qs: questionSets){
-            qs.setExpanded(true);
-        }
-    }
-
+}
 }

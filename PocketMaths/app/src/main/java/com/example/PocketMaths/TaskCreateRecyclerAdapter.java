@@ -41,7 +41,6 @@ public class TaskCreateRecyclerAdapter extends RecyclerView.Adapter<TaskCreateRe
         Task task = tasks.get(position);
 
         // Showing Details:
-
         holder.txtTaskName.setText(task.getName());
 
         holder.txtQuestionSetName.setText(String.format(context.getString(R.string.view_task_question_set_name),

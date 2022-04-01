@@ -8,6 +8,10 @@
         android:layout_height="match_parent"
         android:layout_margin="25dp"
         >
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -94,6 +98,7 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginBottom="35dp"
                 android:text="@string/show_Refreshers"
                 android:textSize="16sp" />
 
@@ -105,6 +110,6 @@
                 android:layout_toEndOf="@id/txtShowRefreshers" />
 
         </RelativeLayout>
-
+        </ScrollView>
     </com.google.android.material.card.MaterialCardView>
 </RelativeLayout>

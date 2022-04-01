@@ -1,50 +1,52 @@
 package com.example.PocketMaths;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.transition.TransitionManager;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.PocketMaths.R;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
-
+/**
+ * This activity relates to the Main Menu Page of the app.
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * MainMenuActivity extends AppCompatActivity class to have access to Activity methods.
+ * MainMenuActivity implements View.OnCLickListener interface to detect touch input.
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * It displays all instances of QuestionSet through its RecyclerView.
+ * It has a search menu which filters through the QuestionSet instances by name and description.
+ * It has buttons that take the user to various pages.
+ */
 public class MainMenuActivity extends AppCompatActivity implements View.OnClickListener {
-
-    private RecyclerView rvMainMenu;
-
-    private ImageView imgAccount, imgTasks, imgCreateTask, imgSettings;
-
-    private SearchView svQuestionSet;
 
     private DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
-    // Declaring Adapter
-    // Done here so it has the scope of the whole class:
     private MainMenuRecyclerAdapter mainMenuRecyclerAdapter;
+
+    private RecyclerView rvMainMenu;
+    private TextView txtNoResults;
+    private RelativeLayout relMainMenu;
+    private ImageView imgAccount, imgTasks, imgCreateTask, imgSettings;
+    private SearchView svQuestionSet;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Setting Current Theme
         Utils.getInstance().setThemeId(databaseHelper.getTheme());
-
-        // Setting Preferences:
-        Utils.getInstance().setShowRefreshers(databaseHelper.showRefreshers());
-
-        setTheme(Utils.getInstance().getThemeID());
+        Utils.getInstance().setShowRefreshers(databaseHelper.getShowRefreshers());
+        setTheme(Utils.getInstance().getThemeId());
         setContentView(R.layout.activity_main_menu);
 
         initViews();
+
+        setUpRecyclerView();
 
         // Initialising Adapter
         mainMenuRecyclerAdapter = new MainMenuRecyclerAdapter(this);
@@ -68,8 +70,9 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
 
     private void initViews() {
+        relMainMenu = findViewById(R.id.relMainMenu);
         rvMainMenu = findViewById(R.id.rvMainMenu);
-
+        txtNoResults = findViewById(R.id.txtNoResults);
         imgAccount = findViewById(R.id.imgAccount);
         imgTasks = findViewById(R.id.imgTasks);
         imgCreateTask = findViewById(R.id.imgCreateTask);
@@ -94,6 +97,10 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         });
     }
 
+
+    private void setUpRecyclerView() {
+    }
+
     public void filterQuestionSets(String targetText){
 
         ArrayList<QuestionSet> questionSetsToShow = new ArrayList<>();
@@ -109,12 +116,13 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         }
 
         // Setting the filtered array list of question sets:
-
         if (questionSetsToShow.size() == 0){
-            //TODO: SHOW NONE FOUND MESSAGE
+            TransitionManager.beginDelayedTransition(relMainMenu);
+            txtNoResults.setVisibility(View.VISIBLE);
         }
         else{
-            //TODO: HIDE NONE FOUND MESSAGE
+            TransitionManager.beginDelayedTransition(relMainMenu);
+            txtNoResults.setVisibility(View.GONE);
         }
         mainMenuRecyclerAdapter.setQuestionSets(questionSetsToShow);
     }

@@ -23,7 +23,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
             Utils.getInstance().setUserAccount(account);
             startActivity(new Intent(this, MainMenuActivity.class));
         } else {
-            setTheme(Utils.getInstance().getThemeID());
+            setTheme(Utils.getInstance().getThemeId());
             setContentView(R.layout.activity_welcome);
 
             initViews();

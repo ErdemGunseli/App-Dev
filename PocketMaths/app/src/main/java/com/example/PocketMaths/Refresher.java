@@ -3,14 +3,14 @@ package com.example.PocketMaths;
 public class Refresher {
 
     private int id;
-    private String model;
+    private String topic;
     private int imageId;
     private int questionIndex;
     private boolean shown;
 
-    public Refresher(int id, String model, int imageId, int questionIndex) {
+    public Refresher(int id, String topic, int imageId, int questionIndex) {
         this.id = id;
-        this.model = model;
+        this.topic = topic;
         this.imageId = imageId;
         this.questionIndex = questionIndex;
     }
@@ -23,12 +23,12 @@ public class Refresher {
         this.id = id;
     }
 
-    public String getModel() {
-        return model;
+    public String getTopic() {
+        return topic;
     }
 
-    public void setModel(String model) {
-        this.model = model;
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 
     public int getImageId() {

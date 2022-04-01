@@ -32,9 +32,11 @@
     <string name="ok">OK</string>
 
     <string name="start">Start</string>
+    <string name="check">Check</string>
     <string name="continue_">Continue</string>
     <string name="number_of_questions">%d Questions</string>
     <string name="on_question">On Question %d</string>
+    <string name="no_results">No Results Found</string>
 
     <string name="question_x_of_x">Question %d of %d</string>
     <string name="points">%d Points</string>
@@ -54,13 +56,17 @@
     <string name="solved_x_out_of_x_1attempt">Solved %d out of %d with one attempt.</string>
     <string name="solved_x_out_of_x_2attempts">Solved %d out of the remaining %d with two attempts.</string>
     <string name="result_percent">Result: %d %%</string>
+
+    <string name="did_great">You Did Great On: </string>
+    <string name="practice">You Could Practice: </string>
+
     <string name="practice_topics">\nPractice the following topics:\n</string>
     <string name="practice_models">\nPractice the following question types:\n</string>
     <string name="review">Review: </string>
     <string name="x_x_points">%d / %d Points</string>
     <string name="initial_answer">Your Initial Answer: %s</string>
     <string name="correct_answer">Correct Answer: %s</string>
-    <string name="list">\t %d) %s \n</string>
+    <string name="list">\n\t %d) %s</string>
 
     <string name="account">Account:</string>
     <string name="history">History: </string>
@@ -106,6 +112,10 @@
 
     <string name="refresher">%s Refresher</string>
     <string name="got_it">Got It!</string>
+
+
+    <!-- ### MATHEMATICS RELATED -->
+    <string name="fraction_format">"\u00BC</string>
 
 
 

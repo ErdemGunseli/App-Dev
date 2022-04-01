@@ -47,7 +47,19 @@
     </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-
+    <TextView
+        android:id="@+id/txtNoResults"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="25dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/no_results"
+        android:textSize="16sp"
+        android:textColor="@color/YellowOrange"
+        android:textStyle="bold"
+        android:layout_below="@id/cvDashboard"
+        android:visibility="gone"
+        />
 
 
     <androidx.recyclerview.widget.RecyclerView

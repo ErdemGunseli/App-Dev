@@ -4,16 +4,16 @@ import static com.example.PocketMaths.Question.MULTIPLE_CHOICE;
 import static com.example.PocketMaths.Question.WRITTEN;
 import static com.example.PocketMaths.RefresherActivity.REFRESHER_ID;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.transition.TransitionManager;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,6 +21,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
 
 public class QuestionSetActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -32,7 +36,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
     private RadioGroup rgQuestionAnswerOptions;
     private RadioButton answerA, answerB, answerC, answerD;
     private Button btnConfirm, btnRevealAnswer;
-    private ImageView imgExit, imgQuestion, imgPrevious, imgNext, imgHelp;
+    private ImageView imgExit, imgQuestion, imgPrevious, imgNext, imgHelp, imgResult;
     private EditText edtTxtAnswer;
 
 
@@ -40,12 +44,10 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
     private Question currentQuestion;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(Utils.getInstance().getThemeID());
+        setTheme(Utils.getInstance().getThemeId());
         setContentView(R.layout.activity_question_set);
 
         // Initialising View Objects:
@@ -81,6 +83,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
 
         }
     }
+
     /**
      * Initialising View objects:
      */
@@ -99,6 +102,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         imgNext = findViewById(R.id.imgNext);
 
         imgHelp = findViewById(R.id.imgHelp);
+        imgResult = findViewById(R.id.imgResult);
 
         rgQuestionAnswerOptions = findViewById(R.id.rgQuestionAnswerOptions);
         answerA = findViewById(R.id.answerA);
@@ -122,33 +126,88 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
 
     /**
      * Sets question data depending on which question is currently being done.
+     *
      * @param questionSet The question set from which the data should be set.
      */
     private void setData(QuestionSet questionSet) {
         // We are getting the current question index to set the correct values:
         currentQuestion = questionSet.getQuestions()[questionSet.getCurrentQuestionIndex()];
 
+        // Setting Result Image
+        setResultImage();
+
         showRefresher(questionSet.getCurrentQuestionIndex());
+
+        //Hiding Keyboard
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(svQuestionSet.getWindowToken(), 0);
 
         if (currentQuestion.getType().equals(MULTIPLE_CHOICE)) {
             rgQuestionAnswerOptions.setVisibility(View.VISIBLE);
             edtTxtAnswer.setVisibility(View.GONE);
             btnRevealAnswer.setVisibility(View.GONE);
-            // Removing the check from the previous question:
+
+            // Clearing check:
             rgQuestionAnswerOptions.clearCheck();
+
+            // Setting the check on the chosen answer:
+            int indexToDisplay;
+
+            if (currentQuestion.getAttempts() > 0) {
+
+
+                if (currentQuestion.getPointsEarned() != 0) {
+                    indexToDisplay = currentQuestion.getCorrectAnswerIndex();
+                } else {
+                    ArrayList<Integer> userAnswers = currentQuestion.getUserAnswerIndexes();
+                    indexToDisplay = userAnswers.get(userAnswers.size() - 1);
+                }
+                            switch (indexToDisplay) {
+
+                                case (0):
+                                    rgQuestionAnswerOptions.check(R.id.answerA);
+                                    break;
+                                case (1):
+                                    rgQuestionAnswerOptions.check(R.id.answerB);
+                                    break;
+                                case (2):
+                                    rgQuestionAnswerOptions.check(R.id.answerC);
+                                    break;
+                                case (3):
+                                    rgQuestionAnswerOptions.check(R.id.answerD);
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                }
+
+
 
             answerA.setText(currentQuestion.getAnswerOptions()[0]);
             answerB.setText(currentQuestion.getAnswerOptions()[1]);
             answerC.setText(currentQuestion.getAnswerOptions()[2]);
             answerD.setText(currentQuestion.getAnswerOptions()[3]);
 
-        }
+        } else if (currentQuestion.getType().equals(WRITTEN)) {
 
-        else if (currentQuestion.getType().equals(WRITTEN)){
+            if (currentQuestion.getAttempts() == 0) {
+                //Deleting previous user input:
+                edtTxtAnswer.setText("");
+            } else if (currentQuestion.getPointsEarned() != 0) {
+                // If the user has entered the correct answer
+                // set the correct answer:
+                edtTxtAnswer.setText(currentQuestion.getCorrectWrittenAnswer());
+            }
+
 
             rgQuestionAnswerOptions.setVisibility(View.GONE);
             edtTxtAnswer.setVisibility(View.VISIBLE);
             btnRevealAnswer.setVisibility(View.VISIBLE);
+
+
+            // Unselecting:
+            edtTxtAnswer.clearFocus();
         }
 
         // Removing the 'Try Again' message:
@@ -159,56 +218,62 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         txtQuestion.setText(currentQuestion.getText());
 
         // Question X of X
-        txtCurrentQuestionIndex.setText(String.format(getString(R.string.question_x_of_x),(questionSet.getCurrentQuestionIndex() + 1), questionSet.getQuestions().length));
+        txtCurrentQuestionIndex.setText(String.format(getString(R.string.question_x_of_x), (questionSet.getCurrentQuestionIndex() + 1), questionSet.getQuestions().length));
 
         // Set points accordingly:
         // Needed for if the screen is rotated after a question is done incorrectly.
         if (currentQuestion.getAttempts() > 1) {
             //X Points
             txtPointsPossible.setText(String.format(getString(R.string.points), currentQuestion.getPointsEarned()));
-        }
-        else if (currentQuestion.getAttempts() == 1 &&
-        currentQuestion.getPointsEarned() != currentQuestion.getPointsPossible()){
+        } else if (currentQuestion.getAttempts() == 1 &&
+                currentQuestion.getPointsEarned() != currentQuestion.getPointsPossible()) {
             // X Points
             txtPointsPossible.setText(String.format(getString(R.string.points), (currentQuestion.getPointsPossible() / 2)));
-        }
-        else{
+        } else {
             //X Points
             txtPointsPossible.setText(String.format(getString(R.string.points), (currentQuestion.getPointsPossible())));
-            //txtPointsPossible.setText(currentQuestion.getPointsPossible() + " Points");
         }
 
         // Set question set image (id = 0 if no image):
         imgQuestion.setImageResource(currentQuestion.getImageId());
 
 
-
-
-
         // Sets the visibility of navigation images and the text of the confirm
         // button depending on the current question:
-        if (firstQuestion()){
-            btnConfirm.setText(getString(R.string.confirm));
+        if (firstQuestion()) {
+            btnConfirm.setText(getString(R.string.check));
             imgNext.setVisibility(View.VISIBLE);
             imgPrevious.setVisibility(View.GONE);
-        }
-        else if (lastQuestion()){
+        } else if (lastQuestion()) {
             btnConfirm.setText(getString(R.string.finish));
             imgNext.setVisibility(View.GONE);
             imgPrevious.setVisibility(View.VISIBLE);
-        }
-        else{
-            btnConfirm.setText(getString(R.string.confirm));
+        } else {
+            btnConfirm.setText(getString(R.string.check));
             imgPrevious.setVisibility(View.VISIBLE);
             imgNext.setVisibility(View.VISIBLE);
         }
 
     }
 
+    private void setResultImage() {
+        // If the question has been answered, display appropriate result image:
+        if (currentQuestion.getPointsEarned() == 0 && currentQuestion.getAttempts() > 0) {
+            imgResult.setImageResource(R.drawable.ic_practice);
+        } else if (currentQuestion.getPointsEarned() > 0) {
+            imgResult.setImageResource(R.drawable.ic_perfect);
+        } else {
+            imgResult.setImageResource(0);
+        }
+
+    }
+
     private void showRefresher(int currentQuestionIndex) {
         // If refreshers are not enabled, return.
-        if (!Utils.getInstance().refreshersEnabled()){return;}
-        for (Refresher refresher: questionSet.getRefreshers()) {
+        if (!Utils.getInstance().refreshersEnabled()) {
+            return;
+        }
+        for (Refresher refresher : questionSet.getRefreshers()) {
             // If a refresher is supposed to be shown before this question,
             // and it has not been shown this time, show it:
             if (refresher.getQuestionIndex() == currentQuestionIndex && !refresher.isShown()) {
@@ -225,15 +290,20 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
 
         Refresher[] refreshers = questionSet.getRefreshers();
 
-        int lastRefresherIndex = -1;
-        for (int index = 0; index < currentQuestionIndex; index++){
-            if (refreshers[index].getQuestionIndex() >= lastRefresherIndex)
-            lastRefresherIndex = index;
+
+        int maxIndex = -1;
+        int refresherIndex = 0;
+        for (Refresher refresher : refreshers) {
+            int refresherQuestionIndex = refresher.getQuestionIndex();
+            if (refresherQuestionIndex > maxIndex && refresherQuestionIndex <= currentQuestionIndex) {
+                maxIndex = refresherIndex;
+            }
+            refresherIndex++;
         }
 
-        if (lastRefresherIndex != -1){
+        if (maxIndex != -1) {
             startActivity(new Intent(this, RefresherActivity.class)
-                    .putExtra(REFRESHER_ID, refreshers[lastRefresherIndex].getId()));
+                    .putExtra(REFRESHER_ID, refreshers[maxIndex].getId()));
         }
 
     }
@@ -268,16 +338,16 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
                 break;
 
             case (R.id.imgNext):
-
+                TransitionManager.beginDelayedTransition(svQuestionSet);
                 // If the current question has been solved, they can go to the next question:
-                if (currentQuestion.getAttempts() > 0){
+                if (currentQuestion.getAttempts() > 0) {
                     TransitionManager.beginDelayedTransition(svQuestionSet);
                     // Increasing the current question index by 1
                     questionSet.setCurrentQuestionIndex(questionSet.getCurrentQuestionIndex() + 1);
                     setData(questionSet);
 
-                }
-                else{
+                } else {
+                    TransitionManager.beginDelayedTransition(svQuestionSet);
                     txtMessage.setText(getString(R.string.try_first));
                 }
                 break;
@@ -293,6 +363,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
                 TransitionManager.beginDelayedTransition(svQuestionSet);
                 txtMessage.setText(currentQuestion.getCorrectWrittenAnswer());
                 // No points if they reveal the answer.
+                setResultImage();
                 txtPointsPossible.setText(String.format(getString(R.string.points), 0));
                 break;
 
@@ -311,16 +382,15 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
     private void confirmClicked() {
 
         // Scrolling to the top
-        svQuestionSet.smoothScrollTo(0,0);
+        svQuestionSet.smoothScrollTo(0, 0);
 
         // If an answer has been selected / written
-        if ((currentQuestion.getType().equals("multipleChoice") && getCheckedRadioButtonIndex() != -1)
-        || (currentQuestion.getType().equals("written") && !edtTxtAnswer.getText().toString().equals("")))
-        {
+        if ((currentQuestion.getType().equals(MULTIPLE_CHOICE) && getCheckedRadioButtonIndex() != -1)
+                || (currentQuestion.getType().equals(WRITTEN) && !edtTxtAnswer.getText().toString().equals(""))) {
 
             if (currentQuestion.checkAnswer(getCheckedRadioButtonIndex(), edtTxtAnswer.getText().toString())) {
 
-                if (lastQuestion()){
+                if (lastQuestion()) {
 
                     // If they start the question set again, it will start from 0:
                     questionSet.setCurrentQuestionIndex(0);
@@ -331,7 +401,19 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
                 } else {
                     // Increasing the current question index by 1
                     questionSet.setCurrentQuestionIndex(questionSet.getCurrentQuestionIndex() + 1);
-                    setData(questionSet);
+
+
+                    setResultImage();
+
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            TransitionManager.beginDelayedTransition(svQuestionSet);
+                            setData(questionSet);
+                        }
+                    }, 1000);
+
 
                 }
             } else {
@@ -365,8 +447,9 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         } else {
 
             // Telling the user to enter an answer.
-           txtMessage.setText(getString(R.string.enter_answer));
+            txtMessage.setText(getString(R.string.enter_answer));
         }
+        setResultImage();
     }
 
 
@@ -396,7 +479,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         // The back button should go to the main menu here:
         startActivity(new Intent(this, MainMenuActivity.class));
     }

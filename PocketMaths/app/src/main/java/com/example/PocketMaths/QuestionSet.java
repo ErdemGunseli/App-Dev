@@ -18,7 +18,6 @@ public class QuestionSet {
     private boolean isExpanded;
 
     private ArrayList<String> topics = new ArrayList<>();
-    private ArrayList<String> models = new ArrayList<>();
 
     private String dateCompleted;
 
@@ -34,21 +33,17 @@ public class QuestionSet {
         this.questions = questions;
         this.refreshers = refreshers;
         this.currentQuestionIndex = 0;
-        arrangeTopics_Models();
+        arrangeTopics();
 
         this.isExpanded = false;
     }
 
-    private void arrangeTopics_Models() {
+    private void arrangeTopics() {
         for (Question question : this.questions) {
-            String model = question.getModel();
             String topic = question.getTopic();
 
             if (!this.topics.contains(topic)){
                 this.topics.add(topic);
-            }
-            if (!this.models.contains(model)){
-                this.models.add(model);
             }
 
         }
@@ -183,6 +178,21 @@ public class QuestionSet {
         }
     }
 
+    public ArrayList<String> getFailedTopics() {
+        ArrayList<String> failedTopics = new ArrayList<>();
+
+        for (Question question : this.questions) {
+            String topic = question.getTopic();
+
+            // If answered incorrectly, add the topic/model to arraylist.
+            if (question.getPointsPossible() != question.getPointsEarned()){
+                if (!failedTopics.contains(topic)){
+                    failedTopics.add(topic);
+                }
+            }
+        }
+        return failedTopics;
+    }
 
     public ArrayList<String> getTopics() {
         return topics;
@@ -190,14 +200,6 @@ public class QuestionSet {
 
     public void setTopics(ArrayList<String> topics) {
         this.topics = topics;
-    }
-
-    public ArrayList<String> getModels() {
-        return models;
-    }
-
-    public void setModels(ArrayList<String> models) {
-        this.models = models;
     }
 
     public Refresher[] getRefreshers() {

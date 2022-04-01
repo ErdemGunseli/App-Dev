@@ -29,7 +29,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(Utils.getInstance().getThemeID());
+        setTheme(Utils.getInstance().getThemeId());
         setContentView(R.layout.activity_sign_up);
 
         initViews();
@@ -166,7 +166,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             databaseHelper.useAccount(account.getId());
 
         }
-
 
 
         // Going to the main menu activity:

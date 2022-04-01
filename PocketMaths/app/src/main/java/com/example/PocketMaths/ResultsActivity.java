@@ -27,9 +27,9 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
 
     private ScrollView svResults;
 
-    private ImageView imgExit;
+    private ImageView imgExit, imgPerfect, imgPractice;
 
-    private TextView txtQuestionSetName, txtResult, txtFirstAttempt, txtSecondAttempt, txtResultPercentage, txtFailed;
+    private TextView txtQuestionSetName, txtResult, txtFirstAttempt, txtSecondAttempt, txtResultPercentage, txtPerfect, txtPractice;
 
     private QuestionSet questionSet;
 
@@ -44,12 +44,10 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
 
 
     private ArrayList<String> failedTopics = new ArrayList<>();
-    private  ArrayList<String> failedModels = new ArrayList<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(Utils.getInstance().getThemeID());
+        setTheme(Utils.getInstance().getThemeId());
         setContentView(R.layout.activity_results);
 
         // Initialising View Objects:
@@ -126,11 +124,17 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         txtQuestionSetName = findViewById(R.id.txtQuestionSetName);
         txtResult = findViewById(R.id.txtResult);
 
+        imgPerfect = findViewById(R.id.imgPerfect);
+        imgPractice = findViewById(R.id.imgPractice);
+
+
         txtFirstAttempt = findViewById(R.id.txtFirstAttempt);
         txtSecondAttempt = findViewById(R.id.txtSecondAttempt);
 
         txtResultPercentage = findViewById(R.id.txtResultPercentage);
-        txtFailed = findViewById(R.id.txtFailed);
+        txtPerfect = findViewById(R.id.txtPerfect);
+        txtPractice = findViewById(R.id.txtPractice);
+
 
         btnFinish = findViewById(R.id.btnFinish);
 
@@ -142,6 +146,8 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void setData(QuestionSet questionSet) {
+
+        //TODO: Split setData()
 
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
@@ -184,34 +190,47 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
         txtResultPercentage.setText(String.format(getString(R.string.result_percent), questionSet.calculateResult()));
 
 
-        // Calculating the topics and models that the student failed.
-        calculateFailed();
+
+        ArrayList<String> failedTopics = questionSet.getFailedTopics();
+        ArrayList<String> perfectTopics = new ArrayList<>();
 
 
-        // Adding the failed topics and question types:
-
-        if (this.failedTopics.size() > 0){
-            // Practice the following topics:
-            txtFailed.append(getString(R.string.practice_topics));
-        }
-        int count = 1;
-        for (String topic: this.failedTopics) {
-            if (topic != null){
-                txtFailed.append(String.format(getString(R.string.list), count, topic));
-                count += 1;
+        // Removing failed topics from all topics to get perfect topics:
+        // Elaborate since ArrayLists are pointer-based and any other technique does not work.
+        for (String topic: questionSet.getTopics()) {
+            if (!failedTopics.contains(topic)){
+                perfectTopics.add(topic);
             }
         }
 
-        if (this.failedModels.size() > 0){
-            // Practice the following question types:
-            txtFailed.append(getString(R.string.practice_models));
+        if (failedTopics.size() == 0){
+            // Invisible instead of gone to maintain layout
+            txtPractice.setVisibility(View.INVISIBLE);
+            imgPractice.setVisibility(View.INVISIBLE);
         }
-        count = 1;
-        for (String model: this.failedModels){
-            if (model != null) {
-                txtFailed.append(String.format(getString(R.string.list), count, model));
+        else{
+            txtPractice.setVisibility(View.VISIBLE);
+            imgPractice.setVisibility(View.VISIBLE);
 
-                count += 1;
+            int count = 1;
+            for (String topic: failedTopics){
+                txtPractice.append(String.format(getString(R.string.list), count, topic));
+                count++;
+            }
+        }
+
+        if (perfectTopics.size() == 0){
+            txtPerfect.setVisibility(View.INVISIBLE);
+            imgPerfect.setVisibility(View.INVISIBLE);
+        }
+        else{
+            txtPerfect.setVisibility(View.VISIBLE);
+            imgPerfect.setVisibility(View.VISIBLE);
+
+            int count = 1;
+            for (String perfectTopic: perfectTopics){
+                txtPerfect.append(String.format(getString(R.string.list), count, perfectTopic));
+                count++;
             }
         }
 
@@ -252,24 +271,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    public void calculateFailed() {
 
-        for (Question question : questionSet.getQuestions()) {
-            String topic = question.getTopic();
-            String model = question.getModel();
-
-            // If answered incorrectly, add the topic/model to arraylist.
-           if (question.getPointsPossible() != question.getPointsEarned()){
-               if (!this.failedTopics.contains(topic)){
-                   this.failedTopics.add(topic);
-               }
-               if (!this.failedModels.contains(model)){
-                   this.failedModels.add(model);
-               }
-           }
-        }
-
-    }
 
     @Override
     public void onBackPressed(){

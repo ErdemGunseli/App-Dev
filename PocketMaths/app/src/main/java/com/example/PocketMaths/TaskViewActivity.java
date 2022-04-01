@@ -1,11 +1,9 @@
 package com.example.PocketMaths;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.transition.TransitionManager;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -42,7 +40,7 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(Utils.getInstance().getThemeID());
+        setTheme(Utils.getInstance().getThemeId());
         setContentView(R.layout.activity_view_task);
 
         initViews();

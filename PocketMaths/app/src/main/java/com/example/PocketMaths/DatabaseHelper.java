@@ -16,16 +16,32 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
+/**
+ * This class allows user data to be saved onto the SQLite Database and persist after the app is closed.
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * DatabaseHelper extends SQLiteOpenHelper to gain access to SQLite Database for Java methods.
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * This class creates and maintains many tables pertaining to different aspects of the app.
+ * It has many methods for adding, retrieving and deleting records from each of the tables.
+ */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
+    /**
+     * Constructor
+     * @param context Required for super constructor.
+     */
     public DatabaseHelper(@Nullable Context context) {
         super(context, "database", null, 1);
     }
 
+    /**
+     * Runs after the constructor.
+     * Creates all of the necessary tables for the relational database, if they do not already exist.
+     */
     @Override
     public void onCreate(SQLiteDatabase database) {
 
-        // Create Tasks table:
+        // ### Creating Tasks table ###:
         database.execSQL("CREATE TABLE IF NOT EXISTS TASKS (" +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                 "ACCOUNT_ID INTEGER NOT NULL, " +
@@ -36,6 +52,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "IS_COMPLETED BOOL NOT NULL" +
                 ")");
 
+        // ### Creating Question Set Results Table ###:
         database.execSQL("CREATE TABLE IF NOT EXISTS QUESTION_SET_RESULTS (" +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                 "QUESTION_SET_ID INTEGER NOT NULL, " +
@@ -48,6 +65,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "DATE_COMPLETED INTEGER" +
                 ")");
 
+        // ### Creating Accounts Table ###:
+        // (In a client-server version of the app, this table would be hosted on the server)
         database.execSQL("CREATE TABLE IF NOT EXISTS ACCOUNTS (" +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                 "PARENT_NAME TEXT NOT NULL," +
@@ -57,10 +76,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "PIN TEXT NOT NULL" +
                 ")");
 
+        // ### Current Account Table ###:
+        // (In a client-server version of the app, this table would have the same columns as the
+        //  Accounts table)
         database.execSQL("CREATE TABLE IF NOT EXISTS CURRENT_ACCOUNT (" +
                 "ACCOUNT_ID INTEGER PRIMARY KEY NOT NULL" +
                 ")");
 
+        // ### Creating App Preferences Table ###:
         database.execSQL("CREATE TABLE IF NOT EXISTS APP_PREFERENCES (" +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                 "DESCRIPTION TEXT NOT NULL," +
@@ -69,10 +92,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-        @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        // Called if the version number changes. No need to add anything here.
-    }
+    /**
+     * Runs on pre-existing versions of the app if the database version is updated after the user
+     * installing it.
+     */
+    @Override
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {}
 
     public long getTableLength(String tableName){
         SQLiteDatabase database = this.getReadableDatabase();
@@ -83,19 +108,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //// TASKS TABLE:
     public boolean addTask(Task task){
-        // This comes from the default properties from the class we are inheriting from:
         SQLiteDatabase database = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
 
-        // Putting the relevant item in each column of the row:
         contentValues.put("ACCOUNT_ID", task.getAccountId());
         contentValues.put("NAME", task.getName());
         contentValues.put("REWARD", task.getReward());
         contentValues.put("PASS_MARK", task.getPassMark());
         contentValues.put("QUESTION_SET_ID", task.getQuestionSetId());
         contentValues.put("IS_COMPLETED", task.isCompleted());
-        // No need to put ID as it is an auto-increment value.
 
         long insert = database.insert("TASKS", null, contentValues);
 
@@ -135,7 +157,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean deleteTask(Task task){
         SQLiteDatabase database = this.getWritableDatabase();
 
-        // Delete from the table an item for which the IDs match:
         long result = database.delete("TASKS", "ID =?", new String[] {String.valueOf(task.getId())});
 
         // Cleaning Up:
@@ -150,13 +171,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void completeTask(Task task){
         SQLiteDatabase database = this.getWritableDatabase();
-
-
-        ContentValues contentValues = new ContentValues();
-
-        contentValues.put("IS_COMPLETED", true);
-
-        database.update("TASKS", contentValues, "id=?", new String[]{String.valueOf(task.getId())});
+        database.execSQL("UPDATE TASKS SET IS_COMPLETED = TRUE WHERE ID = ?", new String[]{String.valueOf(task.getId())});
 
         // Cleaning Up:
         database.close();
@@ -293,6 +308,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return account;
     }
 
+    public void updateAccount(Account account){
+        SQLiteDatabase database = this.getWritableDatabase();
+        database.execSQL("UPDATE ACCOUNTS SET PARENT_NAME = ?, STUDENT_NAME =?, EMAIL = ?, PASSWORD = ?, PIN = ? WHERE ID = ?",
+                new String[] {String.valueOf(account.getParentName()), String.valueOf(account.getStudentName()),String.valueOf(account.getEmail()), String.valueOf(account.getPassword()), String.valueOf(account.getPin()) , String.valueOf(account.getId())});
+
+        // Cleaning Up:
+        database.close();
+    }
+
     //// CURRENT ACCOUNT TABLE
     public boolean useAccount(int id){
         Account account = getAccountById(id);
@@ -300,7 +324,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
         }
         else{
-
             SQLiteDatabase database = this.getWritableDatabase();
 
             ContentValues contentValues = new ContentValues();
@@ -443,11 +466,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean showRefreshers(){
+    public boolean getShowRefreshers(){
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor cursor = database.rawQuery("SELECT * FROM APP_PREFERENCES WHERE DESCRIPTION =?", new String[]{SHOW_REFRESHERS});
 
-        boolean bool = false;
+        // If setting not present, it should default to True.
+        boolean bool = true;
         if (cursor.moveToFirst()){
             bool = cursor.getInt(2) == 1;
         }

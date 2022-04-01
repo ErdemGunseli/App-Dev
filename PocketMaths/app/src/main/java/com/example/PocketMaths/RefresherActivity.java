@@ -22,7 +22,7 @@ public class RefresherActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setTheme(Utils.getInstance().getThemeID());
+        setTheme(Utils.getInstance().getThemeId());
         setContentView(R.layout.activity_refresher);
 
         // Initialising View Objects:
@@ -61,7 +61,7 @@ public class RefresherActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void initViews() {
-        txtRefresherModel = findViewById(R.id.txtRefresherModel);
+        txtRefresherModel = findViewById(R.id.txtRefresherTopic);
         imgRefresher = findViewById(R.id.imgRefresher);
         btnContinue = findViewById(R.id.btnContinue);
 
@@ -70,7 +70,7 @@ public class RefresherActivity extends AppCompatActivity implements View.OnClick
 
 
     private void setData(Refresher refresher){
-        txtRefresherModel.setText(String.format(getString(R.string.refresher),refresher.getModel()));
+        txtRefresherModel.setText(String.format(getString(R.string.refresher),refresher.getTopic()));
         imgRefresher.setImageResource(refresher.getImageId());
     }
 

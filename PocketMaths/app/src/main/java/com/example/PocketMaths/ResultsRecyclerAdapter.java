@@ -1,4 +1,7 @@
 package com.example.PocketMaths;
+import static com.example.PocketMaths.Question.MULTIPLE_CHOICE;
+import static com.example.PocketMaths.Question.WRITTEN;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 
 
 public class ResultsRecyclerAdapter extends RecyclerView.Adapter<ResultsRecyclerAdapter.ViewHolder> {
@@ -40,7 +45,10 @@ public class ResultsRecyclerAdapter extends RecyclerView.Adapter<ResultsRecycler
         Question currentQuestion = questions[position];
         String[] answers = currentQuestion.getAnswerOptions();
         int correctAnswerIndex = currentQuestion.getCorrectAnswerIndex();
-        int chosenAnswerIndex = currentQuestion.getChosenAnswerIndex();
+
+        ArrayList<Integer> userAnswerIndexes = currentQuestion.getUserAnswerIndexes();
+
+
 
         // We can access these private attributes directly since they are from a subclass:
 
@@ -54,7 +62,9 @@ public class ResultsRecyclerAdapter extends RecyclerView.Adapter<ResultsRecycler
 
         holder.imgQuestion.setImageResource(currentQuestion.getImageId());
 
-        if (currentQuestion.getType().equals("multipleChoice")) {
+        if (currentQuestion.getType().equals(MULTIPLE_CHOICE)) {
+            // Getting their first answer:
+            int chosenAnswerIndex = userAnswerIndexes.get(0);
 
             // Your Initial Answer: X
             holder.txtChosenAnswer.setText(String.format(context.getString(R.string.initial_answer), answers[chosenAnswerIndex]));
@@ -63,15 +73,15 @@ public class ResultsRecyclerAdapter extends RecyclerView.Adapter<ResultsRecycler
             holder.txtCorrectAnswer.setText(String.format(context.getString(R.string.correct_answer), answers[correctAnswerIndex]));
 
         }
-        else if (currentQuestion.getType().equals("written")) {
+        else if (currentQuestion.getType().equals(WRITTEN)) {
 
             // If they revealed the answer, the variable storing their answer will be null, so use "?".
             // Otherwise, set text as variable.
 
             String chosenAnswer = "?";
-
-            if (currentQuestion.getWrittenAnswer() != null) {
-                chosenAnswer = currentQuestion.getWrittenAnswer();
+            String writtenAnswer = currentQuestion.getUserWrittenAnswers().get(0);
+            if (writtenAnswer != null) {
+                chosenAnswer = writtenAnswer;
             }
                 // Your Initial Answer: X
                 holder.txtChosenAnswer.setText(String.format(context.getString(R.string.initial_answer), chosenAnswer));

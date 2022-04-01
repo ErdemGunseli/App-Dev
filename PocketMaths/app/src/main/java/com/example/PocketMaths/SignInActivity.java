@@ -23,7 +23,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(Utils.getInstance().getThemeID());
+        setTheme(Utils.getInstance().getThemeId());
         setContentView(R.layout.activity_sign_in);
 
         initViews();
@@ -120,6 +120,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             else{
                 Utils.getInstance().setUserAccount(account);
                 databaseHelper.useAccount(account.getId());
+
                 startActivity(new Intent(this, MainMenuActivity.class));
             }
 

@@ -98,7 +98,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/txtDetailsText"
-                    android:layout_margin="15dp"
+                    android:layout_marginStart="15dp"
                     android:textColor="@color/YellowOrange"
                     android:textSize="16sp"
                     />

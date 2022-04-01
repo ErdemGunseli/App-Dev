@@ -1,23 +1,15 @@
 package com.example.PocketMaths;
 
-import static com.example.PocketMaths.Utils.SHOW_REFRESHERS;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.transition.TransitionManager;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.Hashtable;
 
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -31,7 +23,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(Utils.getInstance().getThemeID());
+        setTheme(Utils.getInstance().getThemeId());
         setContentView(R.layout.activity_settings);
 
         initViews();

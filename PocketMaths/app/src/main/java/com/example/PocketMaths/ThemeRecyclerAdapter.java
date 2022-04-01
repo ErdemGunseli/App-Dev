@@ -1,6 +1,5 @@
 package com.example.PocketMaths;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
@@ -88,7 +87,7 @@ public class ThemeRecyclerAdapter extends RecyclerView.Adapter<ThemeRecyclerAdap
                    switch (getAdapterPosition()){
 
                        case (0):
-                           setTheme(0);
+                           setTheme(R.style.Theme_PocketMaths);
                            break;
 
                        case (1) :

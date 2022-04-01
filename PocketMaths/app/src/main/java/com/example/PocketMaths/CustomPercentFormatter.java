@@ -1,50 +1,73 @@
 package com.example.PocketMaths;
 
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.DefaultValueFormatter;
-import com.github.mikephil.charting.formatter.IValueFormatter;
-import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.text.DecimalFormat;
 
-// Extending ValueFormatter. Not extending the Percentage Formatter directly since it may
-// be changed in the future like it has been changed before.
+/**
+ * This class is used instead of the default PercentageFormatter to hide the percentage values of
+ * the pie chart if the value is 0.
+ * The values are passed into the pie chart even if they are 0 to maintain the correct color order.
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * CustomPercentFormatter extends ValueFormatter to gain access to its methods.
+ * It does not extend the PercentFormatter directly, since it may be changed in the future like it
+ * has been changed before.
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
+
 public class CustomPercentFormatter extends ValueFormatter {
 
-    public DecimalFormat mFormat;
+    public DecimalFormat decimalFormat;
     private PieChart pieChart;
 
+    /**
+     * Constructor
+     * Used for formatting decimal values.
+     */
     public CustomPercentFormatter() {
-        mFormat = new DecimalFormat("###,###,##0.0");
+        decimalFormat = new DecimalFormat("###,###,##0.0");
     }
 
+    /**
+     * Constructor
+     * For pie charts, percentage sign is added depending on external factors.
+     * @param pieChart Pie chart with which it is used.
+     */
     public CustomPercentFormatter(PieChart pieChart) {
         this();
         this.pieChart = pieChart;
     }
 
+    /**
+     * Applies the correct formatting and returns the value.
+     * @param value Value to be formatted.
+     * @return Formatted Value
+     */
     @Override
     public String getFormattedValue(float value) {
-        // Only create value label if the value is not 0:
+        // Only creating value label if the value is not 0:
         if (value != 0) {
-            return mFormat.format(value) + " %";
+            return decimalFormat.format(value) + " %";
         }
         return "";
     }
 
+    /**
+     * Applies the correct formatting for pie chart labels.
+     * @param value Value to be formatted
+     * @param pieEntry An entry of the pie chart that the label is for
+     * @return Formatted Value
+     */
     @Override
     public String getPieLabel(float value, PieEntry pieEntry) {
         if (pieChart != null && pieChart.isUsePercentValuesEnabled()) {
-            // Converted to percent
+            // Converting value to percentage:
             return getFormattedValue(value);
         } else {
-            // raw value, skip percent sign
-            return mFormat.format(value);
+            // If percentage values are disabled, returning decimal:
+            return decimalFormat.format(value);
         }
     }
 }
