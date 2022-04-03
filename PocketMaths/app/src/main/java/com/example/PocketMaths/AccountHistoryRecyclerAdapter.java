@@ -38,6 +38,7 @@ public class AccountHistoryRecyclerAdapter extends RecyclerView.Adapter<AccountH
 
     /**
      * Constructor
+     *
      * @param context Required to get strings from resources.
      */
     public AccountHistoryRecyclerAdapter(Context context) {
@@ -49,7 +50,8 @@ public class AccountHistoryRecyclerAdapter extends RecyclerView.Adapter<AccountH
     /**
      * Runs when an instance of ViewHolder is created.
      * Attaches the XML layout file 'account_history_item' to the ViewHolder.
-     * @param parent Required to inflate XML layout file into a View object.
+     *
+     * @param parent   Required to inflate XML layout file into a View object.
      * @param viewType Required for background processing.
      * @return ViewHolder object.
      */
@@ -62,7 +64,9 @@ public class AccountHistoryRecyclerAdapter extends RecyclerView.Adapter<AccountH
 
     /**
      * Runs when an instance of ViewHolder object attaches to a container.
-     * @param holder The instance of ViewHolder object, required for accessing data.
+     * Sets the appropriate data to the ViewHolder instance layout.
+     *
+     * @param holder   The instance of ViewHolder object, required for accessing data.
      * @param position The index of the ArrayList, required for accessing ArrayList items.
      */
     @Override
@@ -100,12 +104,11 @@ public class AccountHistoryRecyclerAdapter extends RecyclerView.Adapter<AccountH
 
     @Override
     public int getItemCount() {
-        // Avoid null pointer exception
+        // Avoiding null pointer exception:
         if (questionSets != null) {
             return questionSets.size();
         }
         return 0;
-
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -126,16 +129,12 @@ public class AccountHistoryRecyclerAdapter extends RecyclerView.Adapter<AccountH
 
         /**
          * Constructor
+         *
          * @param itemView Required for super constructor
          */
         public ViewHolder(@NonNull View itemView) {
-            // We can add all the elements in our layout one by one:
             super(itemView);
-
-
-            // Initialising View Objects
             initViews();
-
         }
 
         /**
@@ -143,15 +142,11 @@ public class AccountHistoryRecyclerAdapter extends RecyclerView.Adapter<AccountH
          * Sets the class' click listener to the appropriate View objects.
          */
         private void initViews() {
-            // When not inside an activity, the following syntax is required:
+            // Outside an activity, we need the following syntax:
             txtQuestionSetName = itemView.findViewById(R.id.txtQuestionSetName);
             txtPoints = itemView.findViewById(R.id.txtPoints);
             txtResultPercentage = itemView.findViewById(R.id.txtResultPercentage);
             pieHistory = itemView.findViewById(R.id.pieHistory);
-
         }
-
-
     }
-
 }

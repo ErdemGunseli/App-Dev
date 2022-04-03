@@ -2,20 +2,19 @@ package com.example.PocketMaths;
 
 import java.util.ArrayList;
 
+/**
+ * The instances of this class contain the details of each question.
+ * The instances of this class are associated to other classes, such as to QuestionSet.
+ */
 public class Question {
-
-    // Each question will have some text, an array of answer options, a correct answer and possibly an image.
-    private int id;
-    private String text;
-    private int imageId;
-
-    private String type;
 
     public static final String WRITTEN = "written";
     public static final String MULTIPLE_CHOICE = "multipleChoice";
-
-
-    //TODO: Change system to first attempt, final attempt
+    //TODO: Use ID!
+    private int id;
+    private String text;
+    private int imageId;
+    private String type;
 
     // For Multiple Choice
     private String[] answerOptions;
@@ -26,16 +25,22 @@ public class Question {
     private String correctWrittenAnswer;
     private ArrayList<String> userWrittenAnswers = new ArrayList<>();
 
-
-
     private String topic;
     private int attempts = 0;
 
     private int pointsPossible;
     private int pointsEarned = 0;
 
-    //TODO: Get id from questions table:
-
+    /**
+     * Constructor for Multiple Choice Question
+     *
+     * @param topic              Topic of the question.
+     * @param text               The question itself.
+     * @param imageId            The id of the image needed - 0 if there is none.
+     * @param answerOptions      The multiple-choice options.
+     * @param correctAnswerIndex The index of the correct option.
+     * @param pointsPossible     The number of points possible.
+     */
     public Question(String topic, String text, int imageId, String[] answerOptions, int correctAnswerIndex, int pointsPossible) {
         this.topic = topic;
         this.text = text;
@@ -46,17 +51,25 @@ public class Question {
         this.type = MULTIPLE_CHOICE;
     }
 
-    public Question(String topic,String text, int imageId, String answer, int pointsPossible){
+    /**
+     * Constructor for Written Question
+     *
+     * @param topic          Topic of the question.
+     * @param text           The question itself.
+     * @param imageId        The id of the image needed - 0 if there is none.
+     * @param correctAnswer  The correct answer.
+     * @param pointsPossible The number of points possible.
+     */
+    public Question(String topic, String text, int imageId, String correctAnswer, int pointsPossible) {
         this.topic = topic;
         this.text = text;
         this.imageId = imageId;
-        this.correctWrittenAnswer = answer;
+        this.correctWrittenAnswer = correctAnswer;
         this.pointsPossible = pointsPossible;
 
         this.type = WRITTEN;
     }
 
-    // Question Text
     public String getText() {
         return text;
     }
@@ -65,8 +78,6 @@ public class Question {
         this.text = text;
     }
 
-
-    // Possible Answers
     public String[] getAnswerOptions() {
         return answerOptions;
     }
@@ -75,8 +86,6 @@ public class Question {
         this.answerOptions = answerOptions;
     }
 
-
-    // Correct Answer Index
     public int getCorrectAnswerIndex() {
         return correctAnswerIndex;
     }
@@ -85,7 +94,6 @@ public class Question {
         this.correctAnswerIndex = correctAnswerIndex;
     }
 
-    // Image ID (optional)
     public int getImageId() {
         return imageId;
     }
@@ -94,25 +102,27 @@ public class Question {
         this.imageId = imageId;
     }
 
-
-    // Marking the Question
+    /**
+     * Checks the answer entered by the user.
+     * Increases the number of attempts made by 1.
+     * If the answer has been answered correctly, calls calculatePointsEarned()
+     *
+     * @param chosenAnswerIndex The option selected by the user - only used if the question is multiple-choice.
+     * @param answer            The answer entered by the user - only used if the question is written.
+     * @return Whether the answer is correct.
+     */
     public boolean checkAnswer(int chosenAnswerIndex, String answer) {
 
         if (this.type.equals(MULTIPLE_CHOICE)) {
-
             this.userAnswerIndexes.add(chosenAnswerIndex);
-
             if (correctAnswerIndex == chosenAnswerIndex) {
                 this.calculatePointsEarned();
                 this.attempts += 1;
                 return true;
             }
-        }
-
-        else if (this.type.equals(WRITTEN)){
-
+        } else if (this.type.equals(WRITTEN)) {
             this.userWrittenAnswers.add(answer);
-            if (answer.equals(this.correctWrittenAnswer)){
+            if (answer.equals(this.correctWrittenAnswer)) {
                 this.calculatePointsEarned();
                 this.attempts += 1;
                 return true;
@@ -149,9 +159,13 @@ public class Question {
         this.pointsEarned = pointsEarned;
     }
 
-    public void calculatePointsEarned(){
-
-        // If they got it right first, do not penalise:
+    /**
+     * Calculates the points earned for a question by taking into account the number of points
+     * available and the number of attempts made.
+     * Updates the points earned.
+     */
+    public void calculatePointsEarned() {
+        // If the question was answered correctly, points can no longer be decreased:
         if (this.pointsEarned == 0) {
             if (attempts == 0) {
                 this.pointsEarned = this.pointsPossible;

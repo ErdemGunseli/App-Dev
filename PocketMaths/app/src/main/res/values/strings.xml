@@ -55,7 +55,8 @@
     <string name="x_points_out_of_x">%d Points out of %d</string>
     <string name="solved_x_out_of_x_1attempt">Solved %d out of %d with one attempt.</string>
     <string name="solved_x_out_of_x_2attempts">Solved %d out of the remaining %d with two attempts.</string>
-    <string name="result_percent">Result: %d %%</string>
+    <string name="result_percent">Result: %d%%</string>
+    <string name="question_mark">/?</string>
 
     <string name="did_great">You Did Great On: </string>
     <string name="practice">You Could Practice: </string>
@@ -85,7 +86,7 @@
     <string name="save_changes">Save Changes</string>
 
     <string name="pass_Mark">Pass Mark: %d%%</string>
-    <string name="create_task">Create Task</string>
+    <string name="create_task">Create Task:</string>
     <string name="create">Create</string>
     <string name="remaining_tasks">Remaining Tasks:</string>
     <string name="choose_qs">Please Select a Question Set</string>
@@ -114,10 +115,18 @@
     <string name="got_it">Got It!</string>
 
 
-    <!-- ### MATHEMATICS RELATED -->
-    <string name="fraction_format">"\u00BC</string>
-
-
-
-
+    <!-- Extra Content Description -->
+    <string name="question_image">Question Image</string>
+    <string name="help">Help</string>
+    <string name="previous_question">Previous Question</string>
+    <string name="next_question">Next Question</string>
+    <string name="question_result">Question Result</string>
+    <string name="delete_task">Delete Task</string>
+    <string name="perfect_topics">Perfect Topics</string>
+    <string name="other_topics">Other Topics</string>
+    <string name="desc_account">Account</string>
+    <string name="search">Search</string>
+    <string name="desc_view_tasks">View Tasks</string>
+    <string name="desc_create_task">Create Task</string>
+    <string name="desc_settings">Settings</string>
 </resources>

@@ -1,7 +1,5 @@
 package com.example.PocketMaths;
 
-import static com.example.PocketMaths.Question.MULTIPLE_CHOICE;
-import static com.example.PocketMaths.Question.WRITTEN;
 import static com.example.PocketMaths.Utils.SHOW_REFRESHERS;
 import static com.example.PocketMaths.Utils.THEME_ID;
 
@@ -28,6 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Constructor
+     *
      * @param context Required for super constructor.
      */
     public DatabaseHelper(@Nullable Context context) {
@@ -73,7 +72,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "STUDENT_NAME TEXT NOT NULL," +
                 "EMAIL TEXT NOT NULL," +
                 "PASSWORD TEXT NOT NULL," +
-                "PIN TEXT NOT NULL" +
+                "PIN INTEGER NOT NULL" +
                 ")");
 
         // ### Current Account Table ###:
@@ -91,23 +90,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ")");
     }
 
-
     /**
      * Runs on pre-existing versions of the app if the database version is updated after the user
      * installing it.
      */
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {}
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+    }
 
-    public long getTableLength(String tableName){
+    public long getTableLength(String tableName) {
         SQLiteDatabase database = this.getReadableDatabase();
         long count = DatabaseUtils.queryNumEntries(database, tableName);
         database.close();
         return count;
     }
 
-    //// TASKS TABLE:
-    public boolean addTask(Task task){
+    ////#### TASKS TABLE ####////:
+    public boolean addTask(Task task) {
         SQLiteDatabase database = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -125,17 +124,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         database.close();
 
         // if insert is negative, it has failed, if it is positive, it was successful:
-        if (insert == -1){return false;}
-        else {return true;}
+        return insert == -1;
     }
 
-    public ArrayList<Task> getTasks(){
+    public ArrayList<Task> getTasks() {
         ArrayList<Task> tasks = new ArrayList<>();
 
         SQLiteDatabase database = this.getReadableDatabase();
-        Cursor cursor = database.rawQuery("SELECT * FROM TASKS WHERE ACCOUNT_ID=?", new String[] {String.valueOf(Utils.getInstance().getUserAccount().getId())});
+        Cursor cursor = database.rawQuery("SELECT * FROM TASKS WHERE ACCOUNT_ID=?", new String[]{String.valueOf(Utils.getInstance().getUserAccount().getId())});
 
-        if (cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             do {
                 tasks.add(new Task(cursor.getInt(0),
                         cursor.getInt(1),
@@ -144,7 +142,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         cursor.getString(4),
                         cursor.getInt(5),
                         cursor.getInt(6) == 1));
-            } while(cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
 
         // Cleaning Up:
@@ -154,22 +152,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return tasks;
     }
 
-    public boolean deleteTask(Task task){
+    public boolean deleteTask(Task task) {
         SQLiteDatabase database = this.getWritableDatabase();
 
-        long result = database.delete("TASKS", "ID =?", new String[] {String.valueOf(task.getId())});
+        long result = database.delete("TASKS", "ID =?", new String[]{String.valueOf(task.getId())});
 
         // Cleaning Up:
         database.close();
 
-        if (result == -1){
-            return false;
-        }
-
-        return true;
+        // if insert is negative, it has failed, if it is positive, it was successful:
+        return result == -1;
     }
 
-    public void completeTask(Task task){
+    public void completeTask(Task task) {
         SQLiteDatabase database = this.getWritableDatabase();
         database.execSQL("UPDATE TASKS SET IS_COMPLETED = TRUE WHERE ID = ?", new String[]{String.valueOf(task.getId())});
 
@@ -177,8 +172,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         database.close();
     }
 
-    //// QUESTION SET RESULT TABLE
-    public boolean addQuestionSetResult(QuestionSetResult questionSetResult, int accountId){
+    ////#### QUESTION SET RESULT TABLE ####/////:
+    public boolean addQuestionSetResult(QuestionSetResult questionSetResult, int accountId) {
         SQLiteDatabase database = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -197,17 +192,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         database.close();
 
         // if insert is negative, it has failed, if it is positive, it was successful:
-        if (insert == -1){return false;}
-        else {return true;}
+        return insert == -1;
     }
 
-    public ArrayList<QuestionSetResult> getQuestionSetResults(){
+    public ArrayList<QuestionSetResult> getQuestionSetResults() {
         ArrayList<QuestionSetResult> questionSetResults = new ArrayList<>();
 
         SQLiteDatabase database = this.getReadableDatabase();
-        Cursor cursor = database.rawQuery("SELECT * FROM QUESTION_SET_RESULTS WHERE ACCOUNT_ID=?", new String[] {String.valueOf(Utils.getInstance().getUserAccount().getId())});
+        Cursor cursor = database.rawQuery("SELECT * FROM QUESTION_SET_RESULTS WHERE ACCOUNT_ID=?", new String[]{String.valueOf(Utils.getInstance().getUserAccount().getId())});
 
-        if (cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             do {
                 questionSetResults.add(new QuestionSetResult(
                         cursor.getInt(0),
@@ -220,7 +214,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         cursor.getInt(7),
                         cursor.getString(8)
                 ));
-            } while(cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
 
         // Cleaning Up:
@@ -230,8 +224,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return questionSetResults;
     }
 
-    //// ACCOUNT TABLE
-    public boolean addAccount(Account account){
+    ////#### ACCOUNT TABLE ####////:
+    public boolean addAccount(Account account) {
         SQLiteDatabase database = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -246,55 +240,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Cleaning Up:
         database.close();
 
-        //TODO: CHANGE PIN TO INT
-        //todo: Return account id
-
         // if insert is negative, it has failed, if it is positive, it was successful:
-        if (insert == -1){return false;}
-        else {return true;}
+        return insert == -1;
     }
 
-    public Account getAccountById(int id){
+    public Account getAccountById(int id) {
 
         SQLiteDatabase database = this.getReadableDatabase();
-        Cursor cursor = database.rawQuery("SELECT * FROM ACCOUNTS WHERE ID = ?", new String[] {String.valueOf(id)});
+        Cursor cursor = database.rawQuery("SELECT * FROM ACCOUNTS WHERE ID = ?", new String[]{String.valueOf(id)});
 
         Account account = new Account();
-        if (cursor.moveToFirst()){
-                account = new Account(
-                        cursor.getInt(0),
-                        cursor.getString(1),
-                        cursor.getString(2),
-                        cursor.getString(3),
-                        cursor.getString(4),
-                        cursor.getString(5)
-                );
-        }
-
-        // Cleaning Up:
-        cursor.close();
-        database.close();
-
-         if (account.getAccountType().equals(Account.Guest)){
-             return null;
-         }
-        return account;
-    }
-
-    public Account getAccountByEmail(String email){
-
-        SQLiteDatabase database = this.getReadableDatabase();
-        Cursor cursor = database.rawQuery("SELECT * FROM ACCOUNTS WHERE EMAIL = ?", new String[] {email});
-
-        Account account = new Account();
-        if (cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             account = new Account(
                     cursor.getInt(0),
                     cursor.getString(1),
                     cursor.getString(2),
                     cursor.getString(3),
                     cursor.getString(4),
-                    cursor.getString(5)
+                    cursor.getInt(5)
             );
         }
 
@@ -302,28 +265,54 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         database.close();
 
-        if (account.getAccountType().equals(Account.Guest)){
+        if (account.getAccountType().equals(Account.Guest)) {
             return null;
         }
         return account;
     }
 
-    public void updateAccount(Account account){
+    public Account getAccountByEmail(String email) {
+
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM ACCOUNTS WHERE EMAIL = ?", new String[]{email});
+
+        Account account = new Account();
+        if (cursor.moveToFirst()) {
+            account = new Account(
+                    cursor.getInt(0),
+                    cursor.getString(1),
+                    cursor.getString(2),
+                    cursor.getString(3),
+                    cursor.getString(4),
+                    cursor.getInt(5)
+            );
+        }
+
+        // Cleaning Up:
+        cursor.close();
+        database.close();
+
+        if (account.getAccountType().equals(Account.Guest)) {
+            return null;
+        }
+        return account;
+    }
+
+    public void updateAccount(Account account) {
         SQLiteDatabase database = this.getWritableDatabase();
         database.execSQL("UPDATE ACCOUNTS SET PARENT_NAME = ?, STUDENT_NAME =?, EMAIL = ?, PASSWORD = ?, PIN = ? WHERE ID = ?",
-                new String[] {String.valueOf(account.getParentName()), String.valueOf(account.getStudentName()),String.valueOf(account.getEmail()), String.valueOf(account.getPassword()), String.valueOf(account.getPin()) , String.valueOf(account.getId())});
+                new String[]{String.valueOf(account.getParentName()), String.valueOf(account.getStudentName()), String.valueOf(account.getEmail()), String.valueOf(account.getPassword()), String.valueOf(account.getPin()), String.valueOf(account.getId())});
 
         // Cleaning Up:
         database.close();
     }
 
-    //// CURRENT ACCOUNT TABLE
-    public boolean useAccount(int id){
+    ////#### CURRENT ACCOUNT TABLE ####////:
+    public boolean useAccount(int id) {
         Account account = getAccountById(id);
-        if (account == null){
+        if (account == null) {
             return false;
-        }
-        else{
+        } else {
             SQLiteDatabase database = this.getWritableDatabase();
 
             ContentValues contentValues = new ContentValues();
@@ -332,11 +321,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             long insert = database.insert("CURRENT_ACCOUNT", null, contentValues);
 
             // if insert is negative, it has failed, if it is positive, it was successful:
-            if (insert == -1){
+            if (insert == -1) {
                 // Cleaning Up:
                 database.close();
-                return false;}
-            else {
+                return false;
+            } else {
                 // If the new account has successfully been set, delete any pre-existing current account:
                 database.execSQL("DELETE FROM CURRENT_ACCOUNT WHERE NOT ACCOUNT_ID =?", new String[]{String.valueOf(id)});
 
@@ -348,7 +337,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean removeCurrentAccount(){
+    public boolean removeCurrentAccount() {
         SQLiteDatabase database = this.getWritableDatabase();
 
         database.execSQL("DELETE FROM CURRENT_ACCOUNT");
@@ -360,12 +349,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return (getTableLength("CURRENT_ACCOUNT") == 0);
     }
 
-    public Account getCurrentAccount(){
+    public Account getCurrentAccount() {
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor cursor = database.rawQuery("SELECT * FROM CURRENT_ACCOUNT", null);
 
         Account account = new Account();
-        if (cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             account = getAccountById(cursor.getInt(0));
         }
 
@@ -373,21 +362,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         database.close();
 
-        if (account.getAccountType().equals(Account.Guest)){
+        if (account.getAccountType().equals(Account.Guest)) {
             return null;
         }
         return account;
 
     }
 
-    //// CURRENT THEME TABLE
-    public boolean setTheme(int themeId){
+    ////#### PREFERENCES TABLE ####////:
+    public boolean setTheme(int themeId) {
         SQLiteDatabase database = this.getWritableDatabase();
 
         // Checking if the exact setting-value pair already exists in the table:
         Cursor cursor = database.rawQuery("SELECT * FROM APP_PREFERENCES WHERE DESCRIPTION =? AND VALUE =?", new String[]{THEME_ID, String.valueOf(themeId)});
         // If the exact setting is already set, return
-        if (cursor.moveToFirst()){return true;}
+        if (cursor.moveToFirst()) {
+            return true;
+        }
 
 
         ContentValues contentValues = new ContentValues();
@@ -398,12 +389,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long insert = database.insert("APP_PREFERENCES", null, contentValues);
 
         // if insert is negative, it has failed, if it is positive, it was successful:
-        if (insert == -1){
+        if (insert == -1) {
             // Cleaning Up:
             database.close();
             cursor.close();
-            return false;}
-        else {
+            return false;
+        } else {
 
             // If the new current theme has successfully been set, delete any pre-existing records of the current theme:
             database.execSQL("DELETE FROM APP_PREFERENCES WHERE DESCRIPTION =? AND NOT VALUE =?", new String[]{THEME_ID, String.valueOf(themeId)});
@@ -415,12 +406,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public int getTheme(){
+    public int getTheme() {
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor cursor = database.rawQuery("SELECT * FROM APP_PREFERENCES WHERE DESCRIPTION =?", new String[]{THEME_ID});
 
         int themeId = 0;
-        if (cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             themeId = cursor.getInt(2);
         }
 
@@ -431,13 +422,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return themeId;
     }
 
-    public boolean setShowRefreshers(boolean bool){
+    public boolean setShowRefreshers(boolean bool) {
         SQLiteDatabase database = this.getWritableDatabase();
 
         // Checking if the exact setting-value pair already exists in the table:
         Cursor cursor = database.rawQuery("SELECT * FROM APP_PREFERENCES WHERE DESCRIPTION =? AND VALUE =?", new String[]{SHOW_REFRESHERS, String.valueOf(bool ? 1 : 0)});
         // If the exact setting is already set, return
-        if (cursor.moveToFirst()){return true;}
+        if (cursor.moveToFirst()) {
+            return true;
+        }
 
 
         ContentValues contentValues = new ContentValues();
@@ -448,12 +441,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long insert = database.insert("APP_PREFERENCES", null, contentValues);
 
         // if insert is negative, it has failed, if it is positive, it was successful:
-        if (insert == -1){
+        if (insert == -1) {
             // Cleaning Up:
             database.close();
             cursor.close();
-            return false;}
-        else {
+            return false;
+        } else {
 
             // If the new current theme has successfully been set, delete any pre-existing records of the current theme:
             database.execSQL("DELETE FROM APP_PREFERENCES WHERE DESCRIPTION =? AND NOT VALUE =?", new String[]{SHOW_REFRESHERS, String.valueOf(bool ? 1 : 0)});
@@ -466,13 +459,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean getShowRefreshers(){
+    public boolean getShowRefreshers() {
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor cursor = database.rawQuery("SELECT * FROM APP_PREFERENCES WHERE DESCRIPTION =?", new String[]{SHOW_REFRESHERS});
 
         // If setting not present, it should default to True.
         boolean bool = true;
-        if (cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             bool = cursor.getInt(2) == 1;
         }
 

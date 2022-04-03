@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.text.InputType;
 import android.transition.TransitionManager;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -26,10 +27,28 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
+/**
+ * This activity relates to the Question Set Page of the app.
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * QuestionSetActivity extends AppCompatActivity class to have access to Activity methods.
+ * QuestionSetActivity implements View.OnCLickListener interface to detect touch input.
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * It displays one question at a time for a given question set.
+ * It causes the displaying of any refreshers associated with a given question.
+ * It displays the question text, the question set name, the index of the question, number of points possible
+ * It displays any images associated with the question.
+ * It has arrow buttons to navigate through the question set
+ * If the question is multiple choice, it displays the options.
+ * If the question is written, it displays the answer box as well as the 'Show Answer' Button.
+ * Depending on the checks for each question, it displays appropriate icons to show the result.
+ */
 public class QuestionSetActivity extends AppCompatActivity implements View.OnClickListener {
 
-    // Using this to get extra data from the Intent:
     public static final String QUESTION_SET_ID = "questionSetID";
+
+    private QuestionSet questionSet;
+
+    private Question currentQuestion;
 
     private ScrollView svQuestionSet;
     private TextView txtQuestion, txtQuestionSetName, txtCurrentQuestionIndex, txtPointsPossible, txtMessage;
@@ -40,70 +59,44 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
     private EditText edtTxtAnswer;
 
 
-    private QuestionSet questionSet;
-    private Question currentQuestion;
-
-
+    /**
+     * Overrides the onCreate method of the super class.
+     * Runs when QuestionSetActivity starts.
+     * Sets the layout and theme.
+     * Calls all necessary functions, either directly or through other functions.
+     *
+     * @param savedInstanceState Required for super constructor.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(Utils.getInstance().getThemeId());
         setContentView(R.layout.activity_question_set);
 
-        // Initialising View Objects:
         initViews();
 
-        // Setting data from the intent:
         setDataFromIntent();
 
-
-    }
-
-    private void setDataFromIntent() {
-        // Getting Question Set from the Intent:
-        Intent intent = getIntent();
-
-        // If the intent is not null:
-        if (intent != null) {
-
-            // Get the extra data from the Intent:
-            // If the value is set to null, it will default to -1:
-            int questionSetID = intent.getIntExtra(QUESTION_SET_ID, -1);
-
-            if (questionSetID != -1) {
-                // Finding our Question Set by ID:
-                questionSet = Utils.getInstance().getQuestionSetById(questionSetID);
-
-                if (questionSet != null) {
-
-                    // Setting the data from the Question Set to our View item:
-                    setData(questionSet);
-                }
-            }
-
-        }
     }
 
     /**
-     * Initialising View objects:
+     * Initialises View objects.
+     * Sets the activity's click listener to appropriate View objects.
+     * Sets custom EditText input type.
      */
     private void initViews() {
         svQuestionSet = findViewById(R.id.svQuestionSet);
-
         txtQuestionSetName = findViewById(R.id.txtQuestionSetName);
         txtCurrentQuestionIndex = findViewById(R.id.txtCurrentQuestionIndex);
         txtPointsPossible = findViewById(R.id.txtPointsPossible);
         txtQuestion = findViewById(R.id.txtQuestion);
         txtMessage = findViewById(R.id.txtMessage);
-
         imgExit = findViewById(R.id.imgExit);
         imgQuestion = findViewById(R.id.imgQuestion);
         imgPrevious = findViewById(R.id.imgPrevious);
         imgNext = findViewById(R.id.imgNext);
-
         imgHelp = findViewById(R.id.imgHelp);
         imgResult = findViewById(R.id.imgResult);
-
         rgQuestionAnswerOptions = findViewById(R.id.rgQuestionAnswerOptions);
         answerA = findViewById(R.id.answerA);
         answerB = findViewById(R.id.answerB);
@@ -113,7 +106,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         btnRevealAnswer = findViewById(R.id.btnRevealAnswer);
         edtTxtAnswer = findViewById(R.id.edtTxtAnswer);
 
-        // Setting On Click Listeners:
+
         imgExit.setOnClickListener(this);
         imgPrevious.setOnClickListener(this);
         imgNext.setOnClickListener(this);
@@ -121,125 +114,75 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         btnRevealAnswer.setOnClickListener(this);
         imgHelp.setOnClickListener(this);
 
+        // Setting the EditText input type here to allow signed decimals.
+        edtTxtAnswer.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
+    }
+
+    /**
+     * Sets the appropriate instance of QuestionSet depending on extra data from the Intent instance.
+     * This activity can only be started by passing the question set Id through the Intent.
+     */
+    private void setDataFromIntent() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            int questionSetID = intent.getIntExtra(QUESTION_SET_ID, -1);
+            if (questionSetID != -1) {
+                questionSet = Utils.getInstance().getQuestionSetById(questionSetID);
+                if (questionSet != null) {
+                    setData(questionSet);
+                }
+            }
+        }
     }
 
 
     /**
-     * Sets question data depending on which question is currently being done.
+     * Sets data from the current instance of Question.
+     * Performs various additional actions such as hiding the keyboard, scrolling to the top etc.
      *
      * @param questionSet The question set from which the data should be set.
      */
     private void setData(QuestionSet questionSet) {
-        // We are getting the current question index to set the correct values:
+        // Scrolling to the top:
+        svQuestionSet.smoothScrollTo(0, 0);
+
         currentQuestion = questionSet.getQuestions()[questionSet.getCurrentQuestionIndex()];
 
-        // Setting Result Image
         setResultImage();
-
-        showRefresher(questionSet.getCurrentQuestionIndex());
+        showRefresher();
 
         //Hiding Keyboard
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(svQuestionSet.getWindowToken(), 0);
 
         if (currentQuestion.getType().equals(MULTIPLE_CHOICE)) {
-            rgQuestionAnswerOptions.setVisibility(View.VISIBLE);
-            edtTxtAnswer.setVisibility(View.GONE);
-            btnRevealAnswer.setVisibility(View.GONE);
-
-            // Clearing check:
-            rgQuestionAnswerOptions.clearCheck();
-
-            // Setting the check on the chosen answer:
-            int indexToDisplay;
-
-            if (currentQuestion.getAttempts() > 0) {
-
-
-                if (currentQuestion.getPointsEarned() != 0) {
-                    indexToDisplay = currentQuestion.getCorrectAnswerIndex();
-                } else {
-                    ArrayList<Integer> userAnswers = currentQuestion.getUserAnswerIndexes();
-                    indexToDisplay = userAnswers.get(userAnswers.size() - 1);
-                }
-                            switch (indexToDisplay) {
-
-                                case (0):
-                                    rgQuestionAnswerOptions.check(R.id.answerA);
-                                    break;
-                                case (1):
-                                    rgQuestionAnswerOptions.check(R.id.answerB);
-                                    break;
-                                case (2):
-                                    rgQuestionAnswerOptions.check(R.id.answerC);
-                                    break;
-                                case (3):
-                                    rgQuestionAnswerOptions.check(R.id.answerD);
-                                    break;
-
-                                default:
-                                    break;
-                            }
-                }
-
-
-
-            answerA.setText(currentQuestion.getAnswerOptions()[0]);
-            answerB.setText(currentQuestion.getAnswerOptions()[1]);
-            answerC.setText(currentQuestion.getAnswerOptions()[2]);
-            answerD.setText(currentQuestion.getAnswerOptions()[3]);
-
+            showMultipleChoice();
+            checkRelevantRadioButton();
+            setAnswerOptions();
         } else if (currentQuestion.getType().equals(WRITTEN)) {
-
-            if (currentQuestion.getAttempts() == 0) {
-                //Deleting previous user input:
-                edtTxtAnswer.setText("");
-            } else if (currentQuestion.getPointsEarned() != 0) {
-                // If the user has entered the correct answer
-                // set the correct answer:
-                edtTxtAnswer.setText(currentQuestion.getCorrectWrittenAnswer());
-            }
-
-
-            rgQuestionAnswerOptions.setVisibility(View.GONE);
-            edtTxtAnswer.setVisibility(View.VISIBLE);
-            btnRevealAnswer.setVisibility(View.VISIBLE);
-
-
-            // Unselecting:
-            edtTxtAnswer.clearFocus();
+            displayRelevantAnswer();
+            showWritten();
         }
 
-        // Removing the 'Try Again' message:
         txtMessage.setText("");
-
         txtQuestionSetName.setText(questionSet.getName());
-
         txtQuestion.setText(currentQuestion.getText());
-
-        // Question X of X
         txtCurrentQuestionIndex.setText(String.format(getString(R.string.question_x_of_x), (questionSet.getCurrentQuestionIndex() + 1), questionSet.getQuestions().length));
 
-        // Set points accordingly:
-        // Needed for if the screen is rotated after a question is done incorrectly.
-        if (currentQuestion.getAttempts() > 1) {
-            //X Points
-            txtPointsPossible.setText(String.format(getString(R.string.points), currentQuestion.getPointsEarned()));
-        } else if (currentQuestion.getAttempts() == 1 &&
-                currentQuestion.getPointsEarned() != currentQuestion.getPointsPossible()) {
-            // X Points
-            txtPointsPossible.setText(String.format(getString(R.string.points), (currentQuestion.getPointsPossible() / 2)));
-        } else {
-            //X Points
-            txtPointsPossible.setText(String.format(getString(R.string.points), (currentQuestion.getPointsPossible())));
-        }
+        setPointsPossible();
 
-        // Set question set image (id = 0 if no image):
         imgQuestion.setImageResource(currentQuestion.getImageId());
 
+        setNavigationVisibility();
 
-        // Sets the visibility of navigation images and the text of the confirm
-        // button depending on the current question:
+    }
+
+    /**
+     * Hides back arrow in the first question.
+     * Hides the forward arrow in the last question.
+     * Changes the 'Change' Button to 'Finish' in the last question.
+     */
+    private void setNavigationVisibility() {
         if (firstQuestion()) {
             btnConfirm.setText(getString(R.string.check));
             imgNext.setVisibility(View.VISIBLE);
@@ -253,11 +196,131 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
             imgPrevious.setVisibility(View.VISIBLE);
             imgNext.setVisibility(View.VISIBLE);
         }
+    }
+
+    /**
+     * Required for button check persistence whilst navigating back and forth through the question
+     * set.
+     * Checks the relevant radio button depending on the user answer.
+     * If the question has been answered correctly, checks the correct answer.
+     * Otherwise, checks the user's last attempt.
+     */
+    private void checkRelevantRadioButton() {
+        int indexToDisplay;
+
+        if (currentQuestion.getAttempts() > 0) {
+            if (currentQuestion.getPointsEarned() != 0) {
+                indexToDisplay = currentQuestion.getCorrectAnswerIndex();
+            } else {
+                ArrayList<Integer> userAnswers = currentQuestion.getUserAnswerIndexes();
+                indexToDisplay = userAnswers.get(userAnswers.size() - 1);
+            }
+            switch (indexToDisplay) {
+                case (0):
+                    rgQuestionAnswerOptions.check(R.id.answerA);
+                    break;
+                case (1):
+                    rgQuestionAnswerOptions.check(R.id.answerB);
+                    break;
+                case (2):
+                    rgQuestionAnswerOptions.check(R.id.answerC);
+                    break;
+                case (3):
+                    rgQuestionAnswerOptions.check(R.id.answerD);
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            rgQuestionAnswerOptions.clearCheck();
+
+        }
+    }
+
+    /**
+     * Sets the relevant answer option to each of the RadioButton objects.
+     */
+    private void setAnswerOptions() {
+        answerA.setText(currentQuestion.getAnswerOptions()[0]);
+        answerB.setText(currentQuestion.getAnswerOptions()[1]);
+        answerC.setText(currentQuestion.getAnswerOptions()[2]);
+        answerD.setText(currentQuestion.getAnswerOptions()[3]);
+    }
+
+    /**
+     * Required for written answer persistence whilst navigating back and forth throughout the question
+     * set.
+     * Displays the relevant answer in the answer box.
+     * If the user has answered the question correctly, displays the correct answer.
+     * Otherwise, displays the user's last attempt.
+     */
+    private void displayRelevantAnswer() {
+        if (currentQuestion.getAttempts() > 0) {
+            if (currentQuestion.getPointsEarned() != 0) {
+                edtTxtAnswer.setText(currentQuestion.getCorrectWrittenAnswer());
+            } else {
+                ArrayList<String> userAnswers = currentQuestion.getUserWrittenAnswers();
+                edtTxtAnswer.setText(userAnswers.get(userAnswers.size() - 1));
+            }
+        } else {
+            edtTxtAnswer.setText("");
+        }
+    }
+
+    /**
+     * Hides the View elements pertaining to written questions and displays those for multiple
+     * choice questions.
+     */
+    private void showMultipleChoice() {
+        rgQuestionAnswerOptions.setVisibility(View.VISIBLE);
+        edtTxtAnswer.setVisibility(View.GONE);
+        btnRevealAnswer.setVisibility(View.GONE);
+    }
+
+    /**
+     * Hides the View elements pertaining to multiple choice questions and displays those for written
+     * questions.
+     */
+    private void showWritten() {
+        rgQuestionAnswerOptions.setVisibility(View.GONE);
+        edtTxtAnswer.setVisibility(View.VISIBLE);
+        btnRevealAnswer.setVisibility(View.VISIBLE);
+
+        edtTxtAnswer.clearFocus();
+    }
+
+    /**
+     * Displays the number of points possible given the number of attempts made.
+     * This is done independently from the pointsPossible attribute of the QuestionSet instance,
+     * as this must be preserved for correctly resetting the QuestionSet instance.
+     */
+    private void setPointsPossible() {
+        // If no points have been earned:
+        if (currentQuestion.getPointsEarned() == 0) {
+            // If the question has not been attempted, displaying the full points possible:
+            if (currentQuestion.getAttempts() == 0) {
+                txtPointsPossible.setText(String.format(getString(R.string.points), (currentQuestion.getPointsPossible())));
+            } else if (currentQuestion.getAttempts() == 1) {
+                // If the question has been attempted once, displaying half the initial points possible:
+                txtPointsPossible.setText(String.format(getString(R.string.points), currentQuestion.getPointsPossible() / 2));
+            } else {
+                // If the question set has been attempted more than once, displaying 0 points:
+                txtPointsPossible.setText(String.format(getString(R.string.points), 0));
+            }
+        } else {
+            // If points have been earned, displaying the number of points earned.
+            txtPointsPossible.setText(String.format(getString(R.string.points), currentQuestion.getPointsEarned()));
+        }
 
     }
 
+    /**
+     * Shows a tick if the question has been answered correctly.
+     * Shows a negative sign if the question has been answered incorrectly.
+     * Otherwise, shows no result image.
+     */
     private void setResultImage() {
-        // If the question has been answered, display appropriate result image:
+
         if (currentQuestion.getPointsEarned() == 0 && currentQuestion.getAttempts() > 0) {
             imgResult.setImageResource(R.drawable.ic_practice);
         } else if (currentQuestion.getPointsEarned() > 0) {
@@ -268,15 +331,21 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
 
     }
 
-    private void showRefresher(int currentQuestionIndex) {
-        // If refreshers are not enabled, return.
+    /**
+     * If refreshers have been enabled by the user, and there is a Refresher instance linked to the
+     * topic of this question, and that refresher has not already been shown in this session, start
+     * RefresherActivity to automatically display the refresher.
+     * Repeat this process for however many such refreshers there are.
+     */
+    private void showRefresher() {
+        // If refreshers are not enabled, returning:
         if (!Utils.getInstance().refreshersEnabled()) {
             return;
         }
         for (Refresher refresher : questionSet.getRefreshers()) {
             // If a refresher is supposed to be shown before this question,
-            // and it has not been shown this time, show it:
-            if (refresher.getQuestionIndex() == currentQuestionIndex && !refresher.isShown()) {
+            // and it has not been shown this time, showing it:
+            if (refresher.getTopic().equals(currentQuestion.getTopic()) && !refresher.isShown()) {
                 startActivity(new Intent(this, RefresherActivity.class)
                         .putExtra(REFRESHER_ID, refresher.getId()));
                 refresher.setShown(true);
@@ -284,77 +353,85 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    // Shows the refresher with the greatest question index that has been viewed before in
-    // this session:
-    private void viewLastRefresher(int currentQuestionIndex) {
+    /**
+     * Causes the displaying of refreshers for the topic of the current question.
+     */
+    private void viewLastRefresher() {
+        ArrayList<Refresher> refreshers = questionSet.getRefreshers();
 
-        Refresher[] refreshers = questionSet.getRefreshers();
-
-
-        int maxIndex = -1;
-        int refresherIndex = 0;
+        int maxRefresherIndex = -1;
+        int currentRefresherIndex = 0;
         for (Refresher refresher : refreshers) {
-            int refresherQuestionIndex = refresher.getQuestionIndex();
-            if (refresherQuestionIndex > maxIndex && refresherQuestionIndex <= currentQuestionIndex) {
-                maxIndex = refresherIndex;
+            if (currentQuestion.getTopic().equals(refresher.getTopic())) {
+                maxRefresherIndex = currentRefresherIndex;
             }
-            refresherIndex++;
+            currentRefresherIndex++;
         }
-
-        if (maxIndex != -1) {
+        if (maxRefresherIndex != -1) {
             startActivity(new Intent(this, RefresherActivity.class)
-                    .putExtra(REFRESHER_ID, refreshers[maxIndex].getId()));
+                    .putExtra(REFRESHER_ID, refreshers.get(maxRefresherIndex).getId()));
         }
-
     }
 
+    /**
+     * Determines if the current question is the first question.
+     *
+     * @return Whether or not the current question is the first one.
+     */
     private boolean firstQuestion() {
-        // If the current question index is 1 less than length:
         return questionSet.getCurrentQuestionIndex() == 0;
     }
 
+    /**
+     * Determines of the current question is the last question.
+     *
+     * @return Whether or not the current question is the last one.
+     */
     private boolean lastQuestion() {
-        // If the current question index is 1 less than length:
         return questionSet.getCurrentQuestionIndex() == questionSet.length() - 1;
     }
 
-
+    /**
+     * Determines which View object has been clicked and performs the appropriate action.
+     *
+     * @param view Used to determine the View object clicked.
+     */
     @Override
-    public void onClick(View v) {
+    public void onClick(View view) {
 
-        switch (v.getId()) {
+        switch (view.getId()) {
 
             case (R.id.imgExit):
-                // Not using finish() so that the main menu can be refreshed, displaying where we
-                // left off etc.
                 startActivity(new Intent(this, MainMenuActivity.class));
+                finish();
                 break;
 
             case (R.id.imgPrevious):
-                TransitionManager.beginDelayedTransition(svQuestionSet);
-                // Decreasing the current question index by 1
+                // Decreasing the current question index by 1:
                 questionSet.setCurrentQuestionIndex(questionSet.getCurrentQuestionIndex() - 1);
+
+                TransitionManager.beginDelayedTransition(svQuestionSet);
                 setData(questionSet);
                 break;
 
             case (R.id.imgNext):
                 TransitionManager.beginDelayedTransition(svQuestionSet);
-                // If the current question has been solved, they can go to the next question:
+                // If the current question has been attempted, going to the next:
                 if (currentQuestion.getAttempts() > 0) {
-                    TransitionManager.beginDelayedTransition(svQuestionSet);
                     // Increasing the current question index by 1
                     questionSet.setCurrentQuestionIndex(questionSet.getCurrentQuestionIndex() + 1);
-                    setData(questionSet);
 
+                    TransitionManager.beginDelayedTransition(svQuestionSet);
+                    setData(questionSet);
                 } else {
+                    // Otherwise, displaying message:
                     TransitionManager.beginDelayedTransition(svQuestionSet);
                     txtMessage.setText(getString(R.string.try_first));
                 }
                 break;
 
             case (R.id.btnConfirm):
-                TransitionManager.beginDelayedTransition(svQuestionSet);
-                confirmClicked();
+                questionFeedback();
                 break;
 
             case (R.id.btnRevealAnswer):
@@ -362,79 +439,63 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
                 currentQuestion.setPointsEarned(0);
                 TransitionManager.beginDelayedTransition(svQuestionSet);
                 txtMessage.setText(currentQuestion.getCorrectWrittenAnswer());
-                // No points if they reveal the answer.
-                setResultImage();
                 txtPointsPossible.setText(String.format(getString(R.string.points), 0));
+                setResultImage();
                 break;
 
             case (R.id.imgHelp):
-                viewLastRefresher(questionSet.getCurrentQuestionIndex());
+                viewLastRefresher();
                 break;
 
             default:
                 break;
-
-
         }
 
     }
 
-    private void confirmClicked() {
-
-        // Scrolling to the top
-        svQuestionSet.smoothScrollTo(0, 0);
-
-        // If an answer has been selected / written
+    /**
+     * After the user has clicked the 'Check' button, performs many actions:
+     * Calls the Question instance methods to check the question.
+     * Displays points possible.
+     * Provides Haptic Feedback if the question is answered incorrectly.
+     * Provides a delay after the question is answered.
+     * Displays various messages.
+     */
+    private void questionFeedback() {
+        // If the question isn't left empty:
         if ((currentQuestion.getType().equals(MULTIPLE_CHOICE) && getCheckedRadioButtonIndex() != -1)
                 || (currentQuestion.getType().equals(WRITTEN) && !edtTxtAnswer.getText().toString().equals(""))) {
 
+            // If the question has been answered correctly:
             if (currentQuestion.checkAnswer(getCheckedRadioButtonIndex(), edtTxtAnswer.getText().toString())) {
 
+                // If this is the last question, start ResultsActivity:
                 if (lastQuestion()) {
-
-                    // If they start the question set again, it will start from 0:
                     questionSet.setCurrentQuestionIndex(0);
-
-                    // Starting the Results Activity:
                     startActivity(new Intent(this, ResultsActivity.class)
                             .putExtra(QUESTION_SET_ID, questionSet.getId()));
+                    finish();
                 } else {
-                    // Increasing the current question index by 1
+                    TransitionManager.beginDelayedTransition(svQuestionSet);
+                    txtMessage.setText("");
+
+                    // Otherwise, increase the question index by 1:
                     questionSet.setCurrentQuestionIndex(questionSet.getCurrentQuestionIndex() + 1);
 
-
-                    setResultImage();
-
                     Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
+                    handler.postDelayed(() -> {
                             TransitionManager.beginDelayedTransition(svQuestionSet);
                             setData(questionSet);
-                        }
                     }, 1000);
-
-
                 }
             } else {
-                // If they have answered incorrectly:
-
+                // If the question has been answered incorrectly:
                 TransitionManager.beginDelayedTransition(svQuestionSet);
                 txtMessage.setText(getString(R.string.try_again));
 
+                setPointsPossible();
 
-                // Do not penalise if they have answered correctly before
-                if (currentQuestion.getPointsEarned() == 0) {
-                    if (currentQuestion.getAttempts() == 1) {
-
-                        // X Points
-                        txtPointsPossible.setText(String.format(getString(R.string.points), currentQuestion.getPointsPossible() / 2));
-                    } else {
-                        txtPointsPossible.setText(String.format(getString(R.string.points), 0));
-                    }
-                }
-
-                // Haptic Feedback if answer is wrong
+                // Creating haptic feedback:
                 Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     vibrator.vibrate(VibrationEffect.createOneShot(75, VibrationEffect.DEFAULT_AMPLITUDE));
@@ -442,45 +503,43 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
                     // Old API:
                     vibrator.vibrate(75);
                 }
-
             }
         } else {
-
-            // Telling the user to enter an answer.
+            // If the question has been left empty, showing message:
             txtMessage.setText(getString(R.string.enter_answer));
         }
         setResultImage();
     }
 
-
+    /**
+     * Returns the index of the checked RadioButton instance.
+     * If none are checked, returns -1.
+     *
+     * @return The index of the checked RadioButton instance.
+     */
     private int getCheckedRadioButtonIndex() {
-
-        // Get the index of which Radio Button has been clicked:
         switch (rgQuestionAnswerOptions.getCheckedRadioButtonId()) {
-
             case (R.id.answerA):
                 return 0;
-
-
             case (R.id.answerB):
                 return 1;
-
             case (R.id.answerC):
                 return 2;
-
             case (R.id.answerD):
                 return 3;
-
             default:
-                // If none have been clicked, return 0:
                 return -1;
-
         }
     }
 
+    /**
+     * Overrides the action to be performed when the back button is pressed.
+     * In this case, MainMenuActivity should be started.
+     */
     @Override
     public void onBackPressed() {
         // The back button should go to the main menu here:
         startActivity(new Intent(this, MainMenuActivity.class));
+        finish();
     }
 }

@@ -4,28 +4,28 @@ import java.util.Locale;
 
 /**
  * The instances of this class contain the account details of a user account.
- * The instances of other classes are associated with instances of this class, such as QuestionSetResult, Task, Utils...
+ * The instances of other classes are associated with instances of this class, such as QuestionSetResult, Task, Utils
  */
 
 public class Account {
 
-    private int id;
     public static final String Member = "Member";
     public static final String Guest = "Guest";
-    private String parentName, studentName, email, password, pin;
+    private int id, pin;
+    private String parentName, studentName, email, password;
     private String accountType;
-
 
     /**
      * Constructor for Member Account
-     * @param id Required for processing the user account.
-     * @param parentName Parent Name
+     *
+     * @param id          Required for processing the user account.
+     * @param parentName  Parent Name
      * @param studentName Student Name
-     * @param email Email
-     * @param password Password
-     * @param pin Pin
+     * @param email       Email
+     * @param password    Password
+     * @param pin         Pin
      */
-    public Account(int id, String parentName, String studentName, String email, String password, String pin) {
+    public Account(int id, String parentName, String studentName, String email, String password, int pin) {
         this.id = id;
         this.parentName = parentName.toUpperCase(Locale.ROOT);
         this.studentName = studentName.toUpperCase(Locale.ROOT);
@@ -75,11 +75,11 @@ public class Account {
         this.password = password;
     }
 
-    public String getPin() {
+    public int getPin() {
         return pin;
     }
 
-    public void setPin(String pin) {
+    public void setPin(int pin) {
         this.pin = pin;
     }
 
@@ -91,8 +91,8 @@ public class Account {
         this.accountType = accountType;
     }
 
-    public boolean checkPin(String pin) {
-        return pin.equals(this.pin);
+    public boolean checkPin(int pin) {
+        return this.pin == pin;
     }
 
     public int getId() {

@@ -35,7 +35,6 @@ import java.util.Objects;
 public class AccountActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Account account = Utils.getInstance().getUserAccount();
-
     private DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
     private RecyclerView rvAccountHistory;
@@ -46,6 +45,9 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
     /**
      * Overrides the onCreate method of the super class.
      * Runs when AccountActivity starts.
+     * Sets the layout and theme.
+     * Calls all necessary functions, either directly or through other functions.
+     *
      * @param savedInstanceState Required for super constructor.
      */
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +60,6 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         setUpRecyclerView();
 
         setData();
-
     }
 
     /**
@@ -66,7 +67,6 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
      * Sets the activity's click listener to appropriate View objects.
      */
     private void initViews() {
-        // Initialising Views:
         rvAccountHistory = findViewById(R.id.rvAccountHistory);
         txtDetails = findViewById(R.id.txtDetails);
         btnTryQuestions = findViewById(R.id.btnTryQuestions);
@@ -76,7 +76,6 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         btnSignIn = findViewById(R.id.btnSignIn);
         imgExit = findViewById(R.id.imgExit);
 
-        // Setting On Click Listeners:
         btnTryQuestions.setOnClickListener(this);
         btnChangeDetails.setOnClickListener(this);
         btnSignOut.setOnClickListener(this);
@@ -86,16 +85,30 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     /**
+     * Performs the setting-up of the RecyclerView, using AccountHistoryRecyclerAdapter.
+     */
+    private void setUpRecyclerView() {
+        AccountHistoryRecyclerAdapter accountHistoryRecyclerAdapter = new AccountHistoryRecyclerAdapter(this);
+        accountHistoryRecyclerAdapter.setQuestionSets(databaseHelper.getQuestionSetResults());
+
+        rvAccountHistory.setAdapter(accountHistoryRecyclerAdapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        // Reversing the order of the ArrayList, since the last question set done should be displayed first:
+        linearLayoutManager.setReverseLayout(true);
+        rvAccountHistory.setLayoutManager(linearLayoutManager);
+
+        // Scrolling to the bottom of the array, top of the RecyclerView:
+        rvAccountHistory.scrollToPosition(databaseHelper.getQuestionSetResults().size() - 1);
+    }
+
+    /**
      * Sets user account details to the appropriate View object.
-     * Sets the visibility of certain View objects and shows appropriate prompts depending on
-     * external factors:
-     * -> If the Account type is Guest, prompts the user to sign-up / sign-in.
-     * -> If the Account does not have any associated instances of QuestionSetResult, prompts the
-     * user to try some questions.
+     * Sets the visibility of certain View objects and displays appropriate prompts depending on
+     * external factors.
      */
     private void setData() {
         // If no question sets have been completed yet,
-        // hiding the RecyclerView and showing 'Try Questions' Button:
+        // hiding the RecyclerView and displaying 'Try Questions' Button:
         if (Objects.requireNonNull(rvAccountHistory.getAdapter()).getItemCount() == 0) {
             rvAccountHistory.setVisibility(View.GONE);
             btnTryQuestions.setVisibility(View.VISIBLE);
@@ -106,7 +119,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         }
 
         if (account.getAccountType().equals(Member)) {
-            // If the Account type is Member, showing the user account details,
+            // If the Account type is Member, displaying the user account details,
             // the 'Change Details' Button, and the 'Sign Out' Button:
             txtDetails.setVisibility(View.VISIBLE);
             btnChangeDetails.setVisibility(View.VISIBLE);
@@ -132,28 +145,8 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     /**
-     * Creates an instance of AccountHistoryRecyclerAdapter and sets it to the RecyclerView object.
-     * Creates an instance of LinearLayoutManager and sets it to the RecyclerView object.
-     * Sets an ArrayList of all instances of QuestionSetResult stored in the relational database,
-     * associated with the instance of Account set as active, to the instance of AccountRecyclerAdapter,
-     * in reverse order, since the last question set done should be displayed first.
-     */
-    private void setUpRecyclerView() {
-        AccountHistoryRecyclerAdapter accountHistoryRecyclerAdapter = new AccountHistoryRecyclerAdapter(this);
-        accountHistoryRecyclerAdapter.setQuestionSets(databaseHelper.getQuestionSetResults());
-
-        rvAccountHistory.setAdapter(accountHistoryRecyclerAdapter);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        // Reversing the order of the ArrayList, since the last question set done should be displayed first:
-        linearLayoutManager.setReverseLayout(true);
-        rvAccountHistory.setLayoutManager(linearLayoutManager);
-
-        // Scrolling to the bottom of the array, top of the RecyclerView:
-        rvAccountHistory.scrollToPosition(databaseHelper.getQuestionSetResults().size() - 1);
-    }
-
-    /**
      * Determines which View object has been clicked and performs the appropriate action.
+     *
      * @param view Used to determine the View object clicked.
      */
     @Override
@@ -164,6 +157,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
             case (R.id.btnTryQuestions):
             case (R.id.imgExit):
                 startActivity(new Intent(this, MainMenuActivity.class));
+                finish();
                 break;
 
             case (R.id.btnSignUp):
@@ -184,6 +178,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
                 Utils.getInstance().setUserAccount(new Account());
                 databaseHelper.removeCurrentAccount();
                 startActivity(new Intent(this, WelcomeActivity.class));
+                finish();
                 break;
 
             default:

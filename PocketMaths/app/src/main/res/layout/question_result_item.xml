@@ -3,7 +3,6 @@
     android:id="@+id/relQuestion"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="10dp"
     >
 
@@ -56,14 +55,16 @@
                 android:layout_centerHorizontal="true"
                 android:maxHeight="300dp"
                 android:adjustViewBounds="true"
-                android:layout_margin="15dp"/>
+                android:layout_margin="15dp"
+                android:contentDescription="@string/question_image"
+                />
 
         </RelativeLayout>
 
     </com.google.android.material.card.MaterialCardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cvQuestionAnswerOptions"
+        android:id="@+id/cvQuestionAnswerMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/cvQuestion"

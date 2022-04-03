@@ -1,9 +1,11 @@
 package com.example.PocketMaths;
 
-import java.text.DateFormat;
-import java.util.Calendar;
 import java.util.Locale;
 
+/**
+ * The instances of this class contain the details associated with a task.
+ * The instances of other classes are associated with instances of this class, such as QuestionSetResult
+ */
 public class Task {
 
     private int id;
@@ -14,8 +16,18 @@ public class Task {
     private int questionSetId;
     private boolean isCompleted;
 
-    //TODO: Add date due??
 
+    /**
+     * Constructor for Task
+     *
+     * @param id            Task ID.
+     * @param accountId     ID of account that made the task.
+     * @param name          Name of the task.
+     * @param passMark      The percentage which needs to be exceeded for the task to be completed.
+     * @param reward        The reward for the task (optional).
+     * @param questionSetId The ID of the question set associated with the task.
+     * @param isCompleted   Whether or not the task has been completed.
+     */
     public Task(int id, int accountId, String name, int passMark, String reward, int questionSetId, boolean isCompleted) {
         this.id = id;
         this.name = name.toUpperCase(Locale.ROOT);
@@ -26,9 +38,13 @@ public class Task {
         this.isCompleted = isCompleted;
     }
 
-    public int getId() {return id;}
+    public int getId() {
+        return id;
+    }
 
-    public void setId(int id) {this.id = id;}
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

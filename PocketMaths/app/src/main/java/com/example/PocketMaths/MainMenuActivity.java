@@ -1,4 +1,5 @@
 package com.example.PocketMaths;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.transition.TransitionManager;
@@ -28,7 +29,6 @@ import java.util.Locale;
 public class MainMenuActivity extends AppCompatActivity implements View.OnClickListener {
 
     private DatabaseHelper databaseHelper = new DatabaseHelper(this);
-
     private MainMenuRecyclerAdapter mainMenuRecyclerAdapter;
 
     private RecyclerView rvMainMenu;
@@ -37,6 +37,14 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     private ImageView imgAccount, imgTasks, imgCreateTask, imgSettings;
     private SearchView svQuestionSet;
 
+    /**
+     * Overrides the onCreate method of the super class.
+     * Runs when MainMenuActivity starts.
+     * Sets the layout, theme and preferences.
+     * Calls all necessary functions, either directly or through other functions.
+     *
+     * @param savedInstanceState Required for super constructor.
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Utils.getInstance().setThemeId(databaseHelper.getTheme());
@@ -48,27 +56,13 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
 
         setUpRecyclerView();
 
-        // Initialising Adapter
-        mainMenuRecyclerAdapter = new MainMenuRecyclerAdapter(this);
-
-        // Setting our Question Sets Array List from the Utils to the Adapter
-        mainMenuRecyclerAdapter.setQuestionSets(Utils.getQuestionSets());
-
-        // Setting the adapter to the recycler view
-        rvMainMenu.setAdapter(mainMenuRecyclerAdapter);
-
-        // We also need to set a layout manager for our Recycler View:
-        // Changing to Linear Layout Manager for the implementation of Expandable Card View:
-        rvMainMenu.setLayoutManager((new LinearLayoutManager(this)));
-
-        // Collapsing all Card Views to ensure that none is expanded when the activity is started:
-        mainMenuRecyclerAdapter.collapseAll();
-
-
+        setUpSearchView();
     }
 
-
-
+    /**
+     * Initialises View objects.
+     * Sets the activity's click listener to appropriate View objects.
+     */
     private void initViews() {
         relMainMenu = findViewById(R.id.relMainMenu);
         rvMainMenu = findViewById(R.id.rvMainMenu);
@@ -83,10 +77,32 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         imgTasks.setOnClickListener(this);
         imgCreateTask.setOnClickListener(this);
         imgSettings.setOnClickListener(this);
+    }
 
+    /**
+     * Performs the setting-up of the RecyclerView, using MainMenuRecyclerAdapter.
+     */
+    private void setUpRecyclerView() {
+        mainMenuRecyclerAdapter = new MainMenuRecyclerAdapter(this);
+        mainMenuRecyclerAdapter.setQuestionSets(Utils.getQuestionSets());
+
+        rvMainMenu.setAdapter(mainMenuRecyclerAdapter);
+        rvMainMenu.setLayoutManager((new LinearLayoutManager(this)));
+
+        mainMenuRecyclerAdapter.collapseAll();
+    }
+
+    /**
+     * Performs the setting up of the SearchView instance.
+     * Sets a new instance of SearchView.OnQueryTextChangeListener to the SearchView object, such that
+     * the QuestionSet objects can be filtered in real-time.
+     */
+    private void setUpSearchView() {
         svQuestionSet.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) {return false;}
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
 
             @Override
             public boolean onQueryTextChange(String s) {
@@ -97,40 +113,50 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         });
     }
 
-
-    private void setUpRecyclerView() {
-    }
-
-    public void filterQuestionSets(String targetText){
+    /**
+     * Iterates through QuestionSet objects, checking their names and descriptions, displaying those
+     * that match the target text and updating them in real-time.
+     * If there are no filter results, the function displays an appropriate message.
+     *
+     * @param targetText The text that is looked for in the filtering process.
+     */
+    public void filterQuestionSets(String targetText) {
 
         ArrayList<QuestionSet> questionSetsToShow = new ArrayList<>();
         targetText = targetText.toUpperCase(Locale.ROOT);
 
         // Iterating through the Question Set:
-        for (QuestionSet questionSet: Utils.getQuestionSets()){
-            // If the Question Set Name or Description contains the target text, include it:
+        for (QuestionSet questionSet : Utils.getQuestionSets()) {
+            // If the Question Set Name or Description contains the target text, including it:
             if (questionSet.getName().toUpperCase(Locale.ROOT).contains(targetText) ||
                     questionSet.getDescription().toUpperCase(Locale.ROOT).contains(targetText)) {
                 questionSetsToShow.add(questionSet);
             }
         }
 
-        // Setting the filtered array list of question sets:
-        if (questionSetsToShow.size() == 0){
+        if (questionSetsToShow.size() == 0) {
+            // Displaying message if none are found:
             TransitionManager.beginDelayedTransition(relMainMenu);
             txtNoResults.setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
+            // Otherwise, hiding the message:
             TransitionManager.beginDelayedTransition(relMainMenu);
             txtNoResults.setVisibility(View.GONE);
         }
+
+        // Setting the filtered array list of question sets:
         mainMenuRecyclerAdapter.setQuestionSets(questionSetsToShow);
     }
 
+    /**
+     * Determines which View object has been clicked and performs the appropriate action.
+     *
+     * @param view Used to determine the View object clicked.
+     */
     @Override
-    public void onClick(View v) {
+    public void onClick(View view) {
 
-        switch (v.getId()){
+        switch (view.getId()) {
 
             case (R.id.imgAccount):
                 // Starting the Account Activity:
@@ -145,10 +171,12 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
             case (R.id.imgCreateTask):
                 Utils.getInstance().setTargetClass(TaskCreateActivity.class);
                 startActivity(new Intent(this, PinVerificationActivity.class));
+                System.out.println(Utils.getInstance().getTargetClass());
                 break;
 
             case (R.id.imgSettings):
                 startActivity(new Intent(this, SettingsActivity.class));
+                finish();
                 break;
 
             default:
@@ -158,9 +186,11 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-
+    /**
+     * Overrides the action to be performed when the back button is pressed.
+     * In this case, nothing should should be done.
+     */
     @Override
-    public void onBackPressed(){
-        // The back button should not do anything here, so overriding into empty procedure.
+    public void onBackPressed() {
     }
 }

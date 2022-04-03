@@ -33,10 +33,7 @@ import java.util.ArrayList;
  */
 public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecyclerAdapter.ViewHolder> {
 
-    // We need an array list to pass the list of different contacts to the adapter class.
-    // If we do not initialise this array list, we will get a null pointer exception.
     private ArrayList<QuestionSet> questionSets = new ArrayList<>();
-
     private Context context;
 
     /**
@@ -65,6 +62,7 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
 
     /**
      * Runs when an instance of ViewHolder object attaches to a container.
+     * Sets the appropriate data to the ViewHolder instance layout.
      *
      * @param holder   The instance of ViewHolder object, required for accessing data.
      * @param position The index of the ArrayList, required for accessing ArrayList items.
@@ -76,7 +74,7 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
         // X Questions
         holder.txtNumberOfQuestions.setText(String.format(context.getString(R.string.number_of_questions), questionSet.getQuestions().length));
 
-        // If the question set has been started, showing where the user left off and changing the
+        // If the question set has been started, displaying where the user left off and changing the
         // text of the 'Continue' Button to 'Start'.
         if (questionSet.getQuestions()[0].getAttempts() != 0) {
             // On Question X
@@ -104,7 +102,7 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
      * @param holder The ViewHolder object the state of which needs to be updated.
      */
     private void setCardViewState(ViewHolder holder) {
-        // If the QuestionSet is expanded, show the expansion CardView:
+        // If the QuestionSet is expanded, display the expansion CardView:
         if (questionSets.get(holder.getAdapterPosition()).isExpanded()) {
             TransitionManager.beginDelayedTransition(holder.relMainMenuItem);
             holder.cvExpandedMainMenuItem.setVisibility(View.VISIBLE);
@@ -118,7 +116,7 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
 
     @Override
     public int getItemCount() {
-        // Avoid null pointer exception
+        // Avoiding null pointer exception:
         if (questionSets != null) {
             return questionSets.size();
         }
@@ -147,7 +145,7 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
      * ViewHolder implements View.OnCLickListener interface to detect touch input.
      * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      */
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private RelativeLayout relMainMenuItem;
         private TextView txtQuestionSetName, txtQuestionSetDescription, txtNumberOfQuestions, txtCurrentQuestionIndex;
         private ImageView imgQuestionSet;
@@ -156,6 +154,7 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
 
         /**
          * Constructor
+         *
          * @param itemView Required for super constructor
          */
         public ViewHolder(@NonNull View itemView) {
@@ -166,10 +165,10 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
 
         /**
          * Initialises View objects.
-         * Sets the activity's click listener to the appropriate View objects.
+         * Sets the class' click listener to the appropriate View objects.
          */
         private void initViews() {
-            // Outside an activity, we need the following syntax:
+            // Outside an activity we need the following syntax:
             relMainMenuItem = itemView.findViewById(R.id.relMainMenuItem);
             txtQuestionSetName = itemView.findViewById(R.id.txtQuestionSetName);
             imgQuestionSet = itemView.findViewById(R.id.imgQuestionSet);
@@ -187,6 +186,7 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
 
         /**
          * Determines which View object has been clicked and performs the appropriate action.
+         *
          * @param view Used to determine the View object clicked.
          */
         @Override
@@ -216,7 +216,7 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
                     context.startActivity(new Intent(context, QuestionSetActivity.class)
                             .putExtra(QUESTION_SET_ID, currentQuestionSet.getId()));
             }
-    }
+        }
 
-}
+    }
 }

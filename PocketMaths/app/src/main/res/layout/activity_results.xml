@@ -32,7 +32,9 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignParentStart="true"
-                    android:src="@drawable/ic_back" />
+                    android:src="@drawable/ic_back"
+                    android:contentDescription="@string/back"
+                    />
 
 
                 <TextView
@@ -115,16 +117,23 @@
                     android:textSize="19sp"
                     android:textStyle="bold" />
 
+                <RelativeLayout
+                    android:id="@+id/rvTopicFeedback"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtResultPercentage"
+                    >
                 <ImageView
                     android:id="@+id/imgPerfect"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_below="@id/txtResultPercentage"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
-                    android:src="@drawable/ic_perfect" />
+                    android:src="@drawable/ic_perfect"
+                    android:contentDescription="@string/perfect_topics"
+                    />
 
 
                 <TextView
@@ -147,7 +156,9 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginEnd="10dp"
-                    android:src="@drawable/ic_practice" />
+                    android:src="@drawable/ic_practice"
+                    android:contentDescription="@string/other_topics"
+                    />
 
                 <TextView
                     android:id="@+id/txtPractice"
@@ -159,6 +170,7 @@
                     android:text="@string/practice"
                     android:textColor="@color/YellowOrange"
                     android:textSize="17sp" />
+                </RelativeLayout>
 
 
             </RelativeLayout>

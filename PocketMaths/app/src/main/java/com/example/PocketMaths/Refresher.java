@@ -1,18 +1,27 @@
 package com.example.PocketMaths;
 
+/**
+ * The instances of this class contain the content for refreshers.
+ * Refreshers are a quick summary of the topic that is needed to solve a given question.
+ */
 public class Refresher {
 
     private int id;
     private String topic;
     private int imageId;
-    private int questionIndex;
     private boolean shown;
 
-    public Refresher(int id, String topic, int imageId, int questionIndex) {
+    /**
+     * Constructor for Refresher
+     *
+     * @param id The ID of the refresher.
+     * @param topic The topic of the refresher.
+     * @param imageId The image ID of the image of the refresher.
+     */
+    public Refresher(int id, String topic, int imageId) {
         this.id = id;
         this.topic = topic;
         this.imageId = imageId;
-        this.questionIndex = questionIndex;
     }
 
     public int getId() {
@@ -37,14 +46,6 @@ public class Refresher {
 
     public void setImageId(int imageId) {
         this.imageId = imageId;
-    }
-
-    public int getQuestionIndex() {
-        return questionIndex;
-    }
-
-    public void setQuestionIndex(int questionIndex) {
-        this.questionIndex = questionIndex;
     }
 
     public boolean isShown() {

@@ -33,6 +33,7 @@ public class CustomPercentFormatter extends ValueFormatter {
     /**
      * Constructor
      * For pie charts, percentage sign is added depending on external factors.
+     *
      * @param pieChart Pie chart with which it is used.
      */
     public CustomPercentFormatter(PieChart pieChart) {
@@ -42,6 +43,7 @@ public class CustomPercentFormatter extends ValueFormatter {
 
     /**
      * Applies the correct formatting and returns the value.
+     *
      * @param value Value to be formatted.
      * @return Formatted Value
      */
@@ -56,7 +58,8 @@ public class CustomPercentFormatter extends ValueFormatter {
 
     /**
      * Applies the correct formatting for pie chart labels.
-     * @param value Value to be formatted
+     *
+     * @param value    Value to be formatted
      * @param pieEntry An entry of the pie chart that the label is for
      * @return Formatted Value
      */

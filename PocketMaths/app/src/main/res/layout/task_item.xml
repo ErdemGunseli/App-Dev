@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/cvDetails"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        >
+    android:id="@+id/cvDetails"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -17,6 +16,8 @@
                 android:id="@+id/txtTaskName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@id/imgDelete"
                 android:textColor="@color/YellowOrange"
                 android:layout_marginBottom="15dp"
                 android:textSize="19sp"
@@ -57,6 +58,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
+                android:contentDescription="@string/delete_task"
                 android:src="@drawable/ic_delete" />
         </RelativeLayout>
 
