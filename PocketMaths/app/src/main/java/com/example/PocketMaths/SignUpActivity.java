@@ -4,12 +4,15 @@ import static com.example.PocketMaths.Account.Guest;
 import static com.example.PocketMaths.Account.Member;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Locale;
@@ -35,6 +38,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private EditText edtTxtParentName, edtTxtStudentName, edtTxtEmail, edtTxtPassword, edtTxtConfirmPassword, edtTxtPin, edtTxtConfirmPin;
     private Button btnBack, btnConfirm;
 
+    private ScrollView svTest;
+
     /**
      * Overrides the onCreate method of the super class.
      * Runs when SignUpActivity starts.
@@ -43,6 +48,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
      *
      * @param savedInstanceState Required for super constructor.
      */
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

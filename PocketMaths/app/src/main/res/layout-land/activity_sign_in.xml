@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/relSignIn"
     android:layout_width="match_parent"
 
@@ -42,7 +41,9 @@
                 android:layout_below="@id/txtSignIn"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
-                android:maxLength="50"/>
+                android:maxLength="50"
+                android:autofillHints="emailAddress"
+                />
 
 
             <EditText
@@ -53,7 +54,9 @@
                 android:layout_marginTop="20dp"
                 android:inputType="textPassword"
                 android:maxLength="20"
-                android:hint="@string/password"/>
+                android:hint="@string/password"
+                android:autofillHints="password"
+                />
 
             <Button
                 android:id="@+id/btnForgotPassword"

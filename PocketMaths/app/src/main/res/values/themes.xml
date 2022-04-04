@@ -11,6 +11,8 @@
 
         <item name="colorAccent">@color/YellowOrange</item>
 
+        <item name="android:colorEdgeEffect">@color/YellowOrange</item>
+
         <item name="fontFamily">@font/metropolis_light</item>
 
         <item name="android:windowBackground">@drawable/default_symbols_background_bitmap</item>
@@ -26,7 +28,6 @@
         <item name="radioButtonStyle">@style/defaultRadioButton</item>
 
         <item name="tabStyle">@style/defaultTabLayout</item>
-
 
     </style>
 
@@ -65,6 +66,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">11sp</item>
         <item name="android:textColor">@color/YellowOrange</item>
+        <item name="rippleColor">@color/YellowOrange</item>
     </style>
 
     <!-- Radio Button Theme -->

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/relSignUp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -44,7 +43,9 @@
                     android:hint="@string/parent_name"
                     android:inputType="textCapSentences"
                     android:maxLength="20"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:autofillHints="name"
+                    />
 
 
                 <EditText
@@ -56,7 +57,9 @@
                     android:hint="@string/student_name"
                     android:inputType="textCapSentences"
                     android:maxLength="20"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:autofillHints="name"
+                    />
 
                 <EditText
                     android:id="@+id/edtTxtEmail"
@@ -67,7 +70,9 @@
                     android:hint="@string/email"
                     android:inputType="textEmailAddress"
                     android:maxLength="50"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:autofillHints="emailAddress"
+                    />
 
 
                 <EditText
@@ -79,7 +84,9 @@
                     android:hint="@string/password"
                     android:inputType="textPassword"
                     android:maxLength="20"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:autofillHints="password"
+                    />
 
 
                 <EditText
@@ -91,7 +98,9 @@
                     android:hint="@string/confirm_password"
                     android:inputType="textPassword"
                     android:maxLength="20"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:autofillHints="password"
+                    />
 
 
                 <EditText
@@ -103,7 +112,9 @@
                     android:hint="@string/pin"
                     android:inputType="numberPassword"
                     android:maxLength="4"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:autofillHints="password"
+                    />
 
 
                 <EditText
@@ -115,7 +126,9 @@
                     android:hint="@string/confirm_pin"
                     android:inputType="numberPassword"
                     android:maxLength="4"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:autofillHints="password"
+                    />
 
 
                 <Button

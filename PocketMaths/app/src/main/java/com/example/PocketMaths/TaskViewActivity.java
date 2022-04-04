@@ -1,5 +1,6 @@
 package com.example.PocketMaths;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.transition.TransitionManager;
 import android.view.View;
@@ -149,7 +150,8 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.imgExit){
-                finish();
+            startActivity(new Intent(this, MainMenuActivity.class));
+            finish();
         }
     }
 

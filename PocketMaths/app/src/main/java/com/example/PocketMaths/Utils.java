@@ -55,7 +55,6 @@ public class Utils {
     private void initData() {
         // TODO: These will all be stored in the database, so the IDs etc. will not be problematic.
 
-        // TODO: Definitely Randomise Names
         questionSets = new ArrayList<>();
         refreshers = new ArrayList<>();
 

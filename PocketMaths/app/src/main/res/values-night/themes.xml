@@ -11,6 +11,8 @@
 
         <item name="colorAccent">@color/YellowOrange</item>
 
+        <item name="android:colorEdgeEffect">@color/YellowOrange</item>
+
         <item name="fontFamily">@font/metropolis_light</item>
 
         <item name="android:windowBackground">@drawable/dark_mode_background_bitmap</item>
