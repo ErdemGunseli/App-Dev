@@ -291,6 +291,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
      */
     @Override
     public void onBackPressed() {
-        // The back button should do nothing here:
+        startActivity(new Intent(this, MainMenuActivity.class));
+        finish();
     }
 }

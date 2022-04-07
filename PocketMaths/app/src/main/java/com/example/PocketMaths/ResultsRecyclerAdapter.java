@@ -4,6 +4,7 @@ import static com.example.PocketMaths.Question.MULTIPLE_CHOICE;
 import static com.example.PocketMaths.Question.WRITTEN;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 
@@ -31,6 +33,8 @@ public class ResultsRecyclerAdapter extends RecyclerView.Adapter<ResultsRecycler
 
     private QuestionSet questionSet;
     private Context context;
+    private DecimalFormat decimalFormat = new DecimalFormat("#.###");
+
 
     /**
      * Constructor
@@ -59,6 +63,7 @@ public class ResultsRecyclerAdapter extends RecyclerView.Adapter<ResultsRecycler
     /**
      * Runs when an instance of ViewHolder object attaches to a container.
      * Sets the appropriate data to the ViewHolder instance layout.
+     * Formats the question and answer text such that subscripts and superscripts can be displayed correctly.
      *
      * @param holder   The instance of ViewHolder object, required for accessing data.
      * @param position The index of the ArrayList, required for accessing ArrayList items.
@@ -75,27 +80,22 @@ public class ResultsRecyclerAdapter extends RecyclerView.Adapter<ResultsRecycler
 
         holder.txtCurrentQuestionIndex.setText(String.format(context.getString(R.string.question_x_of_x), (position + 1), questionSet.getQuestions().length));
         holder.txtPointsPossible.setText(String.format(context.getString(R.string.x_x_points), currentQuestion.getPointsEarned(), currentQuestion.getPointsPossible()));
-        holder.txtQuestion.setText(currentQuestion.getText());
+        holder.txtQuestion.setText(Html.fromHtml(currentQuestion.getText()));
         holder.imgQuestion.setImageResource(currentQuestion.getImageId());
 
+        String correctAnswer;
+        String chosenAnswer;
         if (currentQuestion.getType().equals(MULTIPLE_CHOICE)) {
-            // Displaying their first answer and the correct answer:
-            int chosenAnswerIndex = userAnswerIndexes.get(0);
-
-            holder.txtChosenAnswer.setText(String.format(context.getString(R.string.initial_answer), answers[chosenAnswerIndex]));
-            holder.txtCorrectAnswer.setText(String.format(context.getString(R.string.correct_answer), answers[correctAnswerIndex]));
-
-        } else if (currentQuestion.getType().equals(WRITTEN)) {
-            // If they revealed the answer, the variable storing their answer will be null, so using "?":
-            // Otherwise, setting text as variable:
-            String chosenAnswer = context.getString(R.string.question_mark);
-            String writtenAnswer = currentQuestion.getUserWrittenAnswers().get(0);
-            if (writtenAnswer != null) {
-                chosenAnswer = writtenAnswer;
-            }
-            holder.txtChosenAnswer.setText(String.format(context.getString(R.string.initial_answer), chosenAnswer));
-            holder.txtCorrectAnswer.setText(String.format(context.getString(R.string.correct_answer), currentQuestion.getCorrectWrittenAnswer()));
+            correctAnswer = Utils.getInstance().formatString(answers[correctAnswerIndex]);
+            chosenAnswer = Utils.getInstance().formatString(answers[userAnswerIndexes.get(0)]);
+        } else {
+            correctAnswer = Utils.getInstance().formatString(String.valueOf(currentQuestion.getCorrectWrittenAnswer()));
+            chosenAnswer = Utils.getInstance().formatString(String.valueOf(currentQuestion.getUserWrittenAnswers().get(0)));
         }
+
+        // Displaying their first answer and the correct answer:
+        holder.txtCorrectAnswer.setText(Html.fromHtml("<br>" + String.format(context.getString(R.string.correct_answer), correctAnswer) + "<br>"));
+        holder.txtChosenAnswer.setText(Html.fromHtml("<br>" + String.format(context.getString(R.string.initial_answer), chosenAnswer) + "<br>"));
     }
 
     @Override

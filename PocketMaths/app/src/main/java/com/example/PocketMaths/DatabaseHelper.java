@@ -88,6 +88,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "DESCRIPTION TEXT NOT NULL," +
                 "VALUE INTEGER NOT NULL" +
                 ")");
+
     }
 
     /**

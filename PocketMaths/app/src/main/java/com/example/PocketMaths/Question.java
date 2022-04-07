@@ -23,8 +23,8 @@ public class Question {
     private ArrayList<Integer> userAnswerIndexes = new ArrayList<>();
 
     // For Written
-    private String correctWrittenAnswer;
-    private ArrayList<String> userWrittenAnswers = new ArrayList<>();
+    private float correctWrittenAnswer;
+    private ArrayList<Float> userWrittenAnswers = new ArrayList<>();
 
     private String topic;
     private int attempts = 0;
@@ -61,7 +61,7 @@ public class Question {
      * @param correctAnswer  The correct answer.
      * @param pointsPossible The number of points possible.
      */
-    public Question(String topic, String text, int imageId, String correctAnswer, int pointsPossible) {
+    public Question(String topic, String text, int imageId, float correctAnswer, int pointsPossible) {
         this.topic = topic;
         this.text = text;
         this.imageId = imageId;
@@ -103,36 +103,44 @@ public class Question {
         this.imageId = imageId;
     }
 
+
     /**
-     * Checks the answer entered by the user.
+     * Checks the multiple choice answer entered by the user.
      * Increases the number of attempts made by 1.
      * If the answer has been answered correctly, calls calculatePointsEarned()
      *
      * @param chosenAnswerIndex The option selected by the user - only used if the question is multiple-choice.
-     * @param answer            The answer entered by the user - only used if the question is written.
      * @return Whether the answer is correct.
      */
-    public boolean checkAnswer(int chosenAnswerIndex, String answer) {
-
-        if (this.type.equals(MULTIPLE_CHOICE)) {
-            this.userAnswerIndexes.add(chosenAnswerIndex);
-            if (correctAnswerIndex == chosenAnswerIndex) {
-                this.calculatePointsEarned();
-                this.attempts += 1;
-                return true;
-            }
-        } else if (this.type.equals(WRITTEN)) {
-            this.userWrittenAnswers.add(answer);
-            if (answer.equals(this.correctWrittenAnswer)) {
-                this.calculatePointsEarned();
-                this.attempts += 1;
-                return true;
-            }
+    public boolean checkMultipleChoiceAnswer(int chosenAnswerIndex) {
+        this.userAnswerIndexes.add(chosenAnswerIndex);
+        if (correctAnswerIndex == chosenAnswerIndex) {
+            this.calculatePointsEarned();
+            this.attempts += 1;
+            return true;
         }
-
         this.attempts += 1;
         return false;
 
+    }
+
+    /**
+     * Checks the written answer entered by the user.
+     * Increases the number of attempts made by 1.
+     * If the answer has been answered correctly, calls calculatePointsEarned()
+     *
+     * @param answer The answer entered by the user - only used if the question is written.
+     * @return Whether the answer is correct.
+     */
+    public boolean checkWrittenAnswer(float answer) {
+        this.userWrittenAnswers.add(answer);
+        if (answer == this.correctWrittenAnswer) {
+            this.calculatePointsEarned();
+            this.attempts += 1;
+            return true;
+        }
+        this.attempts += 1;
+        return false;
     }
 
 
@@ -176,11 +184,11 @@ public class Question {
         }
     }
 
-    public String getCorrectWrittenAnswer() {
+    public float getCorrectWrittenAnswer() {
         return correctWrittenAnswer;
     }
 
-    public void setCorrectWrittenAnswer(String correctWrittenAnswer) {
+    public void setCorrectWrittenAnswer(int correctWrittenAnswer) {
         this.correctWrittenAnswer = correctWrittenAnswer;
     }
 
@@ -208,11 +216,11 @@ public class Question {
         this.userAnswerIndexes = userAnswerIndexes;
     }
 
-    public ArrayList<String> getUserWrittenAnswers() {
+    public ArrayList<Float> getUserWrittenAnswers() {
         return userWrittenAnswers;
     }
 
-    public void setUserWrittenAnswers(ArrayList<String> userWrittenAnswers) {
+    public void setUserWrittenAnswers(ArrayList<Float> userWrittenAnswers) {
         this.userWrittenAnswers = userWrittenAnswers;
     }
 }

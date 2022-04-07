@@ -24,7 +24,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_margin="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
                 android:textColor="@color/YellowOrange"
                 android:textSize="13sp"
                 android:textStyle="bold" />
@@ -33,7 +34,8 @@
                 android:id="@+id/txtPointsPossible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
                 android:layout_toEndOf="@id/txtCurrentQuestionIndex"
                 android:textColor="@color/YellowOrange"
                 android:textSize="13sp"
@@ -44,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txtPointsPossible"
-                android:layout_margin="15dp"
+                android:layout_marginBottom="15dp"
                 android:textSize="15sp" />
 
             <ImageView
@@ -53,11 +55,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txtQuestion"
                 android:layout_centerHorizontal="true"
-                android:maxHeight="300dp"
-                android:adjustViewBounds="true"
                 android:layout_margin="15dp"
+                android:adjustViewBounds="true"
                 android:contentDescription="@string/question_image"
-                />
+                android:maxHeight="300dp" />
 
         </RelativeLayout>
 
@@ -80,7 +81,8 @@
                 android:id="@+id/txtCorrectAnswer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 android:textColor="@color/YellowOrange"
                 android:textSize="13sp"
                 android:textStyle="bold" />
@@ -90,7 +92,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txtCorrectAnswer"
-                android:layout_margin="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 android:textColor="@color/YellowOrange"
                 android:textSize="13sp"
                 android:textStyle="bold" />

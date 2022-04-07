@@ -13,7 +13,7 @@
         android:id="@+id/cvDashboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         app:cardCornerRadius="0dp"
         >
     <LinearLayout
@@ -42,7 +42,9 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:src="@drawable/ic_account" />
+            android:src="@drawable/ic_account"
+            android:contentDescription="@string/desc_account"
+            />
 
     </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -94,7 +96,9 @@
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_tasks" />
+            android:src="@drawable/ic_tasks"
+            android:contentDescription="@string/desc_view_tasks"
+            />
 
             <ImageView
                 android:id="@+id/imgCreateTask"
@@ -105,7 +109,9 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
-                android:src="@drawable/ic_create_task" />
+                android:src="@drawable/ic_create_task"
+                android:contentDescription="@string/desc_create_task"
+                />
 
             <ImageView
                 android:id="@+id/imgSettings"
@@ -113,7 +119,9 @@
                 android:layout_height="40dp"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:src="@drawable/ic_settings" />
+                android:src="@drawable/ic_settings"
+                android:contentDescription="@string/settings"
+                />
     </LinearLayout>
     </androidx.cardview.widget.CardView>
 

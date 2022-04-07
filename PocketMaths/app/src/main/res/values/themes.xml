@@ -72,7 +72,7 @@
     <!-- Radio Button Theme -->
     <style name="defaultRadioButton" parent="Base.Widget.AppCompat.CompoundButton.RadioButton">
         <item name="android:textColor">@color/Secondary</item>
-        <item name="android:textSize">13.5sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:buttonTint">@color/Silver</item>
     </style>
 
@@ -88,11 +88,6 @@
     <style name="sliderLabel" parent="Widget.MaterialComponents.Tooltip">
         <item name="backgroundTint">@color/Silver</item>
     </style>
-
-
-
-
-
 
 
     <!-- ## Theme 2 - Red & Green ## -->

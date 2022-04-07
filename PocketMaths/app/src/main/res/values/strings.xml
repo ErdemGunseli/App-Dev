@@ -111,11 +111,13 @@
     <string name="preferences">Preferences:</string>
     <string name="show_Refreshers">Show Refreshers</string>
 
-    <string name="refresher">%s Refresher</string>
     <string name="got_it">Got It!</string>
+
+    <string name="invalid_answer">Your Answer is Invalid</string>
 
 
     <!-- Extra Content Description -->
+    <string name="question_set_image">Question Set Image</string>
     <string name="question_image">Question Image</string>
     <string name="help">Help</string>
     <string name="previous_question">Previous Question</string>

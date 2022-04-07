@@ -86,7 +86,7 @@ public class RefresherActivity extends AppCompatActivity implements View.OnClick
      * @param refresher The refresher from which the data should be set.
      */
     private void setData(Refresher refresher) {
-        txtRefresherModel.setText(String.format(getString(R.string.refresher), refresher.getTopic()));
+        txtRefresherModel.setText(refresher.getTopic());
         imgRefresher.setImageResource(refresher.getImageId());
     }
 

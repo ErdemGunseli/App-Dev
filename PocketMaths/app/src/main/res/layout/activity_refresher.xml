@@ -28,18 +28,19 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="25dp"
                 android:layout_marginBottom="25dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:textAlignment="center"
                 android:textColor="@color/YellowOrange"
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
-            <com.google.android.material.card.MaterialCardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/cvRefresher"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/Silver"
                 android:layout_below="@id/txtRefresherTopic"
-                android:layout_margin="10dp"
+                android:layout_margin="20dp"
                 >
 
                 <ImageView
@@ -51,7 +52,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginBottom="15dp" />
 
-            </com.google.android.material.card.MaterialCardView>
+            </androidx.cardview.widget.CardView>
 
             <Button
                 android:id="@+id/btnContinue"

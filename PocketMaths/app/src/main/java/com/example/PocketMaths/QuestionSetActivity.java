@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.text.Html;
 import android.text.InputType;
 import android.transition.TransitionManager;
 import android.view.View;
@@ -20,11 +21,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -45,11 +48,12 @@ import java.util.ArrayList;
 public class QuestionSetActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String QUESTION_SET_ID = "questionSetID";
-
     private QuestionSet questionSet;
-
     private Question currentQuestion;
+    private boolean inTransition = false;
+    private DecimalFormat decimalFormat = new DecimalFormat("#.###");
 
+    private RelativeLayout relQuestionSet;
     private ScrollView svQuestionSet;
     private TextView txtQuestion, txtQuestionSetName, txtCurrentQuestionIndex, txtPointsPossible, txtMessage;
     private RadioGroup rgQuestionAnswerOptions;
@@ -76,7 +80,6 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         initViews();
 
         setDataFromIntent();
-
     }
 
     /**
@@ -85,6 +88,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
      * Sets custom EditText input type.
      */
     private void initViews() {
+        relQuestionSet = findViewById(R.id.relQuestionSet);
         svQuestionSet = findViewById(R.id.svQuestionSet);
         txtQuestionSetName = findViewById(R.id.txtQuestionSetName);
         txtCurrentQuestionIndex = findViewById(R.id.txtCurrentQuestionIndex);
@@ -105,7 +109,6 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         btnConfirm = findViewById(R.id.btnConfirm);
         btnRevealAnswer = findViewById(R.id.btnRevealAnswer);
         edtTxtAnswer = findViewById(R.id.edtTxtAnswer);
-
 
         imgExit.setOnClickListener(this);
         imgPrevious.setOnClickListener(this);
@@ -138,6 +141,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
 
     /**
      * Sets data from the current instance of Question.
+     * Formats the question text such that subscripts and superscripts can be displayed correctly.
      * Performs various additional actions such as hiding the keyboard, scrolling to the top etc.
      *
      * @param questionSet The question set from which the data should be set.
@@ -166,7 +170,9 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
 
         txtMessage.setText("");
         txtQuestionSetName.setText(questionSet.getName());
-        txtQuestion.setText(currentQuestion.getText());
+        txtQuestion.setText(Html.fromHtml(currentQuestion.getText()));
+
+
         txtCurrentQuestionIndex.setText(String.format(getString(R.string.question_x_of_x), (questionSet.getCurrentQuestionIndex() + 1), questionSet.getQuestions().length));
 
         setPointsPossible();
@@ -174,6 +180,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         imgQuestion.setImageResource(currentQuestion.getImageId());
 
         setNavigationVisibility();
+
 
     }
 
@@ -239,12 +246,13 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
 
     /**
      * Sets the relevant answer option to each of the RadioButton objects.
+     * Formats the answer options text such that subscripts and superscripts can be displayed correctly.
      */
     private void setAnswerOptions() {
-        answerA.setText(currentQuestion.getAnswerOptions()[0]);
-        answerB.setText(currentQuestion.getAnswerOptions()[1]);
-        answerC.setText(currentQuestion.getAnswerOptions()[2]);
-        answerD.setText(currentQuestion.getAnswerOptions()[3]);
+        answerA.setText(Html.fromHtml(currentQuestion.getAnswerOptions()[0]));
+        answerB.setText(Html.fromHtml(currentQuestion.getAnswerOptions()[1]));
+        answerC.setText(Html.fromHtml(currentQuestion.getAnswerOptions()[2]));
+        answerD.setText(Html.fromHtml(currentQuestion.getAnswerOptions()[3]));
     }
 
     /**
@@ -257,10 +265,10 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
     private void displayRelevantAnswer() {
         if (currentQuestion.getAttempts() > 0) {
             if (currentQuestion.getPointsEarned() != 0) {
-                edtTxtAnswer.setText(currentQuestion.getCorrectWrittenAnswer());
+                edtTxtAnswer.setText(decimalFormat.format(currentQuestion.getCorrectWrittenAnswer()));
             } else {
-                ArrayList<String> userAnswers = currentQuestion.getUserWrittenAnswers();
-                edtTxtAnswer.setText(userAnswers.get(userAnswers.size() - 1));
+                ArrayList<Float> userAnswers = currentQuestion.getUserWrittenAnswers();
+                edtTxtAnswer.setText(String.valueOf(decimalFormat.format(userAnswers.get(userAnswers.size() - 1))));
             }
         } else {
             edtTxtAnswer.setText("");
@@ -398,6 +406,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
      */
     @Override
     public void onClick(View view) {
+        if (inTransition){return;}
 
         switch (view.getId()) {
 
@@ -409,37 +418,47 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
             case (R.id.imgPrevious):
                 // Decreasing the current question index by 1:
                 questionSet.setCurrentQuestionIndex(questionSet.getCurrentQuestionIndex() - 1);
-
-                TransitionManager.beginDelayedTransition(svQuestionSet);
+                TransitionManager.beginDelayedTransition(relQuestionSet);
                 setData(questionSet);
                 break;
 
             case (R.id.imgNext):
-                TransitionManager.beginDelayedTransition(svQuestionSet);
                 // If the current question has been attempted, going to the next:
                 if (currentQuestion.getAttempts() > 0) {
                     // Increasing the current question index by 1
                     questionSet.setCurrentQuestionIndex(questionSet.getCurrentQuestionIndex() + 1);
 
-                    TransitionManager.beginDelayedTransition(svQuestionSet);
+                    TransitionManager.beginDelayedTransition(relQuestionSet);
                     setData(questionSet);
+
                 } else {
                     // Otherwise, displaying message:
-                    TransitionManager.beginDelayedTransition(svQuestionSet);
+                    TransitionManager.beginDelayedTransition(relQuestionSet);
                     txtMessage.setText(getString(R.string.try_first));
                 }
                 break;
 
             case (R.id.btnConfirm):
-                questionFeedback();
+                // Error catching if input is invalid:
+                try {
+                    questionFeedback();
+                }catch (Exception e){
+                    TransitionManager.beginDelayedTransition(relQuestionSet);
+                    txtMessage.setText(getString(R.string.invalid_answer));
+                    vibrate();
+                }
                 break;
 
             case (R.id.btnRevealAnswer):
-                currentQuestion.setAttempts(2);
-                currentQuestion.setPointsEarned(0);
-                TransitionManager.beginDelayedTransition(svQuestionSet);
-                txtMessage.setText(currentQuestion.getCorrectWrittenAnswer());
-                txtPointsPossible.setText(String.format(getString(R.string.points), 0));
+                //Only losing points if they have not earned points:
+
+                if (currentQuestion.getPointsEarned() == 0){
+                    currentQuestion.setAttempts(2);
+                    txtPointsPossible.setText(String.format(getString(R.string.points), 0));
+                }
+
+                TransitionManager.beginDelayedTransition(relQuestionSet);
+                txtMessage.setText(Html.fromHtml(decimalFormat.format(currentQuestion.getCorrectWrittenAnswer())));
                 setResultImage();
                 break;
 
@@ -466,9 +485,17 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         if ((currentQuestion.getType().equals(MULTIPLE_CHOICE) && getCheckedRadioButtonIndex() != -1)
                 || (currentQuestion.getType().equals(WRITTEN) && !edtTxtAnswer.getText().toString().equals(""))) {
 
-            // If the question has been answered correctly:
-            if (currentQuestion.checkAnswer(getCheckedRadioButtonIndex(), edtTxtAnswer.getText().toString())) {
+            boolean answerCorrect;
 
+            if (currentQuestion.getType().equals(MULTIPLE_CHOICE)) {
+                answerCorrect = currentQuestion.checkMultipleChoiceAnswer(getCheckedRadioButtonIndex());
+            } else {
+                answerCorrect = currentQuestion.checkWrittenAnswer(Float.parseFloat(String.valueOf(edtTxtAnswer.getText())));
+            }
+
+
+            // If the question has been answered correctly:
+            if (answerCorrect) {
                 // If this is the last question, start ResultsActivity:
                 if (lastQuestion()) {
                     questionSet.setCurrentQuestionIndex(0);
@@ -476,36 +503,32 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
                             .putExtra(QUESTION_SET_ID, questionSet.getId()));
                     finish();
                 } else {
-                    TransitionManager.beginDelayedTransition(svQuestionSet);
+                    TransitionManager.beginDelayedTransition(relQuestionSet);
                     txtMessage.setText("");
 
                     // Otherwise, increase the question index by 1:
                     questionSet.setCurrentQuestionIndex(questionSet.getCurrentQuestionIndex() + 1);
 
+                    inTransition = true;
                     Handler handler = new Handler();
                     handler.postDelayed(() -> {
-                            TransitionManager.beginDelayedTransition(svQuestionSet);
-                            setData(questionSet);
+                        TransitionManager.beginDelayedTransition(relQuestionSet);
+                        inTransition = false;
+                        setData(questionSet);
                     }, 1000);
                 }
             } else {
                 // If the question has been answered incorrectly:
-                TransitionManager.beginDelayedTransition(svQuestionSet);
+                TransitionManager.beginDelayedTransition(relQuestionSet);
                 txtMessage.setText(getString(R.string.try_again));
 
-                setPointsPossible();
+                vibrate();
 
-                // Creating haptic feedback:
-                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    vibrator.vibrate(VibrationEffect.createOneShot(75, VibrationEffect.DEFAULT_AMPLITUDE));
-                } else {
-                    // Old API:
-                    vibrator.vibrate(75);
-                }
+                setPointsPossible();
             }
         } else {
             // If the question has been left empty, showing message:
+            TransitionManager.beginDelayedTransition(relQuestionSet);
             txtMessage.setText(getString(R.string.enter_answer));
         }
         setResultImage();
@@ -529,6 +552,22 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
                 return 3;
             default:
                 return -1;
+        }
+    }
+
+    /**
+     * Creates haptic feedback.
+     * Uses the appropriate method depending on the device version.
+     */
+    private void vibrate(){
+        // Creating haptic feedback:
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createOneShot(75, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            // Old API:
+            vibrator.vibrate(75);
         }
     }
 

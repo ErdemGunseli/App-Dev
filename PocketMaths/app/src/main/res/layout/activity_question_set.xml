@@ -1,267 +1,263 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/svQuestionSet"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    >
-
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     android:id="@+id/relQuestionSet"
-    tools:context="com.example.PocketMaths.QuestionSetActivity"
-    android:layout_margin="35dp"
-    >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cvQuestion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp">
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-
-                <ImageView
-                    android:id="@+id/imgExit"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_margin="10dp"
-                    android:src="@drawable/ic_back"
-                    android:contentDescription="@string/back"
-                    />
-
-                <TextView
-                    android:id="@+id/txtQuestionSetName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/imgExit"
-                    android:layout_alignBottom="@id/imgExit"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="10dp"
-                    android:textSize="11sp"
-                    android:textColor="@color/YellowOrange"
-                    android:textStyle="bold"
-                    />
-
-                <TextView
-                    android:id="@+id/txtCurrentQuestionIndex"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/imgExit"
-                    android:layout_toEndOf="@id/txtQuestionSetName"
-                    android:layout_toStartOf="@id/imgHelp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="10dp"
-                    android:textSize="11sp"
-                    android:textColor="@color/YellowOrange"
-                    android:textStyle="bold"
-                    />
-
-                <TextView
-                    android:id="@+id/txtPointsPossible"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:textSize="13sp"
-                    android:textColor="@color/YellowOrange"
-                    android:textStyle="bold"
-                    android:layout_below="@id/imgQuestion"
-                    android:layout_alignParentEnd="true"
-                    />
-
-
-                <TextView
-                    android:id="@+id/txtQuestion"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:textSize="17sp"
-                    android:layout_below="@id/txtQuestionSetName"
-                    />
-
-                <ImageView
-                    android:id="@+id/imgQuestion"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxHeight="300dp"
-                    android:adjustViewBounds="true"
-                    android:layout_below="@id/txtQuestion"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginRight="25dp"
-                    android:layout_marginBottom="25dp"
-                    android:contentDescription="@string/question_image"
-                    />
-
-                <ImageView
-                    android:id="@+id/imgHelp"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_margin="10dp"
-                    android:layout_alignParentEnd="true"
-                    android:src="@drawable/ic_help"
-                    android:contentDescription="@string/help"
-                    />
-
-            </RelativeLayout>
-
-
-
-
-    </com.google.android.material.card.MaterialCardView>
-
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cvQuestionAnswerMenu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/cvQuestion"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="45dp">
+    <ScrollView
+        android:id="@+id/svQuestionSet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:id="@+id/relQuestionAnswerOptions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="15dp">
+            android:layout_margin="25dp"
+            tools:context="com.example.PocketMaths.QuestionSetActivity">
 
-            <RadioGroup
-                android:id="@+id/rgQuestionAnswerOptions"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvQuestion"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <RadioButton
-                    android:id="@+id/answerA"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp" />
-
-                <RadioButton
-                    android:id="@+id/answerB"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp" />
-
-                <RadioButton
-                    android:id="@+id/answerC"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp" />
-
-                <RadioButton
-                    android:id="@+id/answerD"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp" />
-
-
-            </RadioGroup>
-
-
-            <EditText
-                android:id="@+id/edtTxtAnswer"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/txtMessage"
+                android:layout_marginBottom="25dp">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/imgExit"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_margin="10dp"
+                        android:contentDescription="@string/back"
+                        android:src="@drawable/ic_back" />
+
+                    <TextView
+                        android:id="@+id/txtQuestionSetName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/imgExit"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_toEndOf="@id/imgExit"
+                        android:textColor="@color/YellowOrange"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:textAlignment="center"
+                        />
+
+                    <TextView
+                        android:id="@+id/txtCurrentQuestionIndex"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/imgExit"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_toStartOf="@id/imgHelp"
+                        android:layout_toEndOf="@id/txtQuestionSetName"
+                        android:textColor="@color/YellowOrange"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:textAlignment="viewStart"
+                        />
+
+                    <TextView
+                        android:id="@+id/txtPointsPossible"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/imgQuestion"
+                        android:layout_alignParentEnd="true"
+                        android:layout_margin="15dp"
+                        android:textColor="@color/YellowOrange"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/txtQuestion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/txtQuestionSetName"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:textSize="17sp" />
+
+                    <ImageView
+                        android:id="@+id/imgQuestion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/txtQuestion"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginRight="25dp"
+                        android:layout_marginBottom="25dp"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/question_image"
+                        android:maxHeight="300dp" />
+
+                    <ImageView
+                        android:id="@+id/imgHelp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_margin="10dp"
+                        android:contentDescription="@string/help"
+                        android:src="@drawable/ic_help" />
+
+                </RelativeLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvQuestionAnswerMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cvQuestion"
                 android:layout_centerHorizontal="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@color/Silver"
-                android:hint="@string/answer"
-                android:maxLength="10"
-                android:padding="10dp"
-                android:textColor="@color/Primary"
-                android:textColorHint="@color/Primary"
-                android:textSize="16sp"
-                tools:ignore="Autofill"
-                android:inputType=""
-                />
+                android:layout_marginBottom="45dp">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnRevealAnswer"
-                style="@style/defaultTextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txtMessage"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_toEndOf="@id/edtTxtAnswer"
-                android:text="@string/reveal_answer"
-                android:textAlignment="center" />
+                <RelativeLayout
+                    android:id="@+id/relQuestionAnswerOptions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="15dp">
+
+                    <RadioGroup
+                        android:id="@+id/rgQuestionAnswerOptions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RadioButton
+                            android:id="@+id/answerA"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp" />
+
+                        <RadioButton
+                            android:id="@+id/answerB"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp" />
+
+                        <RadioButton
+                            android:id="@+id/answerC"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp" />
+
+                        <RadioButton
+                            android:id="@+id/answerD"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp" />
 
 
-            <TextView
-                android:id="@+id/txtMessage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/rgQuestionAnswerOptions"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/YellowOrange"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                    </RadioGroup>
 
-            <Button
-                android:id="@+id/btnConfirm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/edtTxtAnswer"
-                android:layout_centerHorizontal="true"
-                android:backgroundTint="@color/YellowOrange"
-                android:text="@string/check" />
 
-            <ImageView
-                android:id="@+id/imgPrevious"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_below="@id/edtTxtAnswer"
-                android:layout_margin="10dp"
-                android:layout_toStartOf="@id/btnConfirm"
-                android:src="@drawable/ic_previous"
-                android:contentDescription="@string/previous_question"
-                />
+                    <EditText
+                        android:id="@+id/edtTxtAnswer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/txtMessage"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@color/Silver"
+                        android:hint="@string/answer"
+                        android:inputType=""
+                        android:maxLength="10"
+                        android:padding="10dp"
+                        android:textColor="@color/Primary"
+                        android:textColorHint="@color/Primary"
+                        android:textSize="16sp"
+                        tools:ignore="Autofill" />
 
-            <ImageView
-                android:id="@+id/imgNext"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_below="@id/edtTxtAnswer"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_toEndOf="@id/btnConfirm"
-                android:src="@drawable/ic_next"
-                android:contentDescription="@string/next_question"
-                />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnRevealAnswer"
+                        style="@style/defaultTextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/txtMessage"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toEndOf="@id/edtTxtAnswer"
+                        android:text="@string/reveal_answer"
+                        android:textAlignment="center" />
 
-            <ImageView
-                android:id="@+id/imgResult"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_alignBottom="@id/btnConfirm"
-                android:layout_alignParentEnd="true"
-                android:layout_margin="5dp"
-                android:contentDescription="@string/question_result"
-                />
 
+                    <TextView
+                        android:id="@+id/txtMessage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rgQuestionAnswerOptions"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/YellowOrange"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/btnConfirm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/edtTxtAnswer"
+                        android:layout_centerHorizontal="true"
+                        android:backgroundTint="@color/YellowOrange"
+                        android:text="@string/check" />
+
+                    <ImageView
+                        android:id="@+id/imgPrevious"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_below="@id/edtTxtAnswer"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toStartOf="@id/btnConfirm"
+                        android:contentDescription="@string/previous_question"
+                        android:src="@drawable/ic_previous" />
+
+                    <ImageView
+                        android:id="@+id/imgNext"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_below="@id/edtTxtAnswer"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toEndOf="@id/btnConfirm"
+                        android:contentDescription="@string/next_question"
+                        android:src="@drawable/ic_next" />
+
+                    <ImageView
+                        android:id="@+id/imgResult"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_alignBottom="@id/btnConfirm"
+                        android:layout_alignParentEnd="true"
+                        android:layout_margin="5dp"
+                        android:contentDescription="@string/question_result" />
+
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
 
         </RelativeLayout>
 
-    </androidx.cardview.widget.CardView>
-
+    </ScrollView>
 </RelativeLayout>
-
-</ScrollView>

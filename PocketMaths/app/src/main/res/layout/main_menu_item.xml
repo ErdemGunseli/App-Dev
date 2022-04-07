@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/relMainMenuItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -38,13 +37,24 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/imgQuestionSet"
+            <androidx.cardview.widget.CardView
                 android:layout_width="135dp"
                 android:layout_height="135dp"
                 android:layout_below="@id/txtQuestionSetName"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:backgroundTint="@color/Silver">
+
+                <ImageView
+                    android:id="@+id/imgQuestionSet"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/question_set_image"
+                    />
+            </androidx.cardview.widget.CardView>
         </RelativeLayout>
+
 
 
     </com.google.android.material.card.MaterialCardView>
@@ -84,6 +94,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@id/txtNumberOfQuestions"
+                android:textAlignment="viewEnd"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 android:textColor="@color/YellowOrange"
