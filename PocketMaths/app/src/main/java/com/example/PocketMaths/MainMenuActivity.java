@@ -89,7 +89,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         rvMainMenu.setAdapter(mainMenuRecyclerAdapter);
         rvMainMenu.setLayoutManager((new LinearLayoutManager(this)));
 
-        mainMenuRecyclerAdapter.collapseAll();
+        mainMenuRecyclerAdapter.setExpandedIndex(-1);
     }
 
     /**

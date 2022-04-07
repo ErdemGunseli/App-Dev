@@ -35,6 +35,7 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
 
     private ArrayList<QuestionSet> questionSets = new ArrayList<>();
     private Context context;
+    private int expandedIndex;
 
     /**
      * Constructor
@@ -103,14 +104,13 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
      */
     private void setCardViewState(ViewHolder holder) {
         // If the QuestionSet is expanded, display the expansion CardView:
-        if (questionSets.get(holder.getAdapterPosition()).isExpanded()) {
+        if (holder.getAdapterPosition() == expandedIndex){
             TransitionManager.beginDelayedTransition(holder.relMainMenuItem);
             holder.cvExpandedMainMenuItem.setVisibility(View.VISIBLE);
-        } else {
-            // Otherwise, hide the expansion CardView:
+        } else{
+        // Otherwise, hide the expansion CardView:
             TransitionManager.beginDelayedTransition(holder.relMainMenuItem);
             holder.cvExpandedMainMenuItem.setVisibility(View.GONE);
-
         }
     }
 
@@ -125,17 +125,16 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
 
     @SuppressLint("NotifyDataSetChanged")
     public void setQuestionSets(ArrayList<QuestionSet> questionSets) {
+        expandedIndex = -1;
         this.questionSets = questionSets;
         notifyDataSetChanged();
     }
 
     /**
-     * Collapses all QuestionSet objects.
+     * Sets the variable determining which CardView should be expanded.
      */
-    public void collapseAll() {
-        for (QuestionSet qs : questionSets) {
-            qs.setExpanded(false);
-        }
+    public void setExpandedIndex(int index) {
+        expandedIndex = index;
     }
 
     /**
@@ -183,7 +182,6 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
             btnStartQuestionSet.setOnClickListener(this);
         }
 
-
         /**
          * Determines which View object has been clicked and performs the appropriate action.
          *
@@ -191,25 +189,23 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
          */
         @Override
         public void onClick(View view) {
-            QuestionSet currentQuestionSet = questionSets.get(getAdapterPosition());
+            int adapterPosition = getAdapterPosition();
+            QuestionSet currentQuestionSet = questionSets.get(adapterPosition);
 
             switch (view.getId()) {
 
                 case (R.id.cvCollapsedMainMenuItem):
 
-                    // Recording the expansion state of the QuestionSet object, so that it
-                    // can be reversed:
-                    boolean state = questionSets.get(getAdapterPosition()).isExpanded();
-
-                    collapseAll();
-
-                    currentQuestionSet.setExpanded(!state);
-
-                    // Using notifyDataSetChanged() here causes the animations to not occur,
-                    // so changing items one by one:
-                    for (int i = 0; i < getItemCount(); i++) {
-                        notifyItemChanged(i);
+                    if (adapterPosition == expandedIndex){
+                        // If the CardView clicked is already expanded, collapsing it:
+                        expandedIndex = -1;
                     }
+                    else{
+                        // Otherwise, expanding the clicked CardView:
+                        notifyItemChanged(expandedIndex);
+                        expandedIndex = adapterPosition;
+                    }
+                    notifyItemChanged(adapterPosition);
                     break;
 
                 case (R.id.btnStartQuestionSet):

@@ -15,11 +15,9 @@ public class QuestionSet {
     private int imageId;
     private Question[] questions;
     private int currentQuestionIndex;
-    private boolean isExpanded;
 
     private ArrayList<String> topics = new ArrayList<>();
     private ArrayList<Refresher> refreshers = new ArrayList<>();
-
 
     /**
      * Constructor for Question Set
@@ -39,8 +37,6 @@ public class QuestionSet {
         this.currentQuestionIndex = 0;
         arrangeTopics();
         calculateRefreshers();
-
-        this.isExpanded = false;
     }
 
     /**
@@ -92,14 +88,6 @@ public class QuestionSet {
         this.questions = questions;
         arrangeTopics();
         currentQuestionIndex = 0;
-    }
-
-    public boolean isExpanded() {
-        return isExpanded;
-    }
-
-    public void setExpanded(boolean expanded) {
-        isExpanded = expanded;
     }
 
     public String getDescription() {
