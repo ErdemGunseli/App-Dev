@@ -63,9 +63,9 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
         imgExit.setOnClickListener(this);
         swShowRefreshers.setOnCheckedChangeListener((CompoundButton compoundButton, boolean checked) -> {
-                Utils.getInstance().setShowRefreshers(checked);
-                databaseHelper.setShowRefreshers(checked);
-            });
+            Utils.getInstance().setShowRefreshers(checked);
+            databaseHelper.setShowRefreshers(checked);
+        });
     }
 
 
@@ -93,11 +93,11 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
 
-        if (view.getId() == R.id.imgExit){
-                // We cannot simply finish if the theme has been changed,
-                // restarting the main menu instead:
-                startActivity(new Intent(this, MainMenuActivity.class));
-                finish();
+        if (view.getId() == R.id.imgExit) {
+            // We cannot simply finish if the theme has been changed,
+            // restarting the main menu instead:
+            startActivity(new Intent(this, MainMenuActivity.class));
+            finish();
         }
     }
 

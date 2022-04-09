@@ -11,8 +11,6 @@ public class Question {
     public static final String WRITTEN = "written";
     public static final String MULTIPLE_CHOICE = "multipleChoice";
 
-    //TODO: Use ID! when in database:
-    private int id;
     private String text;
     private int imageId;
     private String type;

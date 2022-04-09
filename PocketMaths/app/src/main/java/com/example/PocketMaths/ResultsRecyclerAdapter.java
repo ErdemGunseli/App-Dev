@@ -1,7 +1,6 @@
 package com.example.PocketMaths;
 
 import static com.example.PocketMaths.Question.MULTIPLE_CHOICE;
-import static com.example.PocketMaths.Question.WRITTEN;
 
 import android.content.Context;
 import android.text.Html;

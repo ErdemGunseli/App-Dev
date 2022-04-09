@@ -30,7 +30,6 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
 
     private DatabaseHelper databaseHelper = new DatabaseHelper(this);
     private TaskRecyclerAdapter taskRecyclerAdapter = new TaskRecyclerAdapter(this, databaseHelper, false, true);
-    private ArrayList<String> questionSetNames = new ArrayList<>();
     private ArrayList<Task> taskedTasks = new ArrayList<>();
     private ArrayList<Task> completedTasks = new ArrayList<>();
 

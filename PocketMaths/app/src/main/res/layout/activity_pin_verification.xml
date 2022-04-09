@@ -45,6 +45,7 @@
             android:cursorVisible="false"
             android:maxLength="4"
             android:inputType="numberPassword"
+            android:autofillHints="password"
             />
 
             <com.google.android.material.button.MaterialButton

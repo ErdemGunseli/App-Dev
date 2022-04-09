@@ -67,11 +67,9 @@ public class Utils {
     }
 
     /**
-     * Initialising Question Sets
+     * Initialises Question Sets
      */
     private void initData() {
-        // TODO: These will all be stored in the database, so the IDs etc. will not be problematic.
-
         questionSets = new ArrayList<>();
         refreshers = new ArrayList<>();
 

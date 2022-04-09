@@ -8,7 +8,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -29,7 +28,6 @@ public class PinVerificationActivity extends AppCompatActivity implements View.O
 
     private RelativeLayout relPinVerification;
     private CardView cvPinVerification, cvSign;
-    private TextView txtPin;
     private Button btnContinue, btnCancel, btnSignUp, btnSignIn, btnBack;
     private EditText edtTxtPin;
 
@@ -59,7 +57,6 @@ public class PinVerificationActivity extends AppCompatActivity implements View.O
     private void initViews() {
         relPinVerification = findViewById(R.id.relPinVerification);
         cvPinVerification = findViewById(R.id.cvPinVerification);
-        txtPin = findViewById(R.id.txtPin);
         btnContinue = findViewById(R.id.btnContinue);
         btnCancel = findViewById(R.id.btnCancel);
         btnBack = findViewById(R.id.btnBack);

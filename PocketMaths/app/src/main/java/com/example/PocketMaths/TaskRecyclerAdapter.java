@@ -47,7 +47,7 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
      *
      * @param context Required to get strings from resources.
      */
-    public TaskRecyclerAdapter(Context context, DatabaseHelper databaseHelper, boolean deletable, boolean linked){
+    public TaskRecyclerAdapter(Context context, DatabaseHelper databaseHelper, boolean deletable, boolean linked) {
         this.context = context;
         this.databaseHelper = databaseHelper;
         this.deletable = deletable;
@@ -86,18 +86,16 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
         holder.txtPassMark.setText(String.format(context.getString(R.string.view_task_pass_mark), task.getPassMark()));
 
         // Only showing the reward if there is one:
-        if (task.getReward().isEmpty()){
+        if (task.getReward().isEmpty()) {
             holder.txtReward.setVisibility(View.GONE);
-        }
-        else{
+        } else {
             holder.txtReward.setText(String.format(context.getString(R.string.view_task_reward), task.getReward()));
         }
 
         // Setting the visibility of the delete button:
-        if (this.deletable){
+        if (this.deletable) {
             holder.imgDelete.setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
             holder.imgDelete.setVisibility(View.GONE);
         }
     }
@@ -105,6 +103,51 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
     @Override
     public int getItemCount() {
         return tasks.size();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void setTasks(ArrayList<Task> tasks) {
+        this.tasks = tasks;
+        notifyDataSetChanged();
+    }
+
+    /**
+     * If the TaskRecyclerAdapter instance has been set to allow tasks to be deletable, deletes the
+     * selected task.
+     *
+     * @param position The index of the Task instance in the ArrayList.
+     */
+    private void deleteTask(int position) {
+        if (!this.deletable) {
+            return;
+        }
+
+        // Deleting specified task from the database:
+        if (databaseHelper.deleteTask(tasks.get(position))) {
+            Toast.makeText(context, context.getString(R.string.task_deleted), Toast.LENGTH_SHORT).show();
+        }
+        // Deleting specified item from array list:
+        tasks.remove(position);
+
+        // Re-setting tasks:
+        setTasks(tasks);
+
+        //Item Changed:
+        notifyItemChanged(position);
+    }
+
+    /**
+     * If the TaskRecyclerAdapter instance has been set to allow the linked question set to be started
+     * by clicking the task, starts the questions set.
+     *
+     * @param questionSetId The ID of the question set to be started.
+     */
+    private void startQuestionSet(int questionSetId) {
+        if (!this.linked) {
+            return;
+        }
+        context.startActivity(new Intent(context, QuestionSetActivity.class)
+                .putExtra(QUESTION_SET_ID, questionSetId));
     }
 
     /**
@@ -152,7 +195,7 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
          */
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
+            switch (view.getId()) {
 
                 case (R.id.imgDelete):
                     deleteTask(getAdapterPosition());
@@ -162,46 +205,6 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
                     startQuestionSet(tasks.get(getAdapterPosition()).getQuestionSetId());
             }
         }
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    public void setTasks(ArrayList<Task> tasks){
-        this.tasks = tasks;
-        notifyDataSetChanged();
-    }
-
-
-    /**
-     * If the TaskRecyclerAdapter instance has been set to allow tasks to be deletable, deletes the
-     * selected task.
-     * @param position The index of the Task instance in the ArrayList.
-     */
-    private void deleteTask(int position){
-        if (!this.deletable){return;}
-
-        // Deleting specified task from the database:
-       if(databaseHelper.deleteTask(tasks.get(position))){
-           Toast.makeText(context, context.getString(R.string.task_deleted), Toast.LENGTH_SHORT).show();
-       }
-        // Deleting specified item from array list:
-        tasks.remove(position);
-
-       // Re-setting tasks:
-        setTasks(tasks);
-
-        //Item Changed:
-        notifyItemChanged(position);
-    }
-
-    /**
-     * If the TaskRecyclerAdapter instance has been set to allow the linked question set to be started
-     * by clicking the task, starts the questions set.
-     * @param questionSetId The ID of the question set to be started.
-     */
-    private void startQuestionSet(int questionSetId){
-        if (!this.linked){return;}
-        context.startActivity(new Intent(context, QuestionSetActivity.class)
-                .putExtra(QUESTION_SET_ID, questionSetId));
     }
 
 

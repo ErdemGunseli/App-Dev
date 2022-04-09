@@ -28,15 +28,15 @@ public class QuestionSetResult {
     /**
      * Constructor for Question Set Result
      *
-     * @param id The ID of the question set result.
-     * @param questionSetId The ID of the question set the result is for.
-     * @param accountId The ID of the account that completed the question set.
-     * @param pointsEarned The number of points earned from the question set.
+     * @param id             The ID of the question set result.
+     * @param questionSetId  The ID of the question set the result is for.
+     * @param accountId      The ID of the account that completed the question set.
+     * @param pointsEarned   The number of points earned from the question set.
      * @param pointsPossible The number of points possible from the question set.
-     * @param firstAttempt The number of questions solved with 1 attempt.
-     * @param secondAttempt The number of questions solved with 2 attempts.
-     * @param moreAttempts The number of questions solved with 3 attempts.
-     * @param dateCompleted The date when the question set has been completed.
+     * @param firstAttempt   The number of questions solved with 1 attempt.
+     * @param secondAttempt  The number of questions solved with 2 attempts.
+     * @param moreAttempts   The number of questions solved with 3 attempts.
+     * @param dateCompleted  The date when the question set has been completed.
      */
     public QuestionSetResult(int id, int questionSetId, int accountId, int pointsEarned, int pointsPossible, int firstAttempt, int secondAttempt, int moreAttempts, String dateCompleted) {
         this.id = id;
@@ -47,7 +47,7 @@ public class QuestionSetResult {
         this.result = (int) (((float) pointsEarned / (float) pointsPossible) * 100);
         this.firstAttempt = firstAttempt;
         this.secondAttempt = secondAttempt;
-        this.moreAttempts =moreAttempts;
+        this.moreAttempts = moreAttempts;
         this.dateCompleted = dateCompleted;
     }
 

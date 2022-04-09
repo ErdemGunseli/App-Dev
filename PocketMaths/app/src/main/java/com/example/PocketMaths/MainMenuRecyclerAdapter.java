@@ -104,11 +104,11 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
      */
     private void setCardViewState(ViewHolder holder) {
         // If the QuestionSet is expanded, display the expansion CardView:
-        if (holder.getAdapterPosition() == expandedIndex){
+        if (holder.getAdapterPosition() == expandedIndex) {
             TransitionManager.beginDelayedTransition(holder.relMainMenuItem);
             holder.cvExpandedMainMenuItem.setVisibility(View.VISIBLE);
-        } else{
-        // Otherwise, hide the expansion CardView:
+        } else {
+            // Otherwise, hide the expansion CardView:
             TransitionManager.beginDelayedTransition(holder.relMainMenuItem);
             holder.cvExpandedMainMenuItem.setVisibility(View.GONE);
         }
@@ -196,11 +196,10 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
 
                 case (R.id.cvCollapsedMainMenuItem):
 
-                    if (adapterPosition == expandedIndex){
+                    if (adapterPosition == expandedIndex) {
                         // If the CardView clicked is already expanded, collapsing it:
                         expandedIndex = -1;
-                    }
-                    else{
+                    } else {
                         // Otherwise, expanding the clicked CardView:
                         notifyItemChanged(expandedIndex);
                         expandedIndex = adapterPosition;

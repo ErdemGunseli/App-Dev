@@ -120,14 +120,14 @@ public class TaskCreateActivity extends AppCompatActivity implements View.OnClic
      */
     private void setUpSwitch() {
         swAddReward.setOnCheckedChangeListener((CompoundButton compoundButton, boolean checked) -> {
-                if (checked) {
-                    TransitionManager.beginDelayedTransition(svCreateTask);
-                    edtTxtReward.setVisibility(View.VISIBLE);
-                } else {
-                    TransitionManager.beginDelayedTransition(svCreateTask);
-                    edtTxtReward.setVisibility(View.GONE);
-                    edtTxtReward.setText("");
-                }
+            if (checked) {
+                TransitionManager.beginDelayedTransition(svCreateTask);
+                edtTxtReward.setVisibility(View.VISIBLE);
+            } else {
+                TransitionManager.beginDelayedTransition(svCreateTask);
+                edtTxtReward.setVisibility(View.GONE);
+                edtTxtReward.setText("");
+            }
         });
     }
 
@@ -168,8 +168,8 @@ public class TaskCreateActivity extends AppCompatActivity implements View.OnClic
     private void setUpSlider() {
         sliderPassMark.setValue(0.0F);
         sliderPassMark.addOnChangeListener((@NonNull Slider slider, float value, boolean fromUser) -> {
-                passMark = (int) value;
-                txtPassMark.setText(String.format(getString(R.string.pass_Mark), passMark));
+            passMark = (int) value;
+            txtPassMark.setText(String.format(getString(R.string.pass_Mark), passMark));
         });
     }
 

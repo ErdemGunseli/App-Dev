@@ -53,7 +53,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
     private boolean inTransition = false;
     private DecimalFormat decimalFormat = new DecimalFormat("#.###");
 
-    private RelativeLayout relQuestionSet, relQuestionAnswerOptions,relWrittenAnswer;
+    private RelativeLayout relQuestionSet, relQuestionAnswerOptions, relWrittenAnswer;
     private ScrollView svQuestionSet;
     private TextView txtQuestion, txtQuestionSetName, txtCurrentQuestionIndex, txtPointsPossible, txtMessage;
     private Button btnConfirm, btnRevealAnswer;
@@ -61,7 +61,6 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
     private EditText edtTxtAnswer;
     private RadioButton[] radioButtons;
     private RadioGroup radioGroup;
-
 
 
     /**
@@ -199,7 +198,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
             radioButtons[index] = new RadioButton(this);
             radioButtons[index].setTextColor(getResources().getColor(R.color.Secondary));
             radioButtons[index].setTextSize(16);
-            radioButtons[index].setPadding(0,25,0,25);
+            radioButtons[index].setPadding(0, 25, 0, 25);
             radioButtons[index].setText(Html.fromHtml(currentQuestion.getAnswerOptions()[index]));
             radioGroup.addView(radioButtons[index]);
         }
@@ -401,7 +400,9 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
      */
     @Override
     public void onClick(View view) {
-        if (inTransition){return;}
+        if (inTransition) {
+            return;
+        }
 
         switch (view.getId()) {
 
@@ -437,7 +438,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
                 // Error catching if input is invalid:
                 try {
                     questionFeedback();
-                }catch (Exception e){
+                } catch (Exception e) {
                     TransitionManager.beginDelayedTransition(relQuestionSet);
                     txtMessage.setText(getString(R.string.invalid_answer));
                     vibrate();
@@ -447,7 +448,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
             case (R.id.btnRevealAnswer):
                 //Only losing points if they have not earned points:
 
-                if (currentQuestion.getPointsEarned() == 0){
+                if (currentQuestion.getPointsEarned() == 0) {
                     currentQuestion.setAttempts(2);
                     txtPointsPossible.setText(String.format(getString(R.string.points), 0));
                 }
@@ -536,8 +537,8 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
      * @return The index of the checked RadioButton instance.
      */
     private int getCheckedRadioButtonIndex() {
-        for (int index = 0; index < radioButtons.length; index++){
-            if (radioButtons[index].isChecked()){
+        for (int index = 0; index < radioButtons.length; index++) {
+            if (radioButtons[index].isChecked()) {
                 return index;
             }
         }
@@ -548,7 +549,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
      * Creates haptic feedback.
      * Uses the appropriate method depending on the device version.
      */
-    private void vibrate(){
+    private void vibrate() {
         // Creating haptic feedback:
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 

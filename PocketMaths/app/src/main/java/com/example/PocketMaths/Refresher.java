@@ -14,8 +14,8 @@ public class Refresher {
     /**
      * Constructor for Refresher
      *
-     * @param id The ID of the refresher.
-     * @param topic The topic of the refresher.
+     * @param id      The ID of the refresher.
+     * @param topic   The topic of the refresher.
      * @param imageId The image ID of the image of the refresher.
      */
     public Refresher(int id, String topic, int imageId) {

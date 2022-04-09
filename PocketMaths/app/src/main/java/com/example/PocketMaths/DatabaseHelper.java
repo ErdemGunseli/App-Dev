@@ -24,6 +24,8 @@ import java.util.ArrayList;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
+    //TODO: Return value of insert is never used. Use it or change to void.
+
     /**
      * Constructor
      *
