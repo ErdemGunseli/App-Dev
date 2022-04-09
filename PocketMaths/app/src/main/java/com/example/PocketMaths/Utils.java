@@ -202,19 +202,19 @@ public class Utils {
         Question[] decimalsFractions = new Question[]{
 
                 new Question("Fractions & Decimals",
-                        "<br>Express <sup>1</sup>/<sub>10</sub> as a decimal.<br>", 0,
+                        "<br>Express <sup>1</sup>/<sub>10</sub> as a <b>decimal</b>.<br>", 0,
                         (float) 0.1, 50),
 
                 new Question("Fractions & Decimals",
-                        "Express the fraction represented by the diagram as a decimal.", R.drawable.fraction_3_4,
+                        "Express the fraction represented by the diagram as a <b>decimal</b>.", R.drawable.fraction_3_4,
                         (float) 0.75, 100),
 
                 new Question("Fractions & Decimals",
-                        "<br>Express <sup>1</sup>/<sub>8</sub> as a decimal.<br>", 0,
+                        "<br>Express <sup>1</sup>/<sub>8</sub> as a <b>decimal</b>.<br>", 0,
                         (float) 0.125, 125),
 
                 new Question("Fractions & Decimals",
-                        "Which of the following is equal to 0.24?", 0,
+                        "Which of the following is <b>equal</b> to 0.24?", 0,
                         new String[]{"<sup>4</sup>/<sub>20</sub>", "<sup>24</sup>/<sub>10</sub>", "<sup>48</sup>/<sub>50</sub>", "<sup>6</sup>/<sub>25</sub>"},
                         3, 150),
 

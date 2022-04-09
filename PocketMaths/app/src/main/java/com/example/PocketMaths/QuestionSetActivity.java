@@ -53,14 +53,15 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
     private boolean inTransition = false;
     private DecimalFormat decimalFormat = new DecimalFormat("#.###");
 
-    private RelativeLayout relQuestionSet;
+    private RelativeLayout relQuestionSet, relQuestionAnswerOptions,relWrittenAnswer;
     private ScrollView svQuestionSet;
     private TextView txtQuestion, txtQuestionSetName, txtCurrentQuestionIndex, txtPointsPossible, txtMessage;
-    private RadioGroup rgQuestionAnswerOptions;
-    private RadioButton answerA, answerB, answerC, answerD;
     private Button btnConfirm, btnRevealAnswer;
     private ImageView imgExit, imgQuestion, imgPrevious, imgNext, imgHelp, imgResult;
     private EditText edtTxtAnswer;
+    private RadioButton[] radioButtons;
+    private RadioGroup radioGroup;
+
 
 
     /**
@@ -89,6 +90,8 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
      */
     private void initViews() {
         relQuestionSet = findViewById(R.id.relQuestionSet);
+        relQuestionAnswerOptions = findViewById(R.id.relQuestionAnswerOptions);
+        relWrittenAnswer = findViewById(R.id.relWrittenAnswer);
         svQuestionSet = findViewById(R.id.svQuestionSet);
         txtQuestionSetName = findViewById(R.id.txtQuestionSetName);
         txtCurrentQuestionIndex = findViewById(R.id.txtCurrentQuestionIndex);
@@ -101,11 +104,6 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         imgNext = findViewById(R.id.imgNext);
         imgHelp = findViewById(R.id.imgHelp);
         imgResult = findViewById(R.id.imgResult);
-        rgQuestionAnswerOptions = findViewById(R.id.rgQuestionAnswerOptions);
-        answerA = findViewById(R.id.answerA);
-        answerB = findViewById(R.id.answerB);
-        answerC = findViewById(R.id.answerC);
-        answerD = findViewById(R.id.answerD);
         btnConfirm = findViewById(R.id.btnConfirm);
         btnRevealAnswer = findViewById(R.id.btnRevealAnswer);
         edtTxtAnswer = findViewById(R.id.edtTxtAnswer);
@@ -120,6 +118,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         // Setting the EditText input type here to allow signed decimals.
         edtTxtAnswer.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
     }
+
 
     /**
      * Sets the appropriate instance of QuestionSet depending on extra data from the Intent instance.
@@ -160,9 +159,9 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         inputMethodManager.hideSoftInputFromWindow(svQuestionSet.getWindowToken(), 0);
 
         if (currentQuestion.getType().equals(MULTIPLE_CHOICE)) {
+            createRadioButtons();
             showMultipleChoice();
             checkRelevantRadioButton();
-            setAnswerOptions();
         } else if (currentQuestion.getType().equals(WRITTEN)) {
             displayRelevantAnswer();
             showWritten();
@@ -183,6 +182,30 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
 
 
     }
+
+    /**
+     * Creates RadioButton instances and sets the appropriate data to it depending on the number and data
+     * from each answer option.
+     */
+    private void createRadioButtons() {
+
+        relQuestionAnswerOptions.removeView(radioGroup);
+        String[] answerOptions = currentQuestion.getAnswerOptions();
+        radioButtons = new RadioButton[answerOptions.length];
+        radioGroup = new RadioGroup(this);
+        radioGroup.setOrientation(RadioGroup.VERTICAL);
+
+        for (int index = 0; index < answerOptions.length; index++) {
+            radioButtons[index] = new RadioButton(this);
+            radioButtons[index].setTextColor(getResources().getColor(R.color.Secondary));
+            radioButtons[index].setTextSize(16);
+            radioButtons[index].setPadding(0,25,0,25);
+            radioButtons[index].setText(Html.fromHtml(currentQuestion.getAnswerOptions()[index]));
+            radioGroup.addView(radioButtons[index]);
+        }
+        relQuestionAnswerOptions.addView(radioGroup);
+    }
+
 
     /**
      * Hides back arrow in the first question.
@@ -214,6 +237,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
      */
     private void checkRelevantRadioButton() {
         int indexToDisplay;
+        radioGroup.clearCheck();
 
         if (currentQuestion.getAttempts() > 0) {
             if (currentQuestion.getPointsEarned() != 0) {
@@ -222,37 +246,9 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
                 ArrayList<Integer> userAnswers = currentQuestion.getUserAnswerIndexes();
                 indexToDisplay = userAnswers.get(userAnswers.size() - 1);
             }
-            switch (indexToDisplay) {
-                case (0):
-                    rgQuestionAnswerOptions.check(R.id.answerA);
-                    break;
-                case (1):
-                    rgQuestionAnswerOptions.check(R.id.answerB);
-                    break;
-                case (2):
-                    rgQuestionAnswerOptions.check(R.id.answerC);
-                    break;
-                case (3):
-                    rgQuestionAnswerOptions.check(R.id.answerD);
-                    break;
-                default:
-                    break;
-            }
-        } else {
-            rgQuestionAnswerOptions.clearCheck();
-
+            RadioButton targetButton = radioButtons[indexToDisplay];
+            targetButton.setChecked(true);
         }
-    }
-
-    /**
-     * Sets the relevant answer option to each of the RadioButton objects.
-     * Formats the answer options text such that subscripts and superscripts can be displayed correctly.
-     */
-    private void setAnswerOptions() {
-        answerA.setText(Html.fromHtml(currentQuestion.getAnswerOptions()[0]));
-        answerB.setText(Html.fromHtml(currentQuestion.getAnswerOptions()[1]));
-        answerC.setText(Html.fromHtml(currentQuestion.getAnswerOptions()[2]));
-        answerD.setText(Html.fromHtml(currentQuestion.getAnswerOptions()[3]));
     }
 
     /**
@@ -275,14 +271,14 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
+
     /**
      * Hides the View elements pertaining to written questions and displays those for multiple
      * choice questions.
      */
     private void showMultipleChoice() {
-        rgQuestionAnswerOptions.setVisibility(View.VISIBLE);
-        edtTxtAnswer.setVisibility(View.GONE);
-        btnRevealAnswer.setVisibility(View.GONE);
+        relQuestionAnswerOptions.setVisibility(View.VISIBLE);
+        relWrittenAnswer.setVisibility(View.GONE);
     }
 
     /**
@@ -290,9 +286,8 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
      * questions.
      */
     private void showWritten() {
-        rgQuestionAnswerOptions.setVisibility(View.GONE);
-        edtTxtAnswer.setVisibility(View.VISIBLE);
-        btnRevealAnswer.setVisibility(View.VISIBLE);
+        relWrittenAnswer.setVisibility(View.VISIBLE);
+        relQuestionAnswerOptions.setVisibility(View.GONE);
 
         edtTxtAnswer.clearFocus();
     }
@@ -541,18 +536,12 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
      * @return The index of the checked RadioButton instance.
      */
     private int getCheckedRadioButtonIndex() {
-        switch (rgQuestionAnswerOptions.getCheckedRadioButtonId()) {
-            case (R.id.answerA):
-                return 0;
-            case (R.id.answerB):
-                return 1;
-            case (R.id.answerC):
-                return 2;
-            case (R.id.answerD):
-                return 3;
-            default:
-                return -1;
+        for (int index = 0; index < radioButtons.length; index++){
+            if (radioButtons[index].isChecked()){
+                return index;
+            }
         }
+        return -1;
     }
 
     /**
