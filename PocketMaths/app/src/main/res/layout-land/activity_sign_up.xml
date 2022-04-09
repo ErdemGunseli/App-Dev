@@ -25,11 +25,11 @@
                     android:id="@+id/txtSignUp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/YellowOrange"
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:text="@string/sign_up"
+                    android:textColor="@color/YellowOrange"
                     android:textSize="21sp"
                     android:textStyle="bold" />
 
@@ -113,7 +113,7 @@
                     android:inputType="numberPassword"
                     android:maxLength="4"
                     android:textSize="16sp"
-                    android:autofillHints="password"
+                    android:importantForAutofill="no"
                     />
 
 
@@ -127,7 +127,7 @@
                     android:inputType="numberPassword"
                     android:maxLength="4"
                     android:textSize="16sp"
-                    android:autofillHints="password"
+                    android:importantForAutofill="no"
                     />
 
 
