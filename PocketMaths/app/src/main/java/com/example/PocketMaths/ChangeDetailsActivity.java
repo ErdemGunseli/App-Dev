@@ -153,6 +153,10 @@ public class ChangeDetailsActivity extends AppCompatActivity implements View.OnC
             Utils.getInstance().showSnackBar(this, relSignUp, getString(R.string.pin_length), getString(R.string.ok));
         } else if (!edtTxtPin.getText().toString().equals(edtTxtConfirmPin.getText().toString())) {
             Utils.getInstance().showSnackBar(this, relSignUp, getString(R.string.pins_do_not_match), getString(R.string.ok));
+            // If an account of this email is not the current account, that email cannot be used:
+        } else if (databaseHelper.getAccountByEmail(edtTxtEmail.getText().toString()) != databaseHelper.getCurrentAccount()) {
+            //
+            Utils.getInstance().showSnackBar(this, relSignUp, getString(R.string.email_registered), getString(R.string.ok));
         } else {
             return true;
         }
