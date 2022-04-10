@@ -190,7 +190,7 @@ public class TaskCreateActivity extends AppCompatActivity implements View.OnClic
      */
     private void showIncompleteTasks() {
         this.tasks = new ArrayList<>();
-        for (Task task : databaseHelper.getTasks()) {
+        for (Task task : databaseHelper.getTasks(Utils.getInstance().getUserAccount().getId())) {
             if (!task.isCompleted()) {
                 this.tasks.add(task);
             }

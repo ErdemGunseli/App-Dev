@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -74,6 +75,8 @@ public class ChangeDetailsActivity extends AppCompatActivity implements View.OnC
 
         btnBack.setOnClickListener(this);
         btnConfirm.setOnClickListener(this);
+
+        edtTxtEmail.setEnabled(false);
     }
 
     /**
@@ -116,6 +119,9 @@ public class ChangeDetailsActivity extends AppCompatActivity implements View.OnC
                 if (inputsValid()) {
                     updateAccount();
                 }
+
+
+            default:
                 break;
         }
     }
@@ -154,9 +160,6 @@ public class ChangeDetailsActivity extends AppCompatActivity implements View.OnC
         } else if (!edtTxtPin.getText().toString().equals(edtTxtConfirmPin.getText().toString())) {
             Utils.getInstance().showSnackBar(this, relSignUp, getString(R.string.pins_do_not_match), getString(R.string.ok));
             // If an account of this email is not the current account, that email cannot be used:
-        } else if (databaseHelper.getAccountByEmail(edtTxtEmail.getText().toString()) != databaseHelper.getCurrentAccount()) {
-            //
-            Utils.getInstance().showSnackBar(this, relSignUp, getString(R.string.email_registered), getString(R.string.ok));
         } else {
             return true;
         }
@@ -174,7 +177,6 @@ public class ChangeDetailsActivity extends AppCompatActivity implements View.OnC
 
         account.setParentName(edtTxtParentName.getText().toString().toUpperCase(Locale.ROOT));
         account.setStudentName(edtTxtStudentName.getText().toString().toUpperCase(Locale.ROOT));
-        account.setEmail(edtTxtEmail.getText().toString().toLowerCase(Locale.ROOT));
         account.setPassword(edtTxtPassword.getText().toString());
         account.setPin(Integer.parseInt(edtTxtPin.getText().toString()));
         account.setAccountType(Member);

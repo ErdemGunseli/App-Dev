@@ -141,6 +141,10 @@ public class Utils {
                         "Which of the following is the <b>greatest<b> in value?", 0,
                         new String[]{"<sup>1</sup>/<sub>2</sub>", "<sup>5</sup>/<sub>3</sub>", "1", "<sup>7</sup>/<sub>2</sub>"}, 3, 100),
 
+                new Question("Comparing Fractions",
+                        "Liam claims that the fractions <sup>4</sup>/<sub>5</sub> and <sup>5</sup>/<sub>6</sub> are <b>equal</b>, since 1 is added to both the numerator and the denominator. Lucy claims that <sup>4</sup>/<sub>5</sub> is <b>greater</b>.", 0,
+                        new String[]{"Liam is correct.", "Lucy is correct.", "Neither is correct."}, 2, 100),
+
 
                 new Question("Comparing Fractions",
                         "Which of the following is the <b>greatest<b> in value?", 0,

@@ -132,8 +132,6 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
         // Re-setting tasks:
         setTasks(tasks);
 
-        //Item Changed:
-        notifyItemChanged(position);
     }
 
     /**

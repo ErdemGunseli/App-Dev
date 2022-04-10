@@ -70,6 +70,7 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
      */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         QuestionSet questionSet = questionSets.get(position);
         holder.txtQuestionSetName.setText(questionSet.getName());
         // X Questions
@@ -145,10 +146,10 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
      * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      */
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private RelativeLayout relMainMenuItem;
+        private RelativeLayout relMainMenuItem, relCollapsedMainMenuItem;
         private TextView txtQuestionSetName, txtQuestionSetDescription, txtNumberOfQuestions, txtCurrentQuestionIndex;
         private ImageView imgQuestionSet;
-        private CardView cvCollapsedMainMenuItem, cvExpandedMainMenuItem;
+        private CardView cvExpandedMainMenuItem;
         private Button btnStartQuestionSet;
 
         /**
@@ -169,17 +170,20 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
         private void initViews() {
             // Outside an activity we need the following syntax:
             relMainMenuItem = itemView.findViewById(R.id.relMainMenuItem);
+            relCollapsedMainMenuItem = itemView.findViewById(R.id.relCollapsedMainMenuItem);
             txtQuestionSetName = itemView.findViewById(R.id.txtQuestionSetName);
             imgQuestionSet = itemView.findViewById(R.id.imgQuestionSet);
             txtNumberOfQuestions = itemView.findViewById(R.id.txtNumberOfQuestions);
             txtCurrentQuestionIndex = itemView.findViewById(R.id.txtCurrentQuestionIndex);
             txtQuestionSetDescription = itemView.findViewById(R.id.txtQuestionSetDescription);
-            cvCollapsedMainMenuItem = itemView.findViewById(R.id.cvCollapsedMainMenuItem);
             cvExpandedMainMenuItem = itemView.findViewById(R.id.cvExpandedMainMenuItem);
             btnStartQuestionSet = itemView.findViewById(R.id.btnStartQuestionSet);
 
-            cvCollapsedMainMenuItem.setOnClickListener(this);
+
+            relCollapsedMainMenuItem.setOnClickListener(this);
             btnStartQuestionSet.setOnClickListener(this);
+
+
         }
 
         /**
@@ -194,7 +198,7 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
 
             switch (view.getId()) {
 
-                case (R.id.cvCollapsedMainMenuItem):
+                case (R.id.relCollapsedMainMenuItem):
 
                     if (adapterPosition == expandedIndex) {
                         // If the CardView clicked is already expanded, collapsing it:

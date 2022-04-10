@@ -254,7 +254,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
      * Only completes one task - all tasks for a given question set should be completed separately.
      */
     private void completeTask() {
-        ArrayList<Task> tasks = databaseHelper.getTasks();
+        ArrayList<Task> tasks = databaseHelper.getTasks(Utils.getInstance().getUserAccount().getId());
 
         // If the question set ID of the task matches that of the completed task, and the pass mark
         // is reached, complete the question set.
@@ -279,8 +279,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
         int v = view.getId();
         if (v == R.id.imgExit || v == R.id.btnFinish) {
-            questionSet.reset();
-            startActivity(new Intent(this, MainMenuActivity.class));
+            onBackPressed();
         }
     }
 
@@ -291,6 +290,7 @@ public class ResultsActivity extends AppCompatActivity implements View.OnClickLi
      */
     @Override
     public void onBackPressed() {
+        questionSet.reset();
         startActivity(new Intent(this, MainMenuActivity.class));
         finish();
     }

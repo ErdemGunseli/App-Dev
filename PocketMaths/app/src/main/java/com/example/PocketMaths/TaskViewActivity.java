@@ -130,7 +130,7 @@ public class TaskViewActivity extends AppCompatActivity implements View.OnClickL
      * Sorts each task linked to the current account into two ArrayLists - complete and incomplete.
      */
     private void organiseTasks() {
-        for (Task task : databaseHelper.getTasks()) {
+        for (Task task : databaseHelper.getTasks(Utils.getInstance().getUserAccount().getId())) {
             if (task.isCompleted()) {
                 completedTasks.add(task);
             } else {

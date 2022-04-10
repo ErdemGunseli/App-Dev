@@ -20,9 +20,9 @@
     <string name="email_registered">This Email Address Is Already Registered, Sign In Instead</string>
 
     <string name="email_sent">Email Sent</string>
-    <string name="check_email">Check The Email</string>
-    <string name="check_password">Check The Password</string>
-    <string name="check_password_length">Choose A Longer Password</string>
+    <string name="check_email">Please Check The Email</string>
+    <string name="check_password">Please Check The Password</string>
+    <string name="check_password_length">Please Choose A Longer Password</string>
     <string name="user_not_found">User Not Found</string>
     <string name="empty_inputs">Please Fill In All The Inputs</string>
     <string name="input_lengths">Please Check The Lengths Of The Inputs</string>

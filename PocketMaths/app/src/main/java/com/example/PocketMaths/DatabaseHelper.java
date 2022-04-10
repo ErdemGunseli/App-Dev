@@ -127,14 +127,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         database.close();
 
         // if insert is negative, it has failed, if it is positive, it was successful:
-        return insert == -1;
+        return insert > 0;
     }
 
-    public ArrayList<Task> getTasks() {
+    public ArrayList<Task> getTasks(int accountId) {
         ArrayList<Task> tasks = new ArrayList<>();
 
         SQLiteDatabase database = this.getReadableDatabase();
-        Cursor cursor = database.rawQuery("SELECT * FROM TASKS WHERE ACCOUNT_ID=?", new String[]{String.valueOf(Utils.getInstance().getUserAccount().getId())});
+        Cursor cursor = database.rawQuery("SELECT * FROM TASKS WHERE ACCOUNT_ID=?", new String[]{String.valueOf(accountId)});
 
         if (cursor.moveToFirst()) {
             do {
@@ -164,12 +164,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         database.close();
 
         // if insert is negative, it has failed, if it is positive, it was successful:
-        return result == -1;
+        return result > 0;
     }
 
     public void completeTask(Task task) {
         SQLiteDatabase database = this.getWritableDatabase();
-        database.execSQL("UPDATE TASKS SET IS_COMPLETED = TRUE WHERE ID = ?", new String[]{String.valueOf(task.getId())});
+        database.execSQL("UPDATE TASKS SET IS_COMPLETED = 1 WHERE ID = ?", new String[]{String.valueOf(task.getId())});
 
         // Cleaning Up:
         database.close();
@@ -195,7 +195,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         database.close();
 
         // if insert is negative, it has failed, if it is positive, it was successful:
-        return insert == -1;
+        return insert > 0;
     }
 
     public ArrayList<QuestionSetResult> getQuestionSetResults() {
@@ -244,7 +244,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         database.close();
 
         // if insert is negative, it has failed, if it is positive, it was successful:
-        return insert == -1;
+        return insert > 0;
     }
 
     public Account getAccountById(int id) {
@@ -324,7 +324,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             long insert = database.insert("CURRENT_ACCOUNT", null, contentValues);
 
             // if insert is negative, it has failed, if it is positive, it was successful:
-            if (insert == -1) {
+            if (insert > 0) {
                 // Cleaning Up:
                 database.close();
                 return false;
@@ -392,7 +392,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long insert = database.insert("APP_PREFERENCES", null, contentValues);
 
         // if insert is negative, it has failed, if it is positive, it was successful:
-        if (insert == -1) {
+        if (insert < 0) {
             // Cleaning Up:
             database.close();
             cursor.close();
@@ -444,7 +444,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long insert = database.insert("APP_PREFERENCES", null, contentValues);
 
         // if insert is negative, it has failed, if it is positive, it was successful:
-        if (insert == -1) {
+        if (insert < 0) {
             // Cleaning Up:
             database.close();
             cursor.close();

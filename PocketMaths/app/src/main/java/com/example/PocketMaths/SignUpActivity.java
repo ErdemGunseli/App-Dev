@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,7 +37,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private EditText edtTxtParentName, edtTxtStudentName, edtTxtEmail, edtTxtPassword, edtTxtConfirmPassword, edtTxtPin, edtTxtConfirmPin;
     private Button btnBack, btnConfirm;
 
-    private ScrollView svTest;
 
     /**
      * Overrides the onCreate method of the super class.

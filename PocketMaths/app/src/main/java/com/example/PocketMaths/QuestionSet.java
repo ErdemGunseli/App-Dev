@@ -188,6 +188,8 @@ public class QuestionSet {
         for (Question question : this.questions) {
             question.setPointsEarned(0);
             question.setAttempts(0);
+            question.setUserAnswerIndexes(new ArrayList<>());
+            question.setUserWrittenAnswers(new ArrayList<>());
         }
     }
 

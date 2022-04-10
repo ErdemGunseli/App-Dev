@@ -107,7 +107,8 @@ public class PinVerificationActivity extends AppCompatActivity implements View.O
                 inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
                 // Checking the pin entered by the user:
-                if (Utils.getInstance().getUserAccount().checkPin(Integer.parseInt(edtTxtPin.getText().toString()))) {
+                if (edtTxtPin.getText().toString().isEmpty()){break;}
+                else if (Utils.getInstance().getUserAccount().checkPin(Integer.parseInt(edtTxtPin.getText().toString()))) {
                     startActivity(new Intent(this, Utils.getInstance().getTargetClass()));
                     finish();
                 } else {

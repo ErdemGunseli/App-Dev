@@ -187,8 +187,6 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
      * from each answer option.
      */
     private void createRadioButtons() {
-
-        relQuestionAnswerOptions.removeView(radioGroup);
         String[] answerOptions = currentQuestion.getAnswerOptions();
         radioButtons = new RadioButton[answerOptions.length];
         radioGroup = new RadioGroup(this);
@@ -203,6 +201,10 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
             radioGroup.addView(radioButtons[index]);
         }
         relQuestionAnswerOptions.addView(radioGroup);
+    }
+
+    private void removeRadioButtons(){
+        relQuestionAnswerOptions.removeView(radioGroup);
     }
 
 
@@ -508,6 +510,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
                     inTransition = true;
                     Handler handler = new Handler();
                     handler.postDelayed(() -> {
+                        removeRadioButtons();
                         TransitionManager.beginDelayedTransition(relQuestionSet);
                         inTransition = false;
                         setData(questionSet);
