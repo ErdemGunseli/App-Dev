@@ -32,7 +32,6 @@ public class ResultsRecyclerAdapter extends RecyclerView.Adapter<ResultsRecycler
 
     private QuestionSet questionSet;
     private Context context;
-    private DecimalFormat decimalFormat = new DecimalFormat("#.###");
 
 
     /**
@@ -89,7 +88,12 @@ public class ResultsRecyclerAdapter extends RecyclerView.Adapter<ResultsRecycler
             chosenAnswer = Utils.getInstance().formatString(answers[userAnswerIndexes.get(0)]);
         } else {
             correctAnswer = Utils.getInstance().formatString(String.valueOf(currentQuestion.getCorrectWrittenAnswer()));
-            chosenAnswer = Utils.getInstance().formatString(String.valueOf(currentQuestion.getUserWrittenAnswers().get(0)));
+            if (currentQuestion.answerShown()){
+                chosenAnswer = "?";
+            }
+            else {
+                chosenAnswer = Utils.getInstance().formatString(String.valueOf(currentQuestion.getUserWrittenAnswers().get(0)));
+            }
         }
 
         // Displaying their first answer and the correct answer:

@@ -81,7 +81,7 @@
                 android:layout_marginEnd="5dp"
                 android:layout_below="@id/rvThemes"
                 android:src="@drawable/ic_settings"
-                android:contentDescription="@string/desc_settings"
+                android:contentDescription="@string/settings"
                 />
 
             <TextView

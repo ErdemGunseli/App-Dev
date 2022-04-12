@@ -196,7 +196,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
             radioButtons[index] = new RadioButton(this);
             radioButtons[index].setTextColor(getResources().getColor(R.color.Secondary));
             radioButtons[index].setTextSize(16);
-            radioButtons[index].setPadding(0, 25, 0, 25);
+            radioButtons[index].setPadding(0, 30, 0, 30);
             radioButtons[index].setText(Html.fromHtml(currentQuestion.getAnswerOptions()[index]));
             radioGroup.addView(radioButtons[index]);
         }
@@ -325,7 +325,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
      */
     private void setResultImage() {
 
-        if (currentQuestion.getPointsEarned() == 0 && currentQuestion.getAttempts() > 0) {
+        if ((currentQuestion.getPointsEarned() == 0 && currentQuestion.getAttempts() > 0) || currentQuestion.answerShown()) {
             imgResult.setImageResource(R.drawable.ic_practice);
         } else if (currentQuestion.getPointsEarned() > 0) {
             imgResult.setImageResource(R.drawable.ic_perfect);
@@ -415,6 +415,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
 
             case (R.id.imgPrevious):
                 // Decreasing the current question index by 1:
+                removeRadioButtons();
                 questionSet.setCurrentQuestionIndex(questionSet.getCurrentQuestionIndex() - 1);
                 TransitionManager.beginDelayedTransition(relQuestionSet);
                 setData(questionSet);
@@ -423,6 +424,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
             case (R.id.imgNext):
                 // If the current question has been attempted, going to the next:
                 if (currentQuestion.getAttempts() > 0) {
+                    removeRadioButtons();
                     // Increasing the current question index by 1
                     questionSet.setCurrentQuestionIndex(questionSet.getCurrentQuestionIndex() + 1);
 
@@ -451,7 +453,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
                 //Only losing points if they have not earned points:
 
                 if (currentQuestion.getPointsEarned() == 0) {
-                    currentQuestion.setAttempts(2);
+                    currentQuestion.setAnswerShown(true);
                     txtPointsPossible.setText(String.format(getString(R.string.points), 0));
                 }
 

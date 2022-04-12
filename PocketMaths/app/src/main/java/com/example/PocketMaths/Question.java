@@ -30,6 +30,8 @@ public class Question {
     private int pointsPossible;
     private int pointsEarned = 0;
 
+    private boolean answerShown;
+
     /**
      * Constructor for Multiple Choice Question
      *
@@ -173,7 +175,7 @@ public class Question {
      */
     public void calculatePointsEarned() {
         // If the question was answered correctly, points can no longer be decreased:
-        if (this.pointsEarned == 0) {
+        if (this.pointsEarned == 0 & !answerShown) {
             if (attempts == 0) {
                 this.pointsEarned = this.pointsPossible;
             } else if (this.attempts == 1) {
@@ -220,5 +222,13 @@ public class Question {
 
     public void setUserWrittenAnswers(ArrayList<Float> userWrittenAnswers) {
         this.userWrittenAnswers = userWrittenAnswers;
+    }
+
+    public boolean answerShown() {
+        return answerShown;
+    }
+
+    public void setAnswerShown(boolean answerShown) {
+        this.answerShown = answerShown;
     }
 }

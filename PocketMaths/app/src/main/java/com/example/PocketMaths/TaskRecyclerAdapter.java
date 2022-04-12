@@ -196,6 +196,7 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
             switch (view.getId()) {
 
                 case (R.id.imgDelete):
+                    if (!deletable){return;}
                     deleteTask(getAdapterPosition());
                     break;
 

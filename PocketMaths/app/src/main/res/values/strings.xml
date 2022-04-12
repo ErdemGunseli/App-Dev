@@ -56,7 +56,6 @@
     <string name="solved_x_out_of_x_1attempt">Solved %d out of %d with one attempt.</string>
     <string name="solved_x_out_of_x_2attempts">Solved %d out of the remaining %d with two attempts.</string>
     <string name="result_percent">Result: %d%%</string>
-    <string name="question_mark">/?</string>
 
     <string name="did_great">You Did Great On: </string>
     <string name="practice">You Could Practice: </string>
@@ -69,7 +68,7 @@
     <string name="correct_answer">Correct Answer: %s</string>
     <string name="list">\n\t %d) %s</string>
 
-    <string name="account">Account:</string>
+    <string name="account">Account</string>
     <string name="history">History: </string>
     <string name="try_question_sets">Try Questions</string>
     <string name="account_details">Account Details:</string>
@@ -86,7 +85,7 @@
     <string name="save_changes">Save Changes</string>
 
     <string name="pass_Mark">Pass Mark: %d%%</string>
-    <string name="create_task">Create Task:</string>
+    <string name="create_task">Create Task</string>
     <string name="create">Create</string>
     <string name="remaining_tasks">Remaining Tasks:</string>
     <string name="choose_qs">Please Select a Question Set</string>
@@ -101,7 +100,7 @@
     <string name="task_deleted">Task Deleted</string>
     <string name="task_completed">%s Completed</string>
 
-    <string name="view_tasks">View Tasks:</string>
+    <string name="view_tasks">View Tasks</string>
     <string name="tasked">Tasked</string>
     <string name="completed">Completed</string>
     <string name="nothing_here">Nothing To Show Here</string>
@@ -128,8 +127,5 @@
     <string name="other_topics">Other Topics</string>
     <string name="desc_account">Account</string>
     <string name="search">Search</string>
-    <string name="desc_view_tasks">View Tasks</string>
-    <string name="desc_create_task">Create Task</string>
-    <string name="desc_settings">Settings</string>
     <string name="theme">Theme</string>
 </resources>

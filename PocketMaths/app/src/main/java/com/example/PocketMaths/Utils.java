@@ -467,8 +467,12 @@ public class Utils {
         this.showRefreshers = showRefreshers;
     }
 
+    /**
+     * Applies the correct formatting.
+     * @param string String to be formatted
+     * @return Formatted string
+     */
     public String formatString(String string) {
-
         DecimalFormat decimalFormat = new DecimalFormat("#.###");
         try {
             return decimalFormat.format(Float.parseFloat(string));

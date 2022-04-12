@@ -97,7 +97,7 @@
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
             android:src="@drawable/ic_tasks"
-            android:contentDescription="@string/desc_view_tasks"
+            android:contentDescription="@string/view_tasks"
             />
 
             <ImageView
@@ -110,7 +110,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:src="@drawable/ic_create_task"
-                android:contentDescription="@string/desc_create_task"
+                android:contentDescription="@string/create_task"
                 />
 
             <ImageView
