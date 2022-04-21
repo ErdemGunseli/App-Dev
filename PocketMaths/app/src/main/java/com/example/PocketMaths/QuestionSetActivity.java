@@ -14,6 +14,7 @@ import android.os.Vibrator;
 import android.text.Html;
 import android.text.InputType;
 import android.transition.TransitionManager;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -195,7 +196,7 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         for (int index = 0; index < answerOptions.length; index++) {
             radioButtons[index] = new RadioButton(this);
             radioButtons[index].setTextColor(getResources().getColor(R.color.Secondary));
-            radioButtons[index].setTextSize(16);
+            radioButtons[index].setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
             radioButtons[index].setPadding(0, 30, 0, 30);
             radioButtons[index].setText(Html.fromHtml(currentQuestion.getAnswerOptions()[index]));
             radioGroup.addView(radioButtons[index]);
