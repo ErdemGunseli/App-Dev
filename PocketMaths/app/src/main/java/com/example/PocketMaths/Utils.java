@@ -274,7 +274,7 @@ public class Utils {
         questionSets.add(new QuestionSet(2, "Fractions & Decimals", "Practice converting between fractions and decimals.", R.drawable.qs_fractions_decimals,
                 decimalsFractions));
 
-        questionSets.add(new QuestionSet(3, "Difficult Fractions Questions", "Go above and beyond the syllabus with this set of questions. Discover tricky questions about fractions and understand how to solve them", R.drawable.qs_difficult_fractions,
+        questionSets.add(new QuestionSet(3, "Difficult Fractions Questions", "Go above and beyond the syllabus with this set of questions. Discover tricky questions about fractions and understand how to solve them.", R.drawable.qs_difficult_fractions,
                 difficultFractions));
 
         // Learn, Discover, Understand, find out, comprehend, retain

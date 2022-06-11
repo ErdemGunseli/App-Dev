@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">FlashcardDemo</string>
+
+    <string name="app_name_formatted">Flashcard Studio</string>
+
+    <string name="flashcard_index"> %d of %d</string>
+</resources>

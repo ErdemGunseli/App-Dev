@@ -196,8 +196,8 @@ public class QuestionSetActivity extends AppCompatActivity implements View.OnCli
         for (int index = 0; index < answerOptions.length; index++) {
             radioButtons[index] = new RadioButton(this);
             radioButtons[index].setTextColor(getResources().getColor(R.color.Secondary));
-            radioButtons[index].setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
-            radioButtons[index].setPadding(0, 30, 0, 30);
+            radioButtons[index].setTextSize(16);
+            radioButtons[index].setPadding(0, 20, 0, 20);
             radioButtons[index].setText(Html.fromHtml(currentQuestion.getAnswerOptions()[index]));
             radioGroup.addView(radioButtons[index]);
         }
