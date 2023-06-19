@@ -125,7 +125,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             // If all of the inputs are not filled, they need to check:
             Utils.getInstance().showSnackBar(this, relSignUp, getString(R.string.empty_inputs), getString(R.string.ok));
         } else if (Utils.getInstance().inputsInvalid(new String[]{edtTxtParentName.getText().toString(), edtTxtStudentName.getText().toString()}, 2)) {
-            // If input length invalid, they need too check:
+            // If input length invalid, they need to check:
             Utils.getInstance().showSnackBar(this, relSignUp, getString(R.string.input_lengths), getString(R.string.ok));
         } else if (Utils.getInstance().inputsInvalid(new String[]{edtTxtPassword.getText().toString()}, 6)) {
             // If Password too short, they need to check:

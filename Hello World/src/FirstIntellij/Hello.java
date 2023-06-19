@@ -114,8 +114,8 @@ public class Hello {
 //
 ////    Classes represent objects - in this case, we are representing a phone.
 ////    Objects can have different properties. A phone may have a screen size, name, etc.
-////    For this reason, we  have properties for classes.
-//
+////    For this reason, we have properties for classes.
+
 ////    private, public or protected can be used as access modifiers. If none are used, the default is public.
 //
 //            String name;
@@ -123,7 +123,7 @@ public class Hello {
 //            int memoryRam;
 //            private int camera;
 
-//    Generating a Constructor:
+//    Constructor:
 //    public Phone(String name, double screenSize, int memoryRam) {
 //            this.name = name;
 //            this.screenSize = screenSize;

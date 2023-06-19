@@ -37,7 +37,7 @@ public class Main {
 
         System.out.println("I had guessed " + randomNumber + ".");
         if (numberOfGuesses < 5){
-            System.out.println("Congratulations,  you got it");
+            System.out.println("Congratulations, you got it");
         }
         else{
             System.out.println("You lost...");

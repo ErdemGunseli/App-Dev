@@ -26,7 +26,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
     /**
      * Overrides the onCreate method of the super class.
      * Runs when AccountActivity starts.
-     * If the user has not already signed in,sets the layout and theme and calls all necessary
+     * If the user has not already signed in, sets the layout and theme and calls all necessary
      * functions, either directly or through other functions.
      * Otherwise, automatically signs the user in.
      * The user can sign out from the Account page if they no longer want to be signed in automatically.
