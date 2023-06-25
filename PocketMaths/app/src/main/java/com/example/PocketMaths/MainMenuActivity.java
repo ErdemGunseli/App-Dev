@@ -27,7 +27,6 @@ import java.util.Locale;
  * It has buttons that take the user to various pages.
  */
 public class MainMenuActivity extends AppCompatActivity implements View.OnClickListener {
-
     private DatabaseHelper databaseHelper = new DatabaseHelper(this);
     private MainMenuRecyclerAdapter mainMenuRecyclerAdapter;
 

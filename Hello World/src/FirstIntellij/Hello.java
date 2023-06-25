@@ -9,6 +9,7 @@ public class Hello {
 
     // psvm + tab
     // A class and this main method is required to run the program.
+
     public static void main(String[] args) {
 
 //        System.out.print("Hello World");
@@ -79,7 +80,7 @@ public class Hello {
 //        There are also For Each loops <<<<<<<<<
 
 //        To generate a random number, first import java.util.Random. Then, follow this syntax:
-//        adding a number in the argument limits the range between 0 and said number - 1.
+//        adding a number in the argument limits the range between 0 and said number - 1 (i.e. number is exclusive..
 
 //        Random random = new Random();
 //        int myRandomNumber = random.nextInt(10);
@@ -232,8 +233,6 @@ public class Hello {
 //        We have size, clear, isEmpty and values methods.
 
 //        We have an interface in java called Collection which is the generic type of all the collections available in Java.
-
-
 
 
 //        Here, we are using the Student class as the data type of our array list:
