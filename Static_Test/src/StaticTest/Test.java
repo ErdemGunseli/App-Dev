@@ -17,7 +17,7 @@ public class Test {
         this.gender = gender;
     }
 
-    // There can also be static methods that belong to the object itself and not to any instance of a class:
+    // There can also be static methods that belong to the class itself and not to any instance of a class:
     // Non-Static methods and variables cannot be used inside a static method!!!
     public static void printName(){
         System.out.println(Test.name);

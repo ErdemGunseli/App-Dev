@@ -19,7 +19,7 @@ public class Hello {
 //        Declaring Variables
 //        int myNumber = 1;
 //        long myLong = 1;
-//        An integer can store up to 2^31; a long can store up to 2^63
+//        An integer can store up to 2^31 - 1; a long can store up to 2^63 - 1:
 
 //        double myDouble = 1.5;
 //        float myFloat = (float) 1.5;
@@ -111,11 +111,11 @@ public class Hello {
 
 
 //        Syntax of a class:
-//        public class Phone {
+//        class Phone {
 //
 ////    Classes represent objects - in this case, we are representing a phone.
 ////    Objects can have different properties. A phone may have a screen size, name, etc.
-////    For this reason, we have properties for classes.
+////    For this reason, we have properties for objects.
 
 ////    private, public or protected can be used as access modifiers. If none are used, the default is public.
 //
@@ -196,7 +196,7 @@ public class Hello {
 //        names1.clear();
 
 //        This will return True as we have cleared the list.
-//        names1.empty();
+//        names1.isEmpty();
 
 
 //        The syntax for maps (similar to dictionaries):
